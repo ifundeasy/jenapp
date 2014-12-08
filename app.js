@@ -24,7 +24,6 @@ $(function () {
 				try {
 					data = JSON.parse(jqXHR.responseText).data;
 				} catch (e) {}
-
 				if (callback) {
 					var cb;
 					typeof callback == "function" ? cb = callback(jqXHR, textStatus, data) : cb = callback;
@@ -47,7 +46,6 @@ $(function () {
 				try {
 					data = JSON.parse(jqXHR.responseText).data;
 				} catch (e) {}
-
 				if (callback) {
 					var cb;
 					typeof callback == "function" ? cb = callback(jqXHR, textStatus, data) : cb = callback;

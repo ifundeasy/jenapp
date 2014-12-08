@@ -15,8 +15,8 @@
     - Database client version : libmysql - 5.5.34
 
 # Application
-- Configuration file : 
-    - Database : [./server/config/db.php]
+- Database configuration file : 
+    - [./server/config/db.php]
 - Server side library :
     - look at file [./server/composer.json] dependencies library folder ./sever/vendor/
     - other server side library dependencies path [./server/libraries]

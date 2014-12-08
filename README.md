@@ -15,6 +15,8 @@
     - Database client version : libmysql - 5.5.34
 
 # Application
+- Configuration file : 
+    - Database : [./server/config/db.php]
 - Server side library :
     - look at file [./server/composer.json] dependencies library folder ./sever/vendor/
     - other server side library dependencies path [./server/libraries]
@@ -22,6 +24,7 @@
     - look at file [./bower.json] dependencies library folder ./bower/
     - other server side library dependencies path [./lib]
 
+[./server/config/db.php]:github.com/rappresent/jenapp/blob/master/server/config/db.php
 [./server/composer.json]:github.com/rappresent/jenapp/blob/master/server/composer.json
 [./server/libraries]:github.com/rappresent/jenapp/tree/master/server/libraries
 [./bower.json]:github.com/rappresent/jenapp/blob/master/bower.json

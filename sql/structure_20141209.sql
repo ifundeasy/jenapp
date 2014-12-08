@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.34)
 # Database: zen
-# Generation Time: 2014-12-08 16:09:26 +0000
+# Generation Time: 2014-12-08 18:51:01 +0000
 # ************************************************************
 
 
@@ -112,7 +112,7 @@ DROP TABLE IF EXISTS `contact`;
 
 CREATE TABLE `contact` (
   `id_contact` varchar(30) NOT NULL DEFAULT '',
-  `pin` varchar(6) NOT NULL DEFAULT '',
+  `pin` varchar(6) DEFAULT NULL,
   `user_name` varchar(50) NOT NULL DEFAULT '',
   `user_pass` varchar(100) NOT NULL DEFAULT '',
   `first_name` varchar(20) NOT NULL DEFAULT '',
@@ -130,7 +130,6 @@ CREATE TABLE `contact` (
   `active` enum('0','1') DEFAULT '1',
   PRIMARY KEY (`id_contact`),
   UNIQUE KEY `user_name` (`user_name`),
-  UNIQUE KEY `pin` (`pin`),
   KEY `fk.id_religion` (`fk.id_religion`),
   KEY `fk.id_relationship` (`fk.id_relationship`),
   CONSTRAINT `contact_ibfk_1` FOREIGN KEY (`fk.id_religion`) REFERENCES `religion` (`id_religion`) ON UPDATE CASCADE,

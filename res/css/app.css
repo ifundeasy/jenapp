@@ -1,0 +1,119 @@
+html, body {
+	height: 100%;
+	max-width: 100%;
+	overflow-x: hidden;
+}
+
+a {
+	cursor: pointer;
+}
+
+nav {
+	border-bottom : 2px solid crimson !important;
+}
+
+nav ul[theme] > li {
+	cursor : pointer;
+}
+
+#content {
+	margin-top : 80px;
+	padding-bottom:150px; /* this needs to be bigger than footer height*/
+}
+
+.sidebar-nav {
+	width: 100%;
+}
+
+.sidebar-nav > li.divider {
+	background  : #303030;
+	color       : white;
+	margin-left : -10px;
+}
+
+.sidebar-nav > li.divider[togo] {
+	background  : #000;
+	color       : white;
+	margin-left : -10px;
+}
+
+.sidebar-nav > li[togo] {
+	cursor: pointer;
+}
+
+.sidebar-nav > li[togo].selected {
+	background : crimson;
+}
+
+.sidebar-nav > li[togo].selected > a {
+	color : white !important;
+}
+
+::-webkit-scrollbar {
+	width: 5px;
+	height: 5px; }
+
+::-webkit-scrollbar:hover {
+	height: 10px; }
+
+::-webkit-scrollbar-track-piece {
+	/*background-color: rgba(0,0,0, 0.01);*/
+	background-color: #FFFFFF;
+}
+
+::-webkit-scrollbar-thumb:vertical {
+	height: 10px;
+	background: -webkit-gradient(linear, left top, right top, color-stop(0%, #E76B00), color-stop(100%, #E67A00));
+	border: 1px solid #E67A00;
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+	width: 110px;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #E76B00), color-stop(100%, #E67A00));
+	border: 1px solid #E67A00;
+}
+
+form input {
+	margin-bottom: 5px;
+}
+
+.autocomplete-suggestions { border: 1px solid #999; background: #fff; cursor: default; overflow: auto; color: black;}
+.autocomplete-suggestion { padding: 10px 5px; white-space: nowrap; overflow: hidden; }
+.autocomplete-selected { background: #f0f0f0; }
+.autocomplete-suggestions strong { font-weight: normal; color: #3399ff; }
+
+.panel-heading a:after {
+	font-family:'Glyphicons Halflings';
+	content:"\e114";
+	float: right;
+}
+.panel-heading a.collapsed:after {
+	content:"\e080";
+}
+.panel-footer {
+	border-top: 1px solid !important;
+}
+
+#wrapper {
+	min-height: 100%;
+}
+
+.footer {
+	clear:both;
+	position: relative;
+	/*margin-top:-150px;
+	height: 150px;*/
+	padding-top:20px;
+	padding-bottom: 20px;
+	border-top: 2px solid crimson;
+}
+
+.company-logo {
+	background-image: url("./../img/logo.jpg");
+	background-size: contain;
+	background-position: center center;
+	background-repeat: no-repeat;
+	border: 2px solid;
+	border-radius: 5px;
+	height: 200px;
+}

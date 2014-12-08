@@ -1,0 +1,137 @@
+<!-- JUDUL -->
+<h3>Data Master Supplier</h3>
+<!-- Tabel Utama -->
+<div class="jumbotron">
+	<table id="main-table-supplier" class="display table table-striped table-bordered table-hover dt-responsive" cellspacing="0" width="100%">
+	    <thead>
+	        <tr>
+	            <th>ID</th>
+	            <th>Nama Supplier</th>
+	            <th>Cabang</th>
+	            <th>Grup</th>
+	            <th>Catatan</th>
+	        </tr>
+	    </thead>
+	    <tfoot>
+	        <tr>
+	            <th>ID</th>
+	            <th>Nama Supplier</th>
+	            <th>Cabang</th>
+	            <th>Grup</th>
+	            <th>Catatan</th>
+	        </tr>
+	    </tfoot>
+	</table>
+	<!-- Tabel Utama - end -->
+	<!-- Registration form - START -->
+	<div class="container hide" id="form-supplier">
+	    <div class="row">
+	        <form role="form" method="post" id="form-input-supplier">
+	            <div class="col-lg-6">
+	                <div class="well well-sm"><strong><span class="glyphicon glyphicon-asterisk"></span>Harus Diisi</strong></div>
+	                <!-- Title & input -->
+	                <div class="form-group">
+	                    <label for="InputUsernameSupplier">Username</label>
+	                    <div class="input-group">
+	                        <input type="text" class="form-control" name="InputUsernameSupplier" id="InputUsernameSupplier" placeholder="id pengguna" required>
+	                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+	                    </div>
+	                </div>
+	                <!-- Title & input - end -->
+	                <div class="form-group">
+	                    <label for="InputPasswordSupplier">Password</label>
+	                    <div class="input-group">
+	                        <input type="password" class="form-control" name="InputPasswordSupplier" id="InputPasswordSupplier" placeholder="kata sandi" required>
+	                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <label for="InputPasswordSupplier2">Konfirmasi Password</label>
+	                    <div class="input-group">
+	                        <input type="password" class="form-control" name="InputPasswordSupplier2" id="InputPasswordSupplier2" placeholder="masukkan lagi kata sandi" required>
+	                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <label for="InputNamaSupplier">Nama Supplier</label>
+	                    <div class="input-group">
+	                        <input type="text" class="form-control" id="InputNamaSupplier" name="InputNamaSupplier" placeholder="nama Supplier" required>
+	                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <label for="InputCabangSupplier">Cabang</label>
+	                    <div class="input-group btn-block">
+	                    	<!-- Single dropdown -->
+							<div class="btn-group btn-block" combobox>
+								<button type="button" id="button-cabang-supplier" class="btn btn-default dropdown-toggle btn-block" data-toggle="dropdown" aria-expanded="false">
+									<div align="left" display  style="float: left">Pilih</div>
+									<div align="right"><span class="caret"></span></div>
+								</button>
+								<ul class="dropdown-menu btn-block" role="menu" id="list-cabang-supplier">
+								</ul>
+								<input type="hidden" class="form-control" id="InputCabangSupplier" name="InputCabangSupplier" placeholder="" value="" required>
+							</div>
+							<!-- Single dropdown - end -->
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <label for="InputGrupSupplier">Grup Supplier</label>
+	                    <div class="input-group btn-block">
+	                    	<!-- Single dropdown -->
+							<div class="btn-group btn-block" combobox>
+								<button type="button" id="button-grup-supplier" class="btn btn-default dropdown-toggle btn-block" data-toggle="dropdown" aria-expanded="false">
+									<div align="left" display  style="float: left">Pilih</div>
+									<div align="right"><span class="caret"></span></div>
+								</button>
+								<ul class="dropdown-menu btn-block" role="menu" id="list-grup-supplier">
+								</ul>
+								<input type="hidden" class="form-control" id="InputGrupSupplier" name="InputGrupSupplier" placeholder="" value="" required>
+							</div>
+							<!-- Single dropdown - end -->
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <label for="InputAlamatSupplier">Alamat</label>
+	                    <div class="input-group">
+	                        <textarea name="InputAlamatSupplier" id="InputAlamatSupplier" class="form-control" rows="5"></textarea>
+	                        <span class="input-group-addon"></span>
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <label for="InputEmailSupplier">Email</label>
+	                    <div class="input-group">
+	                        <input type="email" class="form-control" id="InputEmailSupplier" name="InputEmailSupplier" placeholder="alamat email">
+	                        <span class="input-group-addon"></span>
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <label for="InputCatatanSupplier">Catatan</label>
+	                    <div class="input-group">
+	                        <textarea name="InputCatatanSupplier" id="InputCatatanSupplier" class="form-control" rows="5"></textarea>
+	                        <span class="input-group-addon"></span>
+	                    </div>
+	                </div>
+	                <input type="submit" name="submit" id="submit-form-supplier" value="Submit" class="btn btn-primary btn-block pull-right">
+	                <input type="reset" name="reset" id="reset-form-supplier" value="Batal" class="btn btn-danger btn-block pull-right">
+	            </div>
+	        </form>
+	        <div class="col-lg-5 col-md-push-1">
+	            <div class="col-md-12">
+	                <div class="alert alert-success hide" id="supplier-form-sukses">
+	                    <strong><span class="glyphicon glyphicon-ok" id="supplier-success-message"></span> Data berhasil disimpan.</strong>
+	                </div>
+	                <div class="alert alert-danger hide" id="supplier-form-gagal">
+	                    <span class="glyphicon glyphicon-remove"></span><strong id="supplier-error-message"></strong>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	<!-- Registration form - END -->
+	<!-- Tombol untuk membuka form input data baru -->
+	<a class="btn btn-primary btn-lg pull-right" id="tambah-data-supplier" role="button">Input Data Supplier Baru</a>
+	<!-- Tombol untuk membuka form input data baru - end -->
+</div>
+<!-- kontroller -->
+<script type="text/javascript" src="./app/control/supplier/supplier.js"></script>

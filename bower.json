@@ -1,0 +1,23 @@
+{
+	"name"        : "Ceramic",
+	"version"     : "0.0.1",
+	"authors"     : [
+		"Afa Rappresent <mail.vudin@gmail.com>"
+	],
+	"description" : "Ceramic Retails",
+	"license"     : "MIT",
+	"ignore"      : [
+		"**/.*",
+		"node_modules",
+		"bower_components",
+		"test",
+		"tests"
+	],
+	"dependencies": {
+		"jquery"    : "2.1.1",
+		"backbone"  : "~1.1.2",
+		"requirejs" : "~2.1.15",
+		"bootstrap" : "~3.2.0",
+		"bootswatch": "~3.2.0+4"
+	}
+}

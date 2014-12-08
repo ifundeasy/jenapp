@@ -1,0 +1,5 @@
+# This file prevents that your .php view files are accessed directly from the outside
+<Files ~ "\.(htaccess|php|html|js|css|json|txt)$">
+order allow,deny
+deny from all
+</Files>

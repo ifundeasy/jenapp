@@ -1,0 +1,198 @@
+<div id="containerNew" class="panel-group">
+	<h1>Order Pembelian
+		<input type="button" class="btn btn-xs btn-danger" style="margin-top: -15px" value="baru">
+		<input id="btnShowConSearch" type="button" class="btn btn-default pull-right" value="Cari order pembelian">
+	</h1>
+	<div class="panel panel-info">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				Informasi Umum<a data-toggle="collapse" data-target="[panel='1']"></a>
+			</h4>
+		</div>
+		<div panel="1" class="panel-collapse collapse in">
+			<div class="panel-body">
+				<form role="form">
+					<div class="col-lg-6 form-group">
+						<label>Nomer Transkasi</label>
+						<input id="inputTransNumb" type="text" class="form-control">
+						<label>Tanggal</label>
+						<input id="inputDateTrans" type="text" class="form-control datepicker">
+					</div>
+					<div class="col-lg-6 form-group">
+						<label>Nama Supplier</label>
+						<input id="inputSupplier" type="text" class="form-control">
+						<label>Alamat Supplier</label>
+						<input id="inputSupplierAddr" type="text" class="form-control" disabled>
+						<!--
+						<div class="btn-group btn-block" combobox>
+							<button type="button" id="button-grup-supplier" class="btn btn-default dropdown-toggle btn-block" data-toggle="dropdown" aria-expanded="false">
+								<div align="left" display  style="float: left">Pilih</div>
+								<div align="right"><span class="caret"></span></div>
+							</button>
+							<ul class="dropdown-menu btn-block" role="menu" id="list-grup-supplier">
+								<li><a id="grup-supplier-l" key="1">Laki-laki 1</a></li>
+								<li><a id="grup-supplier-l" key="2">Laki-laki 2</a></li>
+								<li><a id="grup-supplier-l" key="3">Laki-laki 3</a></li>
+							</ul>
+							<input type="hidden" class="form-control" id="InputGrupSupplier" name="InputGrupSupplier" placeholder="" value="" required>
+						</div>
+						-->
+					</div>
+				</form>
+			</div>
+			<!--<div class="panel-footer">Footer</div>-->
+		</div>
+	</div>
+	<div class="panel panel-danger">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				Barang<a data-toggle="collapse" data-target="[panel='3']" class="collapsed"></a>
+			</h4>
+		</div>
+		<div panel="3" class="panel-collapse collapse">
+			<div class="panel-body">
+				<table class="table table-hover table-striped table-bordered table-condensed table-responsive">
+					<thead>
+						<tr class="active">
+							<th style="width: 40px" class="text-center">No</th>
+							<th style="width: 80px" class="text-center">Kode</th>
+							<th class="text-center">Nama barang</th>
+							<th style="width: 80px" class="text-center">Qty</th>
+							<th class="text-center">Harga (Rp.)</th>
+							<th class="text-center">Diskon (%)</th>
+							<th class="text-center">Total (Rp.)</th>
+							<th class="text-center">Aksi</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td align="center">1</td>
+							<td align="left">09875</td>
+							<td align="left">Ayam Bacot</td>
+							<td align="center">12</td>
+							<td align="right">100,000</td>
+							<td align="right">10</td>
+							<td align="right">1,200,000</td>
+							<td align="center"><input type="button" class="btn btn-sm btn-danger" value="Hapus"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="panel-footer text-right">
+			<form role="form" class="form-inline">
+				<div class="form-group">
+					<input id="inputProduct" style="margin-top: 6px;" type="text" class="form-control" placeholder="Nama">
+					<input id="inputProductQty" style="margin-top: 6px;" type="text" class="form-control" placeholder="Qty">
+					<div class="input-group">
+						<input id="inputProductDiscount" type="text" class="form-control" placeholder="Diskon">
+						<span class="input-group-addon">%</span>
+					</div>
+					<div style="margin-top: 6px">
+						<div class="input-group" style="margin-bottom: 6px">
+							<span class="input-group-addon">Rp.</span>
+							<input id="inputProductPrice" type="text" class="form-control" placeholder="Harga" disabled>
+						</div>
+						<input id="btnAddProduct" type="button" class="btn btn-success form-control" style="margin-bottom: 6px" value="Tambah">
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="panel panel-info">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				Lainnya<a data-toggle="collapse" data-target="[panel='2']" class="collapsed"></a>
+			</h4>
+		</div>
+		<div panel="2" class="panel-collapse collapse in">
+			<div class="panel-body">
+				<form role="form">
+					<div class="col-lg-6 form-group">
+						<label>Tax</label>
+						<div class="input-group">
+							<input id="inputTax" type="text" class="form-control">
+							<span class="input-group-addon">%</span>
+						</div>
+						<label>Grand Total</label>
+						<div class="input-group">
+							<span class="input-group-addon">Rp.</span>
+							<input id="inputGrandTotal" type="text" class="form-control" disabled>
+						</div>
+						<p align="right" style="margin-top: 10px">
+							<span class="label label-info">Total Qty : <span id="inputTotalQty">0</span></span>
+							<span class="label label-info">Total Item : <span id="inputTotalItems">0</span></span>
+						</p>
+					</div>
+					<div class="col-lg-6 form-group">
+						<label>Pengaju</label>
+						<input type="text" class="form-control" disabled>
+						<label>Keterangan</label>
+						<textarea type="text" rows="4" class="form-control right"></textarea>
+					</div>
+
+				</form>
+			</div>
+		</div>
+		<div class="panel-footer text-right">
+			<input id="btnResetTrans" type="button" class="btn btn-warning" value="Reset">
+			<input id="btnSubmitTrans" type="button" class="btn btn-success" value="Sumbit">
+		</div>
+	</div>
+</div>
+<div id="containerSearch" class="panel-group">
+	<h1>Order Pembelian
+		<input type="button" class="btn btn-xs btn-info" style="margin-top: -15px" value="cari">
+		<input id="btnShowConNew" type="button" class="btn btn-default pull-right" value="Buat order pembelian">
+	</h1>
+	<div class="panel panel-danger">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				Barang<a data-toggle="collapse" data-target="[panel='3']" class="collapsed"></a>
+			</h4>
+		</div>
+		<div panel="3" class="panel-collapse collapse">
+			<div class="panel-body">
+				<table class="table table-hover table-striped table-bordered table-condensed table-responsive">
+					<thead>
+					<tr class="active">
+						<th style="width: 40px" class="text-center">No</th>
+						<th style="width: 80px" class="text-center">Kode</th>
+						<th class="text-center">Nama barang</th>
+						<th style="width: 80px" class="text-center">Qty</th>
+						<th class="text-center">Harga</th>
+						<th class="text-center">Total</th>
+						<th class="text-center">Aksi</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr>
+						<td align="center">1</td>
+						<td align="left">09875</td>
+						<td align="left">Ayam Bacot</td>
+						<td align="center">12</td>
+						<td align="right">100,000</td>
+						<td align="right">1,200,000</td>
+						<td align="center"><input type="button" class="btn btn-sm btn-danger" value="Hapus"></td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="panel-footer text-right">
+			<form role="form" class="form-inline">
+				<div class="form-group">
+					<input style="margin-top: 6px;" type="text" class="form-control" placeholder="Nama">
+					<input style="margin-top: 6px;" type="text" class="form-control" placeholder="Qty">
+					<input style="margin-top: 6px;" type="text" class="form-control" placeholder="Harga" disabled>
+					<!--
+					<input style="margin-top: 6px;" type="text" class="form-control" placeholder="Tax">
+					<input style="margin-top: 6px;" type="text" class="form-control" placeholder="Diskon">
+					-->
+					<input type="button" class="btn btn-success form-control" value="Tambah">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<script type="application/javascript" src="./app/control/i-orderbeli.js"></script>

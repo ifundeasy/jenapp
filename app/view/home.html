@@ -1,0 +1,23 @@
+<div class="jumbotron" style="margin-top: 10%">
+	<div class="container">
+		<!-- Example row of columns -->
+		<div class="row">
+			<div class="col-lg-6 company-logo">
+			</div>
+			<div class="col-lg-6">
+				<h2 style="margin-top: 10px;"><span company>Nama Kompani</span></h2>
+				<div>Hai, <strong><span username>Nama pengguna</span></strong>! Anda sedang login dalam aplikasi ini.
+				     Untuk memulai klik <strong><span company>Nama Kompani</span></strong> yang berada pada ujung atas kiri pada
+				     halaman ini. Anda juga dapat mengganti tema tampilan dengan mengklik <strong>&nbspTheme</strong> pada ujung kanan atas.
+					<br/><br/>Selamat bekerja!
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="application/javascript">
+	$(document).ready(function(){
+		$('span[username]').html($('span#contact').html());
+		$('span[company]').html($('a#brand').html());
+	})
+</script>

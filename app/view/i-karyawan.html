@@ -1,0 +1,154 @@
+<!-- JUDUL -->
+<h3>Data Master Karyawan</h3>
+<!-- Tabel Utama -->
+<div class="jumbotron">
+	<table id="main_table" class="display table table-striped table-bordered table-hover dt-responsive" cellspacing="0" width="100%">
+	    <thead>
+	        <tr>
+	            <th>ID</th>
+	            <th>Nama Depan</th>
+	            <th>Nama Belakang</th>
+	            <th>Cabang</th>
+	            <th>Grup</th>
+	        </tr>
+	    </thead>
+	    <tfoot>
+	        <tr>
+	            <th>ID</th>
+	            <th>Nama Depan</th>
+	            <th>Nama Belakang</th>
+	            <th>Cabang</th>
+	            <th>Grup</th>
+	        </tr>
+	    </tfoot>
+	</table>
+	<!-- Tabel Utama - end -->
+	<!-- Registration form - START -->
+	<div class="container hide" id="form-karyawan">
+	    <div class="row">
+	        <form role="form" method="post" id="form-input-karyawan">
+	            <div class="col-lg-6">
+	                <div class="well well-sm"><strong><span class="glyphicon glyphicon-asterisk"></span>Harus Diisi</strong></div>
+	                <!-- Title & input -->
+	                <div class="form-group">
+	                    <label for="InputUsername">Username</label>
+	                    <div class="input-group">
+	                        <input type="text" class="form-control" name="InputUsername" id="InputUsername" placeholder="id pengguna" required>
+	                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+	                    </div>
+	                </div>
+	                <!-- Title & input - end -->
+	                <div class="form-group">
+	                    <label for="InputPassword">Password</label>
+	                    <div class="input-group">
+	                        <input type="password" class="form-control" name="InputPassword" id="InputPassword" placeholder="kata sandi" required>
+	                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <label for="InputPassword2">Konfirmasi Password</label>
+	                    <div class="input-group">
+	                        <input type="password" class="form-control" name="InputPassword2" id="InputPassword2" placeholder="masukkan lagi kata sandi" required>
+	                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <label for="InputNamaDepan">Nama Depan</label>
+	                    <div class="input-group">
+	                        <input type="text" class="form-control" id="InputNamaDepan" name="InputNamaDepan" placeholder="nama depan" required>
+	                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <label for="InputNamaBelakang">Nama Belakang</label>
+	                    <div class="input-group">
+	                        <input type="text" class="form-control" id="InputNamaBelakang" name="InputNamaBelakang" placeholder="nama belakang">
+	                        <span class="input-group-addon"></span>
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <label for="InputAlamat">Alamat</label>
+	                    <div class="input-group">
+	                        <textarea name="InputAlamat" id="InputAlamat" class="form-control" rows="2"></textarea>
+	                        <span class="input-group-addon"></span>
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <label for="InputKota">Kota</label>
+	                    <div class="input-group btn-block">
+	                    	<!-- Single dropdown -->
+							<div class="btn-group btn-block" combobox>
+								<button type="button" id="button-InputKota" class="btn btn-default dropdown-toggle btn-block" data-toggle="dropdown" aria-expanded="false">
+									<div align="left" display  style="float: left">Pilih</div>
+									<div align="right"><span class="caret"></span></div>
+								</button>
+								<ul class="dropdown-menu btn-block" role="menu" id="list-kota">
+								</ul>
+								<input type="hidden" class="form-control" id="InputKota" name="InputKota" placeholder="" value="" required>
+							</div>
+							<!-- Single dropdown - end -->
+							<input type="text" class="form-control" id="InputKodepos" name="InputKodepos" placeholder="Kode Pos">
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <label for="InputEmail">Email</label>
+	                    <div class="input-group">
+	                        <input type="email" class="form-control" id="InputEmail" name="InputEmail" placeholder="alamat email">
+	                        <span class="input-group-addon"></span>
+	                    </div>
+	                </div>
+	                <div class="form-group btn-block">
+	                    <label for="InputTgLahir">Tanggal Lahir</label>
+	                    <div class="input-group btn-block">
+	                    	<input type="text" class="form-control date span2 btn-block" id="InputTgLahir" name="InputTgLahir" placeholder="dd-mm-yyyy">
+	                    	<span class="input-group-addon"></span>
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <label for="InputGender">Jenis Kelamin</label>
+	                    <div class="input-group btn-block">
+	                    	<!-- Single dropdown -->
+							<div class="btn-group btn-block" combobox>
+								<button type="button" id="button-InputGender" class="btn btn-default dropdown-toggle btn-block" data-toggle="dropdown" aria-expanded="false">
+									<div align="left" display style="float: left">Laki-laki</div>
+									<div align="right"><span class="caret"></span></div>
+								</button>
+								<ul class="dropdown-menu btn-block" role="menu">
+									<li><a id="gender-l" key="1">Laki-laki</a></li>
+									<li><a id="gender-p" key="2">Perempuan</a></li>
+								</ul>
+							</div>
+							<!-- Single dropdown - end -->
+	                    	<input type="hidden" id="InputGender" name="InputGender" placeholder="" value="L" required>
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <label for="InputCatatan">Catatan</label>
+	                    <div class="input-group">
+	                        <textarea name="InputCatatan" id="InputCatatan" class="form-control" rows="5"></textarea>
+	                        <span class="input-group-addon"></span>
+	                    </div>
+	                </div>
+	                <input type="submit" name="submit" id="submit-form-karyawan" value="Submit" class="btn btn-primary btn-block pull-right">
+	                <input type="reset" name="reset" id="reset-form-karyawan" value="Batal" class="btn btn-danger btn-block pull-right">
+	            </div>
+	        </form>
+	        <div class="col-lg-5 col-md-push-1">
+	            <div class="col-md-12">
+	                <div class="alert alert-success hide" id="karyawan-form-sukses">
+	                    <strong><span class="glyphicon glyphicon-ok" id="karyawan-success-message"></span> Data berhasil disimpan.</strong>
+	                </div>
+	                <div class="alert alert-danger hide" id="karyawan-form-gagal">
+	                    <span class="glyphicon glyphicon-remove"></span><strong id="karyawan-error-message"></strong>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	<!-- Registration form - END -->
+	<!-- Tombol untuk membuka form input data baru -->
+	<a class="btn btn-primary btn-lg pull-right" id="tambah-data" role="button">Input Data Karyaan Baru</a>
+	<!-- Tombol untuk membuka form input data baru - end -->
+</div>
+<!-- kontroller -->
+<script type="text/javascript" src="./app/control/karyawan/karyawan.js"></script>

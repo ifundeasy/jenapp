@@ -2,7 +2,7 @@
  * Created by rappresent on 11/5/14.
  */
 
-var Profile, Cache, Ajax, Personalize;
+var Profile, Cache, Ajax, AjaxSync, Personalize;
 $(function () {
 	Profile = {};
 	Cache = function () {
@@ -16,6 +16,29 @@ $(function () {
 			type     : mode,
 			url      : url,
 			data     : data,
+			xhrFields: {
+				withCredentials: true
+			},
+			complete : function (jqXHR, textStatus) {
+				var data;
+				try {
+					data = JSON.parse(jqXHR.responseText).data;
+				} catch (e) {}
+
+				if (callback) {
+					var cb;
+					typeof callback == "function" ? cb = callback(jqXHR, textStatus, data) : cb = callback;
+					return cb;
+				}
+			}
+		})
+	};
+	AjaxSync = function(mode, url, data, callback) {
+		$.ajax({
+			type     : mode,
+			url      : url,
+			data     : data,
+			async    : data,
 			xhrFields: {
 				withCredentials: true
 			},

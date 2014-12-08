@@ -1,10 +1,10 @@
 {
-	"name"        : "Ceramic",
+	"name"        : "Framewocked",
 	"version"     : "0.0.1",
 	"authors"     : [
 		"Afa Rappresent <mail.vudin@gmail.com>"
 	],
-	"description" : "Ceramic Retails",
+	"description" : "Framewocked",
 	"license"     : "MIT",
 	"ignore"      : [
 		"**/.*",

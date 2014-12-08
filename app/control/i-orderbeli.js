@@ -59,7 +59,7 @@ IOrderBeli.prototype.initialize = function () {
 		inputDateTrans      : {
 			object: "#inputDateTrans",
 			config: ["confInputDateTrans"],
-			events: []
+			events: ["inputSetDataValue"]
 		},
 		inputSupplier       : {
 			object: "#inputSupplier",
@@ -79,12 +79,12 @@ IOrderBeli.prototype.initialize = function () {
 		inputProductQty     : {
 			object: "#inputProductQty",
 			config: [],
-			events: []
+			events: ["inputSetDataValue"]
 		},
 		inputProductDiscount: {
 			object: "#inputProductDiscount",
 			config: [],
-			events: []
+			events: ["inputSetDataValue"]
 		},
 		inputProductPrice   : {
 			object: "#inputProductPrice",
@@ -200,10 +200,10 @@ IOrderBeli.prototype.clickBtnAddProduct = function (object, elements) {
 	object.off('click');
 	object.on('click', function () {
 		var table = elements.tableOrderPembelian.object;
-		var product = elements.inputProductPrice.object.data();
+		var product = elements.inputProduct.object.data();
 		var qty = elements.inputProductQty.object.data();
 		var discount = elements.inputProductDiscount.object.data();
-		var price = elements.inputProductPrice.object.data();
+		var price = product.harga_beli;
 
 		console.log(product, qty, discount, price);
 	});
@@ -214,6 +214,14 @@ IOrderBeli.prototype.inputFocus = function (object, elements) {
 	object.off('focus');
 	object.on('focus', function () {
 		me.focusAt = object;
+	});
+};
+
+IOrderBeli.prototype.inputSetDataValue = function (object, elements) {
+	var me = this;
+	object.off('input');
+	object.on('input', function () {
+		object.data("value", object.val())
 	});
 };
 

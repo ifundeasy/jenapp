@@ -83,9 +83,9 @@
 			<form role="form" class="form-inline">
 				<div class="form-group">
 					<input id="inputProduct" style="margin-top: 6px;" type="text" class="form-control" placeholder="Nama">
-					<input id="inputProductQty" style="margin-top: 6px;" type="text" class="form-control" placeholder="Qty">
+					<input id="inputProductQty" style="margin-top: 6px;" type="number" class="form-control" placeholder="Qty">
 					<div class="input-group">
-						<input id="inputProductDiscount" type="text" class="form-control" placeholder="Diskon">
+						<input id="inputProductDiscount" type="number" class="form-control" placeholder="Diskon">
 						<span class="input-group-addon">%</span>
 					</div>
 					<div style="margin-top: 6px">
@@ -111,13 +111,13 @@
 					<div class="col-lg-6 form-group">
 						<label>Tax</label>
 						<div class="input-group">
-							<input id="inputTax" type="text" class="form-control">
+							<input id="inputTax" type="number" class="form-control">
 							<span class="input-group-addon">%</span>
 						</div>
 						<label>Grand Total</label>
 						<div class="input-group">
 							<span class="input-group-addon">Rp.</span>
-							<input id="inputGrandTotal" type="text" class="form-control" disabled>
+							<input id="inputGrandTotal" type="number" class="form-control" disabled>
 						</div>
 						<p align="right" style="margin-top: 10px">
 							<span class="label label-info">Total Qty : <span id="inputTotalQty">0</span></span>
@@ -183,8 +183,8 @@
 			<form role="form" class="form-inline">
 				<div class="form-group">
 					<input style="margin-top: 6px;" type="text" class="form-control" placeholder="Nama">
-					<input style="margin-top: 6px;" type="text" class="form-control" placeholder="Qty">
-					<input style="margin-top: 6px;" type="text" class="form-control" placeholder="Harga" disabled>
+					<input style="margin-top: 6px;" type="number" class="form-control" placeholder="Qty">
+					<input style="margin-top: 6px;" type="number" class="form-control" placeholder="Harga" disabled>
 					<!--
 					<input style="margin-top: 6px;" type="text" class="form-control" placeholder="Tax">
 					<input style="margin-top: 6px;" type="text" class="form-control" placeholder="Diskon">

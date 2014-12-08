@@ -17,10 +17,10 @@
 # Application
 - Server side library :
     - look at file [./server/composer.json] (dependencies library folder [./sever/vendor/])
-    - other server side library dependencies path : [./server/libraries]
+    - other server side library dependencies path [./server/libraries]
 - Client side library : 
-    - look at file [./bower.json] (this dependencies library is : [./bower/])
-    - other server side library dependencies path : [./lib]
+    - look at file [./bower.json] (this dependencies library is [./bower/])
+    - other server side library dependencies path [./lib]
 
 [./server/composer.json]:github.com/rappresent/jenapp/blob/master/server/composer.json
 [./sever/vendor/]:github.com/rappresent/jenapp/tree/master/server/vendor

@@ -1,5 +1,5 @@
 /**
- * Created by rappresent on 11/5/14. ngewe deui
+ * Created by rappresent on 11/5/14.
  */
 
 var Profile, Cache, Ajax, AjaxSync, Personalize;

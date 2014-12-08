@@ -21,6 +21,11 @@ IOrderBeli.prototype.initialize = function () {
 			config: [],
 			events: []
 		},
+		tableOrderPembelian     : {
+			object: "#tableOrderPembelian",
+			config: ["confTableOrderPembelian"],
+			events: []
+		},
 		btnShowConNew       : {
 			object: "#btnShowConNew",
 			config: [],
@@ -34,7 +39,7 @@ IOrderBeli.prototype.initialize = function () {
 		btnAddProduct       : {
 			object: "#btnAddProduct",
 			config: [],
-			events: []
+			events: ["clickBtnAddProduct"]
 		},
 		btnResetTrans       : {
 			object: "#btnResetTrans",
@@ -49,7 +54,7 @@ IOrderBeli.prototype.initialize = function () {
 		inputTransNumb      : {
 			object: "#inputTransNumb",
 			config: [],
-			events: ["inputFocus"]
+			events: ["inputFocus", "changeInputTransNumb"]
 		},
 		inputDateTrans      : {
 			object: "#inputDateTrans",
@@ -88,7 +93,7 @@ IOrderBeli.prototype.initialize = function () {
 		},
 		inputTax            : {
 			object: "#inputTax",
-			config: [],
+			config: ["confInputTax"],
 			events: []
 		},
 		inputGrandTotal     : {
@@ -139,7 +144,6 @@ IOrderBeli.prototype.prepare = function () {
 	Object.keys(me.elements).forEach(function (key) {
 		me.initEl(key, me.elements[key].object);
 	});
-	console.log(me.elements)
 	me.elements.containerSearch.object.hide();
 	me.elements.containerNew.object.show();
 };
@@ -191,12 +195,53 @@ IOrderBeli.prototype.clickBtnShowConNew = function (object, elements) {
 	});
 };
 
+IOrderBeli.prototype.clickBtnAddProduct = function (object, elements) {
+	var me = this;
+	object.off('click');
+	object.on('click', function () {
+		var table = elements.tableOrderPembelian.object;
+		var product = elements.inputProductPrice.object.data();
+		var qty = elements.inputProductQty.object.data();
+		var discount = elements.inputProductDiscount.object.data();
+		var price = elements.inputProductPrice.object.data();
+
+		console.log(product, qty, discount, price);
+	});
+};
+
 IOrderBeli.prototype.inputFocus = function (object, elements) {
 	var me = this;
 	object.off('focus');
 	object.on('focus', function () {
 		me.focusAt = object;
 	});
+};
+
+IOrderBeli.prototype.changeInputTransNumb = function (object, elements) {
+	var me = this;
+	object.off('input');
+	object.on('input', function () {
+		Ajax('get', './server/api/purchase/' + object.val(), {}, function(jq, res, data) {
+			if (data.length == 0) {
+				object.parent().removeClass("has-error");
+				object.parent().addClass("has-success");
+			} else {
+				object.parent().removeClass("has-success");
+				object.parent().addClass("has-error");
+			}
+		})
+	});
+};
+
+IOrderBeli.prototype.confInputTax = function (object, elements) {
+	var me = this;
+	object.val(10);
+	object.data("value", 10);
+};
+
+IOrderBeli.prototype.confTableOrderPembelian = function (object, elements) {
+	var me = this;
+	object.find("tbody").html("")
 };
 
 IOrderBeli.prototype.confInputDateTrans = function (object, elements) {
@@ -232,6 +277,7 @@ IOrderBeli.prototype.confInputSupplier = function (object, elements) {
 						address : suggestion.address,
 						city : suggestion.city,
 					});
+					elements.inputSupplierAddr.object.val(suggestion.address + " " + suggestion.city);
 				}
 			});
 		}
@@ -246,13 +292,23 @@ IOrderBeli.prototype.confInputProduct = function (object, elements) {
 			object.autocomplete({
 				lookup: me.data.product,
 				onSelect: function (suggestion) {
-					console.log(suggestion);
 					object.data({
 						value : suggestion.id_product,
 						display : suggestion.name,
-						harga_beli: null,
-						harga_jual: null
+						harga_beli: parseFloat(suggestion.harga_beli),
+						harga_jual: parseFloat(suggestion.harga_jual)
 					});
+					if (parseFloat(suggestion.harga_beli)) {
+						elements.inputProductPrice.object.val(parseFloat(suggestion.harga_beli));
+
+						elements.inputProductQty.object.val(1);
+						elements.inputProductQty.object.data("value", 1);
+
+						elements.inputProductDiscount.object.val(0);
+						elements.inputProductDiscount.object.data("value", 0);
+					} else {
+						alert("Tidak dapat memilih barang ini, karena tidak memiliki harga jual")
+					}
 				}
 			});
 		}

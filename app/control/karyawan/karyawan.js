@@ -31,7 +31,7 @@ $(document).ready(function () {
 		var new_id 	 	= '';
 		var new_pass 	= '';
 		var new_date 	= new Date();
-		var birth_date 	= new Date($('#form-karyawan form').serializeArray()[7].value);
+		var birth_date 	= new Date($('.date').datepicker('getDate'));
 		console.log("new_date");
 		console.log(new_date);
 		console.log("birth_date");
@@ -87,7 +87,7 @@ $(document).ready(function () {
 					first_name		: _data[3].value,
 					last_name 		: _data[4].value,
 					registered 		: new_date.format("yyyy-mm-dd HH:mm:ss"), //kalo mau pake waktu server, kosong aja
-					date_of_birth	: birth_date.format('yyy-mm-dd'),
+					date_of_birth	: birth_date.format('yyyy-mm-dd'),
 					genre 			: _data[8].value,
 					notes			: _data[9].value,
 					allow_access 	: 1,
@@ -136,7 +136,45 @@ $(document).ready(function () {
 											},
 											success: function(data, status, xhr){
 												console.log('email saved');
-												
+												// simpan data tambahan alamat
+												if(_data[5].value != ""){
+													console.log('inserting additional data...');
+													$.ajax({
+														url		: './server/api/city',
+														type	: 'GET',
+														async	: false,
+														data 	: {
+															f0_n: 'name', 
+															f0_l: '=', 
+															f0_v: 'Bandung' // nanti mah diganti dgn value dr combobox kota
+														},
+														success: function(data, status, xhr){
+															var idCity = JSON.parse(xhr.responseText).data[0].id_city;
+															$.ajax({
+																url		: './server/api/contact_addr',
+																type	: 'POST',
+																async	: false,
+																data 	: {
+																	'fk.id_contact' : new_id,
+																	'fk.id_city'	: idCity,
+																	'address'		: _data[5].value,
+																	'active'		: 1
+																},
+																success: function(data, status, xhr){
+																	console.log('address saved');
+																	
+																},
+																error : function(xhr, status, err){
+																	exeption = "Error! kesalahan server saat penyimpanan data [5].";
+																}
+															});
+														},
+														error : function(xhr, status, err){
+															exeption = "Error! kesalahan server saat penyimpanan data [4].";
+														}
+													});
+												}
+												// simpan data tambahan alamat --end
 											},
 											error : function(xhr, status, err){
 												exeption = "Error! kesalahan server saat penyimpanan data [3].";

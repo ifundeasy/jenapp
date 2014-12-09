@@ -21,7 +21,7 @@ IOrderBeli.prototype.initialize = function () {
 			config: [],
 			events: []
 		},
-		tableOrderPembelian     : {
+		tableOrderPembelian : {
 			object: "#tableOrderPembelian",
 			config: ["confTableOrderPembelian"],
 			events: []
@@ -44,7 +44,7 @@ IOrderBeli.prototype.initialize = function () {
 		btnResetTrans       : {
 			object: "#btnResetTrans",
 			config: [],
-			events: []
+			events: ["clickBtnResetTrans"]
 		},
 		btnSubmitTrans      : {
 			object: "#btnSubmitTrans",
@@ -101,6 +101,11 @@ IOrderBeli.prototype.initialize = function () {
 			config: [],
 			events: []
 		},
+		inputTotal     : {
+			object: "#inputTotal",
+			config: [],
+			events: []
+		},
 		inputTotalQty       : {
 			object: "#inputTotalQty",
 			config: [],
@@ -110,6 +115,16 @@ IOrderBeli.prototype.initialize = function () {
 			object: "#inputTotalItems",
 			config: [],
 			events: []
+		},
+		inputInternal     : {
+			object: "#inputInternal",
+			config: ["confInputInternal"],
+			events: []
+		},
+		textareaNotes     : {
+			object: "#textareaNotes",
+			config: [],
+			events: ["inputSetDataValue"]
 		}
 	};
 
@@ -123,12 +138,16 @@ IOrderBeli.prototype.ajax = function (callback) {
 	Ajax('get', './server/custom/harga', {}, function (jqXHR, textStatus, rawData) {
 		if (rawData) me.data.product = rawData;
 
-		rawData.forEach(function(raw){ raw.value = raw.name });
+		rawData.forEach(function (raw, i) {
+			raw.value = raw.name;
+		});
 
 		Ajax('get', './server/custom/supplier', {}, function (jqXHR, textStatus, rawData) {
 			if (rawData) me.data.supplier = rawData;
 
-			rawData.forEach(function(raw){ raw.value = raw.id_supplier });
+			rawData.forEach(function (raw) {
+				raw.value = raw.id_supplier
+			});
 
 			if (callback) {
 				typeof callback == 'function' ? (cb = callback()) : (cb = callback);
@@ -203,9 +222,82 @@ IOrderBeli.prototype.clickBtnAddProduct = function (object, elements) {
 		var product = elements.inputProduct.object.data();
 		var qty = elements.inputProductQty.object.data();
 		var discount = elements.inputProductDiscount.object.data();
-		var price = product.harga_beli;
+		var price = product.product_purchase_price;
 
-		console.log(product, qty, discount, price);
+		if (product.value && qty && discount && price) {
+			var uuid = (new Date()).getTime();
+			var tbody = table.find('tbody');
+			var tr = table.find('tbody>tr').length + 1;
+			var total = (qty.value * product.product_purchase_price) - (qty.value * product.product_purchase_price * discount.value / 100);
+			var str = "<tr id="+ uuid +">" +
+				"<td align='center'>" + tr + "</td>" +
+				"<td align='left'>" + product.value + "</td>" +
+				"<td align='left'>" + product.display + "</td>" +
+				"<td align='center'>" + qty.value + "</td>" +
+				"<td align='right'>" + product.product_purchase_price + "</td>" +
+				"<td align='right'>" + discount.value + "</td>" +
+				"<td align='right'>" + total + "</td>" +
+				"<td align='center'><input type='button' class='btn btn-sm btn-danger' value='Hapus'></td>" +
+				"</tr>";
+
+			tbody.append(str);
+
+			tbody.find("#" + uuid).data({
+				"id_product": product.value,
+				"qty"       : qty.value,
+				"id_product_purchase_price": product.id_product_purchase_price,
+				"product_purchase_price": product.product_purchase_price,
+				"discount"  : discount.value,
+				"total" : total
+			});
+
+			tbody.find('input[type="button"]').off('click');
+			tbody.find('input[type="button"]').on('click', function(event){
+				$(event.target).closest('tr').remove();
+
+				me.calculate(elements);
+				$.each(tbody.find("tr"), function(i, tr){
+					var row = $(tr).children().get(0);
+					$(row).html(i+1);
+				});
+			});
+
+			me.calculate(elements);
+		}
+	});
+};
+
+IOrderBeli.prototype.calculate = function (elements) {
+	var me = this;
+	var products = [];
+	var data = [];
+	var tax = elements.inputTax.object.data("value");
+	var total = 0;
+	var qty = 0;
+	$.each(elements.tableOrderPembelian.object.find('tbody>tr'), function(i, tr){
+		total += $(tr).data("total");
+		qty += $(tr).data("qty");
+		data.push($(tr).data());
+		products.push($(tr).data("id_product"))
+	});
+
+	elements.inputTotalQty.object.html(qty);
+	elements.inputTotalItems.object.html(products.getUnique().length);
+	elements.inputTotal.object.val(total);
+	elements.inputGrandTotal.object.val(total - (total * tax /100));
+};
+
+IOrderBeli.prototype.clickBtnResetTrans = function (object, elements) {
+	var me = this;
+
+	object.off('click');
+	object.on('click', function () {
+		me.module.find('input[id][type!="button"][id!="inputDateTrans"]').val("");
+		me.module.find('textarea[id]').val("");
+		me.module.find('span[id]').html(0);
+		me.confInputDateTrans(me.module.find("input#inputDateTrans"), elements);
+
+		me.prepare();
 	});
 };
 
@@ -229,7 +321,8 @@ IOrderBeli.prototype.changeInputTransNumb = function (object, elements) {
 	var me = this;
 	object.off('input');
 	object.on('input', function () {
-		Ajax('get', './server/api/purchase/' + object.val(), {}, function(jq, res, data) {
+		if (object.val())
+		Ajax('get', './server/api/purchase/' + object.val(), {}, function (jq, res, data) {
 			if (data.length == 0) {
 				object.parent().removeClass("has-error");
 				object.parent().addClass("has-success");
@@ -249,7 +342,8 @@ IOrderBeli.prototype.confInputTax = function (object, elements) {
 
 IOrderBeli.prototype.confTableOrderPembelian = function (object, elements) {
 	var me = this;
-	object.find("tbody").html("")
+	object.find("tbody").html("");
+	object.closest("div[panel]").closest('div.panel.panel-danger').find("a").trigger("click");
 };
 
 IOrderBeli.prototype.confInputDateTrans = function (object, elements) {
@@ -266,24 +360,25 @@ IOrderBeli.prototype.confInputDateTrans = function (object, elements) {
 
 IOrderBeli.prototype.confInputSupplier = function (object, elements) {
 	var me = this;
-	var z = setInterval(function(){
+	var z = setInterval(function () {
 		if (me.data.supplier) {
 			clearInterval(z);
 			object.autocomplete({
-				lookup: me.data.supplier,
+				lookup  : me.data.supplier,
 				onSelect: function (suggestion) {
-					function display () {
+					function display() {
 						var ret = "";
 						if (suggestion.first_name) ret += suggestion.first_name + " ";
 						if (suggestion.last_name) ret += suggestion.last_name;
 
 						return ret;
 					}
+
 					object.data({
-						value : suggestion.id_supplier,
-						display : display(),
-						address : suggestion.address,
-						city : suggestion.city,
+						value  : suggestion.id_supplier,
+						display: display(),
+						address: suggestion.address,
+						city   : suggestion.city,
 					});
 					elements.inputSupplierAddr.object.val(suggestion.address + " " + suggestion.city);
 				}
@@ -294,20 +389,23 @@ IOrderBeli.prototype.confInputSupplier = function (object, elements) {
 
 IOrderBeli.prototype.confInputProduct = function (object, elements) {
 	var me = this;
-	var z = setInterval(function(){
+	var z = setInterval(function () {
 		if (me.data.product) {
 			clearInterval(z);
+			var data = me.data.product.filter(function(data){ return data.id_product_purchase_price !== null });
 			object.autocomplete({
-				lookup: me.data.product,
+				lookup  : data,
 				onSelect: function (suggestion) {
 					object.data({
-						value : suggestion.id_product,
-						display : suggestion.name,
-						harga_beli: parseFloat(suggestion.harga_beli),
-						harga_jual: parseFloat(suggestion.harga_jual)
+						value     : suggestion.id_product,
+						display   : suggestion.name,
+						id_product_purchase_price: suggestion.id_product_purchase_price,
+						product_purchase_price: parseFloat(suggestion.product_purchase_price),
+						id_product_sale_price: suggestion.id_product_sale_price,
+						product_sale_price: parseFloat(suggestion.product_sale_price)
 					});
-					if (parseFloat(suggestion.harga_beli)) {
-						elements.inputProductPrice.object.val(parseFloat(suggestion.harga_beli));
+					if (parseFloat(suggestion.product_purchase_price)) {
+						elements.inputProductPrice.object.val(parseFloat(suggestion.product_purchase_price));
 
 						elements.inputProductQty.object.val(1);
 						elements.inputProductQty.object.data("value", 1);
@@ -321,6 +419,12 @@ IOrderBeli.prototype.confInputProduct = function (object, elements) {
 			});
 		}
 	}, 200)
+};
+
+IOrderBeli.prototype.confInputInternal = function (object, elements) {
+	var me = this;
+	object.val($('span#contact').html());
+	object.data("value", Profile.internal.id_internal);
 };
 
 $(document).ready(function () {

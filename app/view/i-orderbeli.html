@@ -109,6 +109,11 @@
 			<div class="panel-body">
 				<form role="form">
 					<div class="col-lg-6 form-group">
+						<label>Total</label>
+						<div class="input-group">
+							<span class="input-group-addon">Rp.</span>
+							<input id="inputTotal" type="number" class="form-control" disabled>
+						</div>
 						<label>Tax</label>
 						<div class="input-group">
 							<input id="inputTax" type="number" class="form-control">
@@ -126,9 +131,9 @@
 					</div>
 					<div class="col-lg-6 form-group">
 						<label>Pengaju</label>
-						<input type="text" class="form-control" disabled>
+						<input id="inputInternal" type="text" class="form-control" disabled>
 						<label>Keterangan</label>
-						<textarea type="text" rows="4" class="form-control right"></textarea>
+						<textarea id="textareaNotes" type="text" rows="4" class="form-control right"></textarea>
 					</div>
 
 				</form>
@@ -148,50 +153,16 @@
 	<div class="panel panel-danger">
 		<div class="panel-heading">
 			<h4 class="panel-title">
-				Barang<a data-toggle="collapse" data-target="[panel='3']" class="collapsed"></a>
+				Transaksi<a data-toggle="collapse" data-target="[panel='3']" class="collapsed"></a>
 			</h4>
 		</div>
 		<div panel="3" class="panel-collapse collapse">
 			<div class="panel-body">
-				<table class="table table-hover table-striped table-bordered table-condensed table-responsive">
-					<thead>
-					<tr class="active">
-						<th style="width: 40px" class="text-center">No</th>
-						<th style="width: 80px" class="text-center">Kode</th>
-						<th class="text-center">Nama barang</th>
-						<th style="width: 80px" class="text-center">Qty</th>
-						<th class="text-center">Harga</th>
-						<th class="text-center">Total</th>
-						<th class="text-center">Aksi</th>
-					</tr>
-					</thead>
-					<tbody>
-					<tr>
-						<td align="center">1</td>
-						<td align="left">09875</td>
-						<td align="left">Ayam Bacot</td>
-						<td align="center">12</td>
-						<td align="right">100,000</td>
-						<td align="right">1,200,000</td>
-						<td align="center"><input type="button" class="btn btn-sm btn-danger" value="Hapus"></td>
-					</tr>
-					</tbody>
-				</table>
+				<h5>Under construction <span class="label label-warning">on the way development :D</span></h5>
 			</div>
 		</div>
 		<div class="panel-footer text-right">
-			<form role="form" class="form-inline">
-				<div class="form-group">
-					<input style="margin-top: 6px;" type="text" class="form-control" placeholder="Nama">
-					<input style="margin-top: 6px;" type="number" class="form-control" placeholder="Qty">
-					<input style="margin-top: 6px;" type="number" class="form-control" placeholder="Harga" disabled>
-					<!--
-					<input style="margin-top: 6px;" type="text" class="form-control" placeholder="Tax">
-					<input style="margin-top: 6px;" type="text" class="form-control" placeholder="Diskon">
-					-->
-					<input type="button" class="btn btn-success form-control" value="Tambah">
-				</div>
-			</form>
+			<h5>Under construction <span class="label label-warning">on the way development :D</span></h5>
 		</div>
 	</div>
 </div>

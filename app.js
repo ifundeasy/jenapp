@@ -340,3 +340,15 @@ String.prototype.numberWithCommas = function () {
 		console.log(this, ": please only number")
 	}
 };
+
+Array.prototype.getUnique = function(){
+	var u = {}, a = [];
+	for(var i = 0, l = this.length; i < l; ++i){
+		if(u.hasOwnProperty(this[i])) {
+			continue;
+		}
+		a.push(this[i]);
+		u[this[i]] = 1;
+	}
+	return a;
+};

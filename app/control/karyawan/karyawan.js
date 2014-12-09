@@ -73,6 +73,7 @@ $(document).ready(function () {
 				error : function(xhr, status, err){
 					exeption = "Error! kesalahan server saat generate hash.";
 				}});
+			// generate new id
 			new_id = new_user.substring(0, 3) + Math.floor(Math.random() * 26).toString() + Date.now().toString();
 			// kirim data untuk disimpan di 'contact'
 			$.ajax({
@@ -239,15 +240,15 @@ $(document).ready(function () {
 	});
 	// kontroller untuk gender --end
 	// kontroller untuk tombol tambah data
-	$('#tambah-data').click(function(){
+	$('#tambah-data-karyawan').click(function(){
 		$('#form-karyawan').toggleClass("hide", "");
-		$('#tambah-data').hide();
+		$('#tambah-data-karyawan').hide();
 	});
 	// kontroller untuk tombol tambah data --end
 	// kontroller untuk tombol reset
 	$('#reset-form-karyawan').click(function(){
 		$('#form-karyawan').addClass("hide");
-		$('#tambah-data').show();
+		$('#tambah-data-karyawan').show();
 	});
 	// kontroller untuk tombol reset --end
 	// kontoller untuk tombol submit (override default behaviour)

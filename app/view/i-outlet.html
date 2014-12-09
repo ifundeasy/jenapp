@@ -1,1 +1,74 @@
-HAiii
+<!-- JUDUL -->
+<h3>Data Master Outlet</h3>
+<!-- Tabel Utama -->
+<div class="jumbotron">
+	<table id="main-table-outlet" class="display table table-striped table-bordered table-hover dt-responsive" cellspacing="0" width="100%">
+	    <thead>
+	        <tr>
+	            <th>ID</th>
+	            <th>Outlet</th>
+	            <th>Cabang</th>
+	            <th>Catatan</th>
+	        </tr>
+	    </thead>
+	    <tfoot>
+	        <tr>
+	            <th>ID</th>
+	            <th>Outlet</th>
+	            <th>Cabang</th>
+	            <th>Catatan</th>
+	        </tr>
+	    </tfoot>
+	</table>
+	<!-- Tabel Utama - end -->
+	<!-- Registration form - START -->
+	<div class="container hide" id="form-outlet">
+	    <div class="row">
+	        <form role="form" method="post" id="form-input-outlet">
+	            <div class="col-lg-6">
+	                <div class="well well-sm"><strong><span class="glyphicon glyphicon-asterisk"></span>Harus Diisi</strong></div>
+	                <!-- Title & input -->
+	                <div class="form-group">
+	                    <label for="InputIdOutlet">ID Outlet</label>
+	                    <div class="input-group">
+	                        <input type="text" class="form-control" name="InputIdOutlet" id="InputIdOutlet" placeholder="id outlet" required>
+	                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <label for="InputNamaOutlet">ID Outlet</label>
+	                    <div class="input-group">
+	                        <input type="text" class="form-control" name="InputNamaOutlet" id="InputNamaOutlet" placeholder="nama outlet" required>
+	                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <label for="InputCatatanOutlet">Catatan</label>
+	                    <div class="input-group">
+	                        <textarea name="InputCatatanOutlet" id="InputCatatanOutlet" class="form-control" rows="5"></textarea>
+	                        <span class="input-group-addon"></span>
+	                    </div>
+	                </div>
+	                <input type="submit" name="submit" id="submit-form-outlet" value="Submit" class="btn btn-primary btn-block pull-right">
+	                <input type="reset" name="reset" id="reset-form-outlet" value="Batal" class="btn btn-danger btn-block pull-right">
+	            </div>
+	        </form>
+	        <div class="col-lg-5 col-md-push-1">
+	            <div class="col-md-12">
+	                <div class="alert alert-success hide" id="outlet-form-sukses">
+	                    <strong><span class="glyphicon glyphicon-ok" id="outlet-success-message"></span> Data berhasil disimpan.</strong>
+	                </div>
+	                <div class="alert alert-danger hide" id="outlet-form-gagal">
+	                    <span class="glyphicon glyphicon-remove"></span><strong id="outlet-error-message"></strong>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	<!-- Registration form - END -->
+	<!-- Tombol untuk membuka form input data baru -->
+	<a class="btn btn-primary btn-lg pull-right" id="tambah-data" role="button">Input Data Outlet Baru</a>
+	<!-- Tombol untuk membuka form input data baru - end -->
+</div>
+<!-- kontroller -->
+<script type="text/javascript" src="./app/control/outlet/outlet.js"></script>

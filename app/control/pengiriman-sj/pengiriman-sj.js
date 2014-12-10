@@ -1,5 +1,6 @@
 // define class
 function Pengiriman_sj(){this.initialize()}
+function Pengiriman_sj_detail(){this.initialize()}
 // act as a contructor
 Pengiriman_sj.prototype.initialize = function(){
 	var me = this;
@@ -13,7 +14,25 @@ Pengiriman_sj.prototype.initialize = function(){
 	// define properties --end
 	// call mandatory methods
 	me.getIdInternal();
-	me.setoutlets();
+	me.configureOutletField();
+	me.configureDatefield();
+}
+Pengiriman_sj_detail.prototype.initialize = function(){
+	var me = this;
+	// define properties
+	me.id_purchase_ex 	= "item-"+Date.now().toString();
+	me.datetime 		= ''; // new Date().format("yyyy-mm-dd HH:mm:ss");
+	me.id_purchase	 	= '';
+	me.id_product		= '';
+	me.qty	 			= 0;
+	me.discount			= 0;
+	me._void			= 0;
+	me.complimentary	= 0;
+	me.active			= 1;
+	me.notes			= '';
+	// define properties --end
+	// call mandatory methods
+
 }
 // act as a contructor --end
 // get internal id set by the session
@@ -28,7 +47,7 @@ Pengiriman_sj.prototype.getIdInternal = function(){
 }
 // get internal id set by the session --end
 // configure 'Tujuan Penerimaan' field
-Pengiriman_sj.prototype.setoutlets = function(){
+Pengiriman_sj.prototype.configureOutletField = function(){
 	var outletList = new Array();
 	// get list of outlets (table 'member')
 	$.ajax({
@@ -49,14 +68,31 @@ Pengiriman_sj.prototype.setoutlets = function(){
 		}
 	});
 	// get list of outlets (table 'member') --end
+	// configure autocomplete object
 	$('#inputTujuanKirimsj').autocomplete({
     lookup: outletList,
     onSelect: function (suggestion) {
         //alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
+        $('#inputAlamatKirimsj').text();
     }
+    // configure autocomplete object --end
 });
 }
 // configure 'Tujuan Penerimaan' field --end
+// configure datepicker object
+Pengiriman_sj.prototype.configureDatefield = function(){
+	$('#inputTglTransKirimsj').datepicker({
+		weekStart         : 1,
+		language          : "id",
+		format            : "dd-mm-yyyy",
+		daysOfWeekDisabled: "0",
+		multidate		  : false,
+	    autoclose		  : true,
+		startDate         : new Date()
+	});
+	$('#inputTglTransKirimsj').datepicker('update', new Date());
+};
+// configure datepicker object --end
 $(document).ready(function(){
 	var kirim_baru = new Pengiriman_sj();
 });

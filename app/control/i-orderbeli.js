@@ -433,6 +433,8 @@ IOrderBeli.prototype.confInputDateTrans = function (object, elements) {
 		format            : "yyyy-mm-dd",
 		daysOfWeekDisabled: "0",
 		startDate         : me.date
+		multidate		  : false,
+	    autoclose		  : true,
 	});
 	object.datepicker('update', me.date);
 };

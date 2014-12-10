@@ -1,0 +1,133 @@
+<div class="panel-group" id="FormPengirimanBaru">
+	<h1>Pengiriman & Surat Jalan
+		<input type="button" class="btn btn-xs btn-danger" style="margin-top: -15px" value="baru">
+		<input id="btnShowConSearch" type="button" class="btn btn-default pull-right" value="Cari Transaksi">
+	</h1>
+	<div class="panel panel-info">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				Informasi Transaksi<a data-toggle="collapse" data-target="[panel='1']"></a>
+			</h4>
+		</div>
+		<div panel="1" class="panel-collapse collapse in">
+			<div class="panel-body">
+				<form role="form">
+					<div class="col-lg-6 form-group">
+						<label>Nomor Transkasi</label>
+						<input id="inputNoTransKirimsj" type="text" class="form-control">
+						<label>Tanggal</label>
+						<input id="inputTglTransKirimsj" type="text" class="form-control datepicker">
+					</div>
+					<div class="col-lg-6 form-group">
+						<label>Tujuan Pengiriman</label>
+						<input id="inputTujuanKirimsj" type="text" class="form-control">
+						<label>Alamat</label>
+						<input id="inputAlamatKirimsj" type="text" class="form-control" disabled>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="panel panel-danger">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				Barang<a data-toggle="collapse" data-target="[panel='3']" class="collapsed"></a>
+			</h4>
+		</div>
+		<div panel="3" class="panel-collapse collapse">
+			<div class="panel-body">
+				<table id="tabelPengirimanBaru" class="table table-hover table-striped table-bordered table-condensed table-responsive">
+					<thead>
+						<tr class="active">
+							<th style="width: 40px" class="text-center">No</th>
+							<th style="width: 80px" class="text-center">Kode</th>
+							<th class="text-center">Nama barang</th>
+							<th style="width: 80px" class="text-center">Qty</th>
+							<th class="text-center">Harga (Rp.)</th>
+							<th class="text-center">Diskon (%)</th>
+							<th class="text-center">Total (Rp.)</th>
+							<th class="text-center">Aksi</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td align="center">1</td>
+							<td align="left">09875</td>
+							<td align="left">Ayam Bacot</td>
+							<td align="center">12</td>
+							<td align="right">100,000</td>
+							<td align="right">10</td>
+							<td align="right">1,200,000</td>
+							<td align="center"><input type="button" class="btn btn-sm btn-danger" value="Hapus"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="panel-footer text-right">
+			<form role="form" class="form-inline">
+				<div class="form-group">
+					<input id="inputProductKirimsj" style="margin-top: 6px;" type="text" class="form-control" placeholder="Nama">
+					<input id="inputProductQtyKirimsj" style="margin-top: 6px;" type="number" class="form-control" placeholder="Qty">
+					<div class="input-group">
+						<input id="inputProductDiscountKirimsj" type="number" class="form-control" placeholder="Diskon">
+						<span class="input-group-addon">%</span>
+					</div>
+					<div style="margin-top: 6px">
+						<div class="input-group" style="margin-bottom: 6px">
+							<span class="input-group-addon">Rp.</span>
+							<input id="inputProductPriceKirimsj" type="text" class="form-control" placeholder="Harga" disabled>
+						</div>
+						<input id="btnAddProductKirimsj" type="button" class="btn btn-success form-control" style="margin-bottom: 6px" value="Tambah">
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="panel panel-info">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				Lainnya<a data-toggle="collapse" data-target="[panel='2']" class="collapsed"></a>
+			</h4>
+		</div>
+		<div panel="2" class="panel-collapse collapse in">
+			<div class="panel-body">
+				<form role="form">
+					<div class="col-lg-6 form-group">
+						<label>Total</label>
+						<div class="input-group">
+							<span class="input-group-addon">Rp.</span>
+							<input id="inputTotalKirimsj" type="number" class="form-control" disabled>
+						</div>
+						<label>Tax</label>
+						<div class="input-group">
+							<input id="inputTaxKirimsj" type="number" class="form-control">
+							<span class="input-group-addon">%</span>
+						</div>
+						<label>Grand Total</label>
+						<div class="input-group">
+							<span class="input-group-addon">Rp.</span>
+							<input id="inputGrandTotalKirimsj" type="number" class="form-control" disabled>
+						</div>
+						<p align="right" style="margin-top: 10px">
+							<span class="label label-info">Total Qty : <span id="inputTotalQtyKirimsj">0</span></span>
+							<span class="label label-info">Total Item : <span id="inputTotalItemsKirimsj">0</span></span>
+						</p>
+					</div>
+					<div class="col-lg-6 form-group">
+						<label>Pengaju</label>
+						<input id="inputInternalKirimsj" type="text" class="form-control" disabled>
+						<label>Keterangan</label>
+						<textarea id="textareaNotesKiirmsj" type="text" rows="4" class="form-control right"></textarea>
+					</div>
+
+				</form>
+			</div>
+		</div>
+		<div class="panel-footer text-right">
+			<input id="btnResetTransKirimsj" type="button" class="btn btn-warning" value="Reset">
+			<input id="btnSubmitTransKirimsj" type="button" class="btn btn-success" value="Sumbit">
+		</div>
+	</div>
+</div>
+<script type="application/javascript" src="./app/control/pengiriman-sj/pengiriman-sj.js"></script>

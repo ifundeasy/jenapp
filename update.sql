@@ -88,3 +88,71 @@ CREATE TABLE `purchase_bill` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 ## --------------------------------------------------------------------------------------------------------------------------------------------------
 ## --------------------------------------------------------------------------------------------------------------------------------------------------
+## Falih's views
+CREATE 
+ALGORITHM=UNDEFINED 
+DEFINER=`root`@`localhost` 
+SQL SECURITY DEFINER 
+VIEW `internal_karyawan` AS 
+SELECT
+  `a`.`id_internal` AS `id`,
+  `b`.`first_name` AS `nama_depan`,
+  `b`.`last_name` AS `nama_belakang`,
+  `c`.`name` AS `cabang`,
+  `d`.`name` AS `grup`,
+  `a`.`active`
+FROM
+  (
+    (
+      (
+        `internal` `a`
+        RIGHT JOIN `contact` `b` ON (
+          (
+            `a`.`fk.id_contact` = `b`.`id_contact`
+          )
+        )
+      )
+      LEFT JOIN `branch` `c` ON (
+        (
+          `a`.`fk.id_branch` = `c`.`id_branch`
+        )
+      )
+    )
+    LEFT JOIN `internal_group` `d` ON (
+      (
+        `a`.`fk.id_internal_group` = `d`.`id_internal_group`
+      )
+    )
+  ) ;
+  CREATE 
+ALGORITHM=UNDEFINED 
+DEFINER=`root`@`localhost` 
+SQL SECURITY DEFINER 
+VIEW `view_outlet` AS 
+SELECT
+  a.id_member AS `id`,
+  b.first_name AS `nama_outlet`,
+  a.notes,
+  a.active
+FROM
+  member AS a
+JOIN contact AS b ON a.`fk.id_contact` = b.id_contact
+WHERE
+  a.`fk.id_member_group` = 'outlet' ;
+  CREATE 
+ALGORITHM=UNDEFINED 
+DEFINER=`root`@`localhost` 
+SQL SECURITY DEFINER 
+VIEW `view_supplier` AS 
+SELECT
+  a.id_supplier,
+  b.first_name,
+  a.`fk.id_branch`,
+  c.`name`,
+  a.notes,
+  a.active
+FROM
+  supplier AS a
+JOIN contact AS b ON a.`fk.id_contact` = b.id_contact
+JOIN supplier_group AS c ON a.`fk.id_supplier_group` = c.id_supplier_group ;
+

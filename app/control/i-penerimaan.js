@@ -1,13 +1,10 @@
 /**
  * Created by rappresent on 12/11/14.
  */
-/**
- * Created by rappresent on 12/7/14.
- */
-function IOrderBeli() {
+function IPenerimaan() {
 }
 
-IOrderBeli.prototype.initialize = function () {
+IPenerimaan.prototype.initialize = function () {
 	var me = this;
 	me.data = {};
 	me.Date = new Date();
@@ -27,7 +24,7 @@ IOrderBeli.prototype.initialize = function () {
 	me.ajax(me.prepare());
 };
 
-IOrderBeli.prototype.ajax = function (callback) {
+IPenerimaan.prototype.ajax = function (callback) {
 	var cb, me = this;
 	Ajax('get', './server/custom/harga', {}, function (jqXHR, textStatus, rawData) {
 		if (rawData) me.data.product = rawData;
@@ -51,7 +48,7 @@ IOrderBeli.prototype.ajax = function (callback) {
 	});
 };
 
-IOrderBeli.prototype.prepare = function () {
+IPenerimaan.prototype.prepare = function () {
 	var me = this;
 
 	Object.keys(me.elements).forEach(function (key) {
@@ -61,7 +58,7 @@ IOrderBeli.prototype.prepare = function () {
 	me.elements.containerNew.object.show();
 };
 
-IOrderBeli.prototype.initEl = function (key, object) {
+IPenerimaan.prototype.initEl = function (key, object) {
 	var me = this;
 	var key = me.elements[key];
 	if (me.module.length == 1) {
@@ -73,14 +70,14 @@ IOrderBeli.prototype.initEl = function (key, object) {
 					if (me[name]) {
 						if (typeof me[name] == 'function') me[name](key.object, me.elements);
 					} else {
-						console.warn("IOrderBeli.prototype." + name + " is " + me[name]);
+						console.warn("IPenerimaan.prototype." + name + " is " + me[name]);
 					}
 				});
 				key.events.forEach(function (name) {
 					if (me[name]) {
 						if (typeof me[name] == 'function') me[name](key.object, me.elements);
 					} else {
-						console.warn("IOrderBeli.prototype." + name + " is " + me[name]);
+						console.warn("IPenerimaan.prototype." + name + " is " + me[name]);
 					}
 				});
 
@@ -91,6 +88,6 @@ IOrderBeli.prototype.initEl = function (key, object) {
 };
 
 $(document).ready(function () {
-	var iOrderBeli = new IOrderBeli();
+	var iOrderBeli = new IPenerimaan();
 	iOrderBeli.initialize();
 });

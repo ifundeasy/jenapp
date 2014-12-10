@@ -330,6 +330,9 @@ IOrderBeli.prototype.clickBtnSubmitTrans = function (object, elements) {
 	object.on('click', function () {
 		var valid = me.validate(elements);
 		if (valid[0].indexOf(false) == -1) {
+
+			object.off('click'); //please wait! don't clicking again!
+
 			AjaxSync("post", "./server/api/purchase", {
 				"id_purchase"   : elements.inputTransNumb.object.data("value"),
 				"datetime"      : elements.inputDateTrans.object.val(),
@@ -339,21 +342,23 @@ IOrderBeli.prototype.clickBtnSubmitTrans = function (object, elements) {
 			}, function (jqXHR, b, c) {
 				//console.log(jqXHR.responseJSON);
 				if (jqXHR.responseJSON.success) {
-					rows = elements.tableOrderPembelian.object.find('tbody>tr')
-					$.each(rows, function(i, row){
+					rows = elements.tableOrderPembelian.object.find('tbody>tr');
+
+					$.each(rows, function (i, row) {
+						date = new Date ();
 						if ($(row).data("id_product")) {
 							row = $(row).data();
-							AjaxSync("post", "./server/api/purchase", {
-								"datetime": elements.inputDateTrans.object.val(),
-								"fk.id_product": row.id_product,
-								"qty": row.id_product,
-								"discount": 0,
-								"active": "1"
+							AjaxSync("post", "./server/api/purchase_ex", {
+								"datetime"                    : dateFormat(date, "isoDate") + " " + dateFormat(date, "isoTime"),
+								"fk.id_product"               : row.id_product,
+								"qty"                         : parseFloat(row.qty),
+								"fk.id_product_purchase_price": row.id_product_purchase_price,
+								"discount"                    : parseFloat(row.discount),
+								"active"                      : "1"
 							}, function (jqXHR, b, c) {
-								//console.log(jqXHR.responseJSON);
-								if (jqXHR.responseJSON.success) {
-									rows = elements.tableOrderPembelian.object.find('tbody>tr')
-									console.log(rows)
+								if (i == rows.length-1){
+									alert("[Warning : 003] Data tersimpan!");
+									elements.btnResetTrans.object.trigger('click');
 								}
 							})
 						}
@@ -362,7 +367,7 @@ IOrderBeli.prototype.clickBtnSubmitTrans = function (object, elements) {
 			})
 		} else {
 			console.log(valid);
-			alert("Maaf data anda tidak valid! [ErrCode : 001]");
+			alert("[Warning : 002] Maaf data anda tidak valid!");
 		}
 	});
 };
@@ -489,7 +494,7 @@ IOrderBeli.prototype.confInputProduct = function (object, elements) {
 						elements.inputProductDiscount.object.val(0);
 						elements.inputProductDiscount.object.data("value", 0);
 					} else {
-						alert("Tidak dapat memilih barang ini, karena tidak memiliki harga jual")
+						alert("[Warning : 001] Tidak dapat memilih barang ini, karena tidak memiliki harga jual!")
 					}
 				}
 			});

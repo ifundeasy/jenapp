@@ -49,7 +49,7 @@ IOrderBeli.prototype.initialize = function () {
 		btnSubmitTrans      : {
 			object: "#btnSubmitTrans",
 			config: [],
-			events: []
+			events: ["clickBtnSubmitTrans"]
 		},
 		inputTransNumb      : {
 			object: "#inputTransNumb",
@@ -94,14 +94,14 @@ IOrderBeli.prototype.initialize = function () {
 		inputTax            : {
 			object: "#inputTax",
 			config: ["confInputTax"],
-			events: []
+			events: ["inputSetDataValue"]
 		},
 		inputGrandTotal     : {
 			object: "#inputGrandTotal",
 			config: [],
 			events: []
 		},
-		inputTotal     : {
+		inputTotal          : {
 			object: "#inputTotal",
 			config: [],
 			events: []
@@ -116,12 +116,12 @@ IOrderBeli.prototype.initialize = function () {
 			config: [],
 			events: []
 		},
-		inputInternal     : {
+		inputInternal       : {
 			object: "#inputInternal",
 			config: ["confInputInternal"],
 			events: []
 		},
-		textareaNotes     : {
+		textareaNotes       : {
 			object: "#textareaNotes",
 			config: [],
 			events: ["inputSetDataValue"]
@@ -229,7 +229,7 @@ IOrderBeli.prototype.clickBtnAddProduct = function (object, elements) {
 			var tbody = table.find('tbody');
 			var tr = table.find('tbody>tr').length + 1;
 			var total = (qty.value * product.product_purchase_price) - (qty.value * product.product_purchase_price * discount.value / 100);
-			var str = "<tr id="+ uuid +">" +
+			var str = "<tr id=" + uuid + ">" +
 				"<td align='center'>" + tr + "</td>" +
 				"<td align='left'>" + product.value + "</td>" +
 				"<td align='left'>" + product.display + "</td>" +
@@ -243,22 +243,22 @@ IOrderBeli.prototype.clickBtnAddProduct = function (object, elements) {
 			tbody.append(str);
 
 			tbody.find("#" + uuid).data({
-				"id_product": product.value,
-				"qty"       : qty.value,
+				"id_product"               : product.value,
+				"qty"                      : qty.value,
 				"id_product_purchase_price": product.id_product_purchase_price,
-				"product_purchase_price": product.product_purchase_price,
-				"discount"  : discount.value,
-				"total" : total
+				"product_purchase_price"   : product.product_purchase_price,
+				"discount"                 : discount.value,
+				"total"                    : total
 			});
 
 			tbody.find('input[type="button"]').off('click');
-			tbody.find('input[type="button"]').on('click', function(event){
+			tbody.find('input[type="button"]').on('click', function (event) {
 				$(event.target).closest('tr').remove();
 
 				me.calculate(elements);
-				$.each(tbody.find("tr"), function(i, tr){
+				$.each(tbody.find("tr"), function (i, tr) {
 					var row = $(tr).children().get(0);
-					$(row).html(i+1);
+					$(row).html(i + 1);
 				});
 			});
 
@@ -274,7 +274,7 @@ IOrderBeli.prototype.calculate = function (elements) {
 	var tax = elements.inputTax.object.data("value");
 	var total = 0;
 	var qty = 0;
-	$.each(elements.tableOrderPembelian.object.find('tbody>tr'), function(i, tr){
+	$.each(elements.tableOrderPembelian.object.find('tbody>tr'), function (i, tr) {
 		total += $(tr).data("total");
 		qty += $(tr).data("qty");
 		data.push($(tr).data());
@@ -284,7 +284,30 @@ IOrderBeli.prototype.calculate = function (elements) {
 	elements.inputTotalQty.object.html(qty);
 	elements.inputTotalItems.object.html(products.getUnique().length);
 	elements.inputTotal.object.val(total);
-	elements.inputGrandTotal.object.val(total - (total * tax /100));
+	elements.inputGrandTotal.object.val(total - (total * tax / 100));
+};
+
+IOrderBeli.prototype.validate = function (elements) {
+	var arr = [false, false, false, false, false, false];
+	var valid = {
+		inputTransNumb     : elements.inputTransNumb.object,
+		inputDateTrans     : elements.inputDateTrans.object,
+		inputInternal      : elements.inputInternal.object,
+		inputSupplier      : elements.inputSupplier.object,
+		inputTax           : elements.inputTax.object,
+		tableOrderPembelian: elements.tableOrderPembelian.object.find('tbody>tr')
+	};
+
+	if (valid.inputTransNumb.data("valid")) arr[0] = true;
+	if (valid.inputDateTrans.data()) arr[1] = true;
+	if (valid.inputInternal.data("value")) arr[2] = true;
+	if (valid.inputSupplier.data("value")) arr[3] = true;
+	if (parseFloat(valid.inputTax.data("value"))) arr[4] = true;
+	if (valid.tableOrderPembelian.length > 0) {
+		if (valid.tableOrderPembelian.data("id_product")) arr[5] = true;
+	}
+
+	return [arr, valid];
 };
 
 IOrderBeli.prototype.clickBtnResetTrans = function (object, elements) {
@@ -298,6 +321,49 @@ IOrderBeli.prototype.clickBtnResetTrans = function (object, elements) {
 		me.confInputDateTrans(me.module.find("input#inputDateTrans"), elements);
 
 		me.prepare();
+	});
+};
+
+IOrderBeli.prototype.clickBtnSubmitTrans = function (object, elements) {
+	var me = this;
+	object.off('click');
+	object.on('click', function () {
+		var valid = me.validate(elements);
+		if (valid[0].indexOf(false) == -1) {
+			AjaxSync("post", "./server/api/purchase", {
+				"id_purchase"   : elements.inputTransNumb.object.data("value"),
+				"datetime"      : elements.inputDateTrans.object.val(),
+				"fk.id_internal": elements.inputInternal.object.data("value"),
+				"pic"           : elements.inputSupplier.object.data("value"),
+				"notes"         : elements.textareaNotes.object.data("value")
+			}, function (jqXHR, b, c) {
+				//console.log(jqXHR.responseJSON);
+				if (jqXHR.responseJSON.success) {
+					rows = elements.tableOrderPembelian.object.find('tbody>tr')
+					$.each(rows, function(i, row){
+						if ($(row).data("id_product")) {
+							row = $(row).data();
+							AjaxSync("post", "./server/api/purchase", {
+								"datetime": elements.inputDateTrans.object.val(),
+								"fk.id_product": row.id_product,
+								"qty": row.id_product,
+								"discount": 0,
+								"active": "1"
+							}, function (jqXHR, b, c) {
+								//console.log(jqXHR.responseJSON);
+								if (jqXHR.responseJSON.success) {
+									rows = elements.tableOrderPembelian.object.find('tbody>tr')
+									console.log(rows)
+								}
+							})
+						}
+					})
+				}
+			})
+		} else {
+			console.log(valid);
+			alert("Maaf data anda tidak valid! [ErrCode : 001]");
+		}
 	});
 };
 
@@ -322,15 +388,23 @@ IOrderBeli.prototype.changeInputTransNumb = function (object, elements) {
 	object.off('input');
 	object.on('input', function () {
 		if (object.val())
-		Ajax('get', './server/api/purchase/' + object.val(), {}, function (jq, res, data) {
-			if (data.length == 0) {
-				object.parent().removeClass("has-error");
-				object.parent().addClass("has-success");
-			} else {
-				object.parent().removeClass("has-success");
-				object.parent().addClass("has-error");
-			}
-		})
+			Ajax('get', './server/api/purchase/' + object.val(), {}, function (jq, res, data) {
+				if (data.length == 0) {
+					object.parent().removeClass("has-error");
+					object.parent().addClass("has-success");
+					object.data({
+						"valid": true,
+						"value": object.val()
+					});
+				} else {
+					object.parent().removeClass("has-success");
+					object.parent().addClass("has-error");
+					object.data({
+						"valid": false,
+						"value": undefined
+					});
+				}
+			})
 	});
 };
 
@@ -392,17 +466,19 @@ IOrderBeli.prototype.confInputProduct = function (object, elements) {
 	var z = setInterval(function () {
 		if (me.data.product) {
 			clearInterval(z);
-			var data = me.data.product.filter(function(data){ return data.id_product_purchase_price !== null });
+			var data = me.data.product.filter(function (data) {
+				return data.id_product_purchase_price !== null
+			});
 			object.autocomplete({
 				lookup  : data,
 				onSelect: function (suggestion) {
 					object.data({
-						value     : suggestion.id_product,
-						display   : suggestion.name,
+						value                    : suggestion.id_product,
+						display                  : suggestion.name,
 						id_product_purchase_price: suggestion.id_product_purchase_price,
-						product_purchase_price: parseFloat(suggestion.product_purchase_price),
-						id_product_sale_price: suggestion.id_product_sale_price,
-						product_sale_price: parseFloat(suggestion.product_sale_price)
+						product_purchase_price   : parseFloat(suggestion.product_purchase_price),
+						id_product_sale_price    : suggestion.id_product_sale_price,
+						product_sale_price       : parseFloat(suggestion.product_sale_price)
 					});
 					if (parseFloat(suggestion.product_purchase_price)) {
 						elements.inputProductPrice.object.val(parseFloat(suggestion.product_purchase_price));

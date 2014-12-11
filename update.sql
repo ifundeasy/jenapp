@@ -12,7 +12,7 @@ INSERT INTO `zen`.`member_group` (`id_member_group`, `name`, `active`, `notes`) 
 ## --------------------------------------------------------------------------------------------------------------------------------------------------
 ## --------------------------------------------------------------------------------------------------------------------------------------------------
 
-## Falih's views
+## Falih views
 CREATE 
 ALGORITHM=UNDEFINED 
 DEFINER=`root`@`localhost` 
@@ -79,4 +79,12 @@ FROM
   supplier AS a
 JOIN contact AS b ON a.`fk.id_contact` = b.id_contact
 JOIN supplier_group AS c ON a.`fk.id_supplier_group` = c.id_supplier_group ;
+## --------------------------------------------------------------------------------------------------------------------------------------------------
+## --------------------------------------------------------------------------------------------------------------------------------------------------
 
+# custom api get product_ex clean
+INSERT INTO `_` (`id`, `query`, `active`, `notes`)
+VALUES
+	('purchase_ex', 'SELECT\n    purchase_ex.`id_purchase_ex`, purchase_ex.`datetime`, purchase_ex.`fk.id_purchase`, purchase_ex.`fk.id_product`,\n    purchase_ex.`modifier`,\n    IF(ISNULL(purchase_ex.`qty` - purchase_bill_ex_.`sum_qty`), purchase_ex.`qty`, (purchase_ex.`qty` - purchase_bill_ex_.`sum_qty`))  AS \'qty\',\n    IF(ISNULL(purchase_bill_ex_.`sum_qty`), 0, purchase_bill_ex_.`sum_qty`)  AS \'sum_qty\',\n    purchase_ex.`fk.id_product_purchase_price`, purchase_ex.`discount`, purchase_ex.`void`, purchase_ex.`complimentary`, purchase_ex.`active`, purchase_ex.`notes`,\n    product.name AS \'name_product\', product_purchase_price.`value`AS \'harga_beli\'\nFROM purchase_ex\nLEFT JOIN product ON purchase_ex.`fk.id_product` = product.`id_product`\nLEFT JOIN product_purchase_price ON purchase_ex.`fk.id_product_purchase_price` = product_purchase_price.`id_product_purchase_price`\nLEFT JOIN (SELECT *, sum(`qty`) AS \'sum_qty\' FROM purchase_bill_ex WHERE `active` = \'1\' GROUP BY `fk.id_purchase_ex`, `fk.id_product_purchase_price`) AS purchase_bill_ex_\n    ON purchase_ex.`id_purchase_ex` = purchase_bill_ex_.`fk.id_purchase_ex`\nWHERE purchase_ex.`fk.id_purchase` = $id_purchase AND purchase_ex.`active` = \'1\';', '0', 'join with product & product_purchase_price');
+## --------------------------------------------------------------------------------------------------------------------------------------------------
+## --------------------------------------------------------------------------------------------------------------------------------------------------

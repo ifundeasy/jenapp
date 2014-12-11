@@ -175,6 +175,8 @@ IOrderBeli.prototype.initEl = function (key, object) {
 			key.object = me.module.find(object);
 			if (typeof key.object !== "string") {
 				key.object.unbind(); //remove all events handler
+
+				if (key.config)
 				key.config.forEach(function (name) {
 					if (me[name]) {
 						if (typeof me[name] == 'function') me[name](key.object, me.elements);
@@ -182,6 +184,8 @@ IOrderBeli.prototype.initEl = function (key, object) {
 						console.warn("IOrderBeli.prototype." + name + " is " + me[name]);
 					}
 				});
+
+				if (key.events)
 				key.events.forEach(function (name) {
 					if (me[name]) {
 						if (typeof me[name] == 'function') me[name](key.object, me.elements);
@@ -284,7 +288,7 @@ IOrderBeli.prototype.calculate = function (elements) {
 	elements.inputTotalQty.object.html(qty);
 	elements.inputTotalItems.object.html(products.getUnique().length);
 	elements.inputTotal.object.val(total);
-	elements.inputGrandTotal.object.val(total - (total * tax / 100));
+	elements.inputGrandTotal.object.val(total + (total * tax / 100));
 };
 
 IOrderBeli.prototype.validate = function (elements) {
@@ -349,6 +353,7 @@ IOrderBeli.prototype.clickBtnSubmitTrans = function (object, elements) {
 						if ($(row).data("id_product")) {
 							row = $(row).data();
 							AjaxSync("post", "./server/api/purchase_ex", {
+								"fk.id_purchase"              : elements.inputTransNumb.object.data("value"),
 								"datetime"                    : dateFormat(date, "isoDate") + " " + dateFormat(date, "isoTime"),
 								"fk.id_product"               : row.id_product,
 								"qty"                         : parseFloat(row.qty),
@@ -357,7 +362,7 @@ IOrderBeli.prototype.clickBtnSubmitTrans = function (object, elements) {
 								"active"                      : "1"
 							}, function (jqXHR, b, c) {
 								if (i == rows.length-1){
-									alert("[Warning : 003] Data tersimpan!");
+									alert("[Success : 001] Data tersimpan!");
 									elements.btnResetTrans.object.trigger('click');
 								}
 							})
@@ -385,6 +390,7 @@ IOrderBeli.prototype.inputSetDataValue = function (object, elements) {
 	object.off('input');
 	object.on('input', function () {
 		object.data("value", object.val())
+		me.calculate(elements);
 	});
 };
 
@@ -432,7 +438,7 @@ IOrderBeli.prototype.confInputDateTrans = function (object, elements) {
 		language          : "id",
 		format            : "yyyy-mm-dd",
 		daysOfWeekDisabled: "0",
-		startDate         : me.date
+		startDate         : me.date,
 		multidate		  : false,
 	    autoclose		  : true,
 	});

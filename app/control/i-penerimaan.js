@@ -187,7 +187,19 @@ IPenerimaan.prototype.confInputSupplier = function (object, elements) {
 						city   : suggestion.city,
 					});
 
-					Ajax('get', './server/api/purchase', {
+					Ajax('get', './server/custom/purchase?id_supplier=' + suggestion.id_supplier, {}, function (jqXHR, success, data) {
+						if ((typeof data == "object") && (data.length > 0)) {
+							me.data.purchase = data;
+							data.forEach(function (raw, i) {
+								raw.value = raw.id_purchase;
+								raw.data = raw.id_purchase;
+							});
+
+							elements.inputOrderNumb.object.removeAttr('disabled');
+							me.confInputOrderNumb(elements.inputOrderNumb.object, elements)
+						}
+					});
+					/*Ajax('get', './server/api/purchase', {
 						f0_n: "pic",
 						f0_l: "=",
 						f0_v: suggestion.id_supplier
@@ -202,7 +214,7 @@ IPenerimaan.prototype.confInputSupplier = function (object, elements) {
 							elements.inputOrderNumb.object.removeAttr('disabled');
 							me.confInputOrderNumb(elements.inputOrderNumb.object, elements)
 						}
-					});
+					});*/
 				}
 			});
 		}

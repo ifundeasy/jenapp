@@ -318,7 +318,7 @@ IPenerimaan.prototype.clickBtnSubmitTrans = function (object, elements) {
 					$.each(rows, function (i, row) {
 						date = new Date();
 
-						if ($(row).data("fk.id_product")) {
+						if ($(row).data("fk.id_product") && (parseFloat($(row).data("check")) > 0)) {
 							row = $(row).data();
 							AjaxSync("post", "./server/api/purchase_bill_ex", {
 								"fk.id_purchase_bill"         : elements.inputTransNumb.object.data("value"),
@@ -408,8 +408,8 @@ IPenerimaan.prototype.insertTable = function (dataArr) {
 					"<td align='left'>" + code + "</td>" +
 					"<td align='left'>" + name + "</td>" +
 					"<td align='center'>" + qty + "</td>" +
-					"<td align='center'><input type='number' style='width: 60px;' min=0 max=" + qty + " value=" + qty + "></td>" +
 					"<td align='center'>" + sum_qty + "</td>" +
+					"<td align='center'><input type='number' style='width: 60px;' min=0 max=" + qty + " value=" + qty + "></td>" +
 					"<td align='right'>" + harga + "</td>" +
 					"<td align='right'>" + diskon + "</td>" +
 					"<td align='right'>" + total + "</td>" +
@@ -493,6 +493,12 @@ IPenerimaan.prototype.calculate = function (elements) {
 	var total = 0;
 	var check = 0;
 
+
+	//elements.inputTotal.object.val(0);
+	//elements.inputGrandTotal.object.val(0);
+	elements.inputTotalQty.object.html(0);
+	elements.inputTotalItems.object.html(0);
+
 	$.each(elements.tableOrderPembelian.object.find('tbody>tr'), function (i, tr) {
 		var id = $(tr).attr('id');
 		var data = $(tr).data();
@@ -525,7 +531,7 @@ IPenerimaan.prototype.validate = function (elements) {
 	if (valid.inputSupplier.data("value")) arr[3] = true;
 	if (parseFloat(valid.inputTax.data("value"))) arr[4] = true;
 	if (valid.tableOrderPembelian.length > 0) {
-		if (valid.tableOrderPembelian.data("fk.id_product")) arr[5] = true;
+		if (parseFloat(valid.tableOrderPembelian.data("check")) > 0) arr[5] = true;
 	}
 
 	return [arr, valid];

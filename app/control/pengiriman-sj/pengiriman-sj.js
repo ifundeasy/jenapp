@@ -5,8 +5,8 @@ function Pengiriman_sj_detail(){this.initialize()}
 Pengiriman_sj.prototype.initialize = function(){
 	var me = this;
 	// define properties
-	me.id_purchase 		= "tr-"+Date.now().toString();
-	me.timestamp 		= ''; // new Date().format("yyyy-mm-dd HH:mm:ss");
+	me.id_pos 			= "tr-"+Date.now().toString();
+	me.datetime 		= ''; // new Date().format("yyyy-mm-dd HH:mm:ss");
 	me.id_internal	 	= '';
 	me.pic				= '';
 	me.active 			= 1;
@@ -16,36 +16,48 @@ Pengiriman_sj.prototype.initialize = function(){
 	me.getIdInternal();
 	me.configureOutletField();
 	me.configureDatefield();
+	me.configureTransNumberField();
 }
 Pengiriman_sj_detail.prototype.initialize = function(){
 	var me = this;
 	// define properties
-	me.id_purchase_ex 	= "item-"+Date.now().toString();
-	me.datetime 		= ''; // new Date().format("yyyy-mm-dd HH:mm:ss");
-	me.id_purchase	 	= '';
-	me.id_product		= '';
-	me.qty	 			= 0;
-	me.discount			= 0;
-	me._void			= 0;
-	me.complimentary	= 0;
-	me.active			= 1;
-	me.notes			= '';
+	me.id_pos_ex			= "item-"+Date.now().toString();
+	me.datetime 			= ''; // new Date().format("yyyy-mm-dd HH:mm:ss");
+	me.id_pos	 			= '';
+	me.id_product			= '';
+	me.id_product_sale_price= 0;
+	me.qty					= 0;
+	me.discount				= 0;
+	me._void				= 0;
+	me.complimentary		= 0;
+	me.active				= 1;
+	me.notes				= '';
 	// define properties --end
 	// call mandatory methods
 
 }
 // act as a contructor --end
-// get internal id set by the session
+// get internal id
 Pengiriman_sj.prototype.getIdInternal = function(){
 	var me = this;
 	$.ajax({url		: './app/control/user_info.php',type:'GET',async:false,data:{},
 		success	: function(datanya){ 
-			me.aaaa = JSON.parse(datanya)[0];
+			var contact = JSON.parse(datanya)[0];
+			$.ajax({url		: './server/api/internal',type:'GET',async:false,data:{
+				f0_n: 'fk.id_contact',
+				f0_l: '=',
+				f0_v: contact
+			},
+				success	: function(data, status, xhr){ 
+					me.id_internal =  JSON.parse(xhr.responseText).data[0].id_internal;
+			}, error: function(){
+				console.error("error saat pengambilan data internal.");	
+			}});
 	}, error: function(){
 		console.error("error saat pengambilan data user.");	
 	}});
 }
-// get internal id set by the session --end
+// get internal id --end
 // configure 'Tujuan Penerimaan' field
 Pengiriman_sj.prototype.configureOutletField = function(){
 	var outletList = new Array();
@@ -70,17 +82,21 @@ Pengiriman_sj.prototype.configureOutletField = function(){
 	// get list of outlets (table 'member') --end
 	// configure autocomplete object
 	$('#inputTujuanKirimsj').autocomplete({
-    lookup: outletList,
-    onSelect: function (suggestion) {
-        //alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
-        $('#inputAlamatKirimsj').text();
-    }
+	    lookup: outletList,
+	    onSelect: function (suggestion) {
+	        //alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
+	        $('#inputAlamatKirimsj').text();
+	    }
     // configure autocomplete object --end
-});
+	});
 }
 // configure 'Tujuan Penerimaan' field --end
 // configure datepicker object
 Pengiriman_sj.prototype.configureDatefield = function(){
+	var me = this;
+	$('#inputTglTransKirimsj').change(function(){
+		
+	});
 	$('#inputTglTransKirimsj').datepicker({
 		weekStart         : 1,
 		language          : "id",
@@ -93,6 +109,28 @@ Pengiriman_sj.prototype.configureDatefield = function(){
 	$('#inputTglTransKirimsj').datepicker('update', new Date());
 };
 // configure datepicker object --end
+// configure transaction id field
+Pengiriman_sj.prototype.configureTransNumberField = function(){
+	var me = this;
+	$('#inputNoTransKirimsj').val(me.id_pos);
+};
+// configure transaction id field --end
+Pengiriman_sj.prototype.clickBtnAddProduct = function(){
+	$('#btnAddProductKirimsj').off('click');
+	$('#btnAddProductKirimsj').on('click', function(){
+		var table = $('#tabelPengirimanBaru');
+		var product = elements.inputProduct.object.data();
+		var qty = elements.inputProductQty.object.data();
+		var discount = elements.inputProductDiscount.object.data();
+		var price = product.product_purchase_price;
+	});
+}
 $(document).ready(function(){
 	var kirim_baru = new Pengiriman_sj();
 });
+
+/////////////////////////this is saved for later use////////////////////////////////////
+var trans_time = new Date().format('HH') + ":" + new Date().format('mm') + ":" + new Date().format('ss');
+var trans_date = $('#inputTglTransKirimsj').datepicker('getDate').format('yyyy-mm-dd');
+var trans_timestamp = new Date(trans_date+" "+trans_time).format('yyyy-mm-dd HH:mm:ss');
+////////////////////////////////////////////////////////////////////////////////////////

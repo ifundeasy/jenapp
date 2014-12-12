@@ -34,7 +34,7 @@
 				Barang<a data-toggle="collapse" data-target="[panel='3']" class="collapsed"></a>
 			</h4>
 		</div>
-		<div panel="3" class="panel-collapse collapse">
+		<div panel="3" class="panel-collapse collapse in">
 			<div class="panel-body">
 				<table id="tabelPengirimanBaru" class="table table-hover table-striped table-bordered table-condensed table-responsive">
 					<thead>
@@ -50,16 +50,6 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td align="center">1</td>
-							<td align="left">09875</td>
-							<td align="left">Ayam Bacot</td>
-							<td align="center">12</td>
-							<td align="right">100,000</td>
-							<td align="right">10</td>
-							<td align="right">1,200,000</td>
-							<td align="center"><input type="button" class="btn btn-sm btn-danger" value="Hapus"></td>
-						</tr>
 					</tbody>
 				</table>
 			</div>
@@ -68,6 +58,7 @@
 			<form role="form" class="form-inline">
 				<div class="form-group">
 					<input id="inputProductKirimsj" style="margin-top: 6px;" type="text" class="form-control" placeholder="Nama">
+					<input id="inputIdProductKirimsj" type="hidden">
 					<input id="inputProductQtyKirimsj" style="margin-top: 6px;" type="number" class="form-control" placeholder="Qty">
 					<div class="input-group">
 						<input id="inputProductDiscountKirimsj" type="number" class="form-control" placeholder="Diskon">

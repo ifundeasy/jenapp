@@ -1,1 +1,51 @@
-Catatan aja..
+SELECT 
+    ppp.`fk.id_product` AS `code`, p.name, pb.ippp, ppp.value,
+    SUM(pb.qty) AS qty_p, SUM(IF(ISNULL(pr.qty), 0, pr.qty)) AS qty_r,
+    SUM(pb.qty - IF(ISNULL(pr.qty), 0, pr.qty)) AS qty,
+    pb.ipx, pb.ipb, pb.datetime AS ipb_date, pb.ipbx, pr.ipr, pr.datetime AS ipr_date
+FROM (
+    SELECT
+        pb.`datetime`, pbx.`fk.id_purchase_ex` AS ipx, pb.`id_purchase_bill` AS ipb,
+        pbx.`id_purchase_bill_ex` AS ipbx, pbx.`fk.id_product_purchase_price` AS ippp, pbx.`qty`
+    FROM purchase_bill AS pb
+    JOIN purchase_bill_ex pbx ON pb.`id_purchase_bill` = pbx.`fk.id_purchase_bill`
+    WHERE pb.`active`='1' AND pbx.`active` = '1'
+) AS pb
+LEFT JOIN (
+    SELECT
+        pr.`DATETIME`, prx.`fk.id_purchase_bill_ex` AS ipbx, pr.`id_purchase_return` AS ipr,
+        prx.`id_purchase_return_ex` AS iprx, SUM(prx.`qty`) AS `qty`
+    FROM purchase_return AS pr
+    JOIN purchase_return_ex AS prx ON pr.`id_purchase_return` = prx.`fk.id_purchase_return`
+    WHERE pr.`active`='1' AND prx.`active` = '1'
+    GROUP BY ipbx
+) AS pr ON pr.ipbx = pb.ipbx
+JOIN product_purchase_price AS ppp ON ppp.`id_product_purchase_price` = pb.ippp
+JOIN product AS p ON p.`id_product` = ppp.`fk.id_product`
+GROUP BY pb.ippp;
+
+SELECT 
+    ppp.`fk.id_product` AS `code`, p.name, pb.ippp, ppp.value,
+    SUM(pb.qty) AS qty_p, SUM(IF(ISNULL(pr.qty), 0, pr.qty)) AS qty_r,
+    SUM(pb.qty - IF(ISNULL(pr.qty), 0, pr.qty)) AS qty,
+    pb.ipx, pb.ipb, pb.datetime AS ipb_date, pb.ipbx, pr.ipr, pr.datetime AS ipr_date
+FROM (
+    SELECT
+        pb.`datetime`, pbx.`fk.id_pos_ex` AS ipx, pb.`id_pos_bill` AS ipb,
+        pbx.`id_pos_bill_ex` AS ipbx, pbx.`fk.id_product_sale_price` AS ippp, pbx.`qty`
+    FROM pos_bill AS pb
+    JOIN pos_bill_ex pbx ON pb.`id_pos_bill` = pbx.`fk.id_pos_bill`
+    WHERE pb.`active`='1' AND pbx.`active` = '1'
+) AS pb
+LEFT JOIN (
+    SELECT
+        pr.`DATETIME`, prx.`fk.id_pos_bill_ex` AS ipbx, pr.`id_pos_return` AS ipr,
+        prx.`id_pos_return_ex` AS iprx, SUM(prx.`qty`) AS `qty`
+    FROM pos_return AS pr
+    JOIN pos_return_ex AS prx ON pr.`id_pos_return` = prx.`fk.id_pos_return`
+    WHERE pr.`active`='1' AND prx.`active` = '1'
+    GROUP BY ipbx
+) AS pr ON pr.ipbx = pb.ipbx
+JOIN product_sale_price AS ppp ON ppp.`id_product_sale_price` = pb.ippp
+JOIN product AS p ON p.`id_product` = ppp.`fk.id_product`
+GROUP BY pb.ippp;

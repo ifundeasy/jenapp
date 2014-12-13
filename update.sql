@@ -178,3 +178,4 @@ CREATE TABLE `pos_return_ex` (
 ) ENGINE=INNODB DEFAULT CHARSET=latin1;
 ## --------------------------------------------------------------------------------------------------------------------------------------------------
 ## --------------------------------------------------------------------------------------------------------------------------------------------------
+INSERT INTO `zen`.`_` (`id`, `query`, `active`, `notes`) VALUES ('get_price_id', 'select * from product_sale_price where `fk.id_product` = $id_product AND value = $value', '0', 'buat cek id harga');

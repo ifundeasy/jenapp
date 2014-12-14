@@ -127,6 +127,8 @@ Pengiriman_sj.prototype.validate = function(){
 // insert record to DB
 Pengiriman_sj.prototype.commit = function(){
 	var me = this;
+	me.item_counter = 0;
+	me.bill_counter = 0;
 	console.log("saving 'pos' :");
 	$.ajax({
 		url		: './server/api/pos',
@@ -171,6 +173,78 @@ Pengiriman_sj.prototype.commit = function(){
 							},
 							success : function(data, status, xhr){
 								console.log(JSON.parse(xhr.responseText));
+								me.item_counter++;
+								console.log("item_counter");
+								console.log(me.item_counter);
+								if(me.item_counter==me.item_list.length){
+									// insert data bill
+									console.log("saving 'pos_bill' :");
+									var new_bill = "bill-"+Date.now().toString();
+									$.ajax({
+										url		: './server/api/pos_bill',
+										type	: 'POST',
+										async	: false,
+										data 	: {
+											id_pos_bill 	: new_bill,
+											datetime 		: me.datetime,
+											'fk.id_internal': me.id_internal,
+											'fk.id_member'	: me.pic,
+											tax_percent 	: me.tax_percent,
+											tax_amount 		: me.tax_amount,
+											active 			: 1,
+											notes 			: me.notes
+										},
+										success: function(){
+											console.log(JSON.parse(xhr.responseText));
+											// transaction item(s) bill
+											console.log("saving 'pos_bill_ex' :");
+											me.item_list.forEach(function(item){
+												// get pricelist from db
+												AjaxSync('get', './server/custom/get_price_id', {
+													id_product 	: item.id_product,
+													value		: item.id_product_sale_price
+												}, function (jqXHR, textStatus, rawData) {
+													if(rawData.length != 0){
+														var price_id = rawData[0].id_product_sale_price;
+														$.ajax({
+															url		: './server/api/pos_bill_ex',
+															type	: 'POST',
+															async	: false,
+															data 	: {
+																id_pos_bill_ex 				: Date.now().toString(),
+																'fk.id_pos_bill' 			: new_bill,
+																'fk.id_pos_ex' 				: item.id_pos_ex,
+																'fk.id_product_sale_price'	: price_id,
+																qty 						: item.qty,
+																discount_percent 			: item.discount,
+																discount_amount 			: (item.id_product_sale_price*item.qty)*item.discount/100,
+																active 						: item.active,
+																notes 						: item.notes
+															},
+															success : function(data, status, xhr){
+																console.log(JSON.parse(xhr.responseText));
+																me.bill_counter++;
+																console.log("bill_counter");
+																console.log(me.bill_counter);
+																if(me.bill_counter==me.item_list.length){
+																	alert("Data Pengiriman Berhasil Disimpan.");
+																	$('#btnResetTransKirimsj').trigger('click');
+																}
+															},
+															error : function(xhr, status, err){
+																console.error("Error! kesalahan server saat penyimpanan data bill detail.");
+															}
+														});
+													} else {
+														console.error("no price id reference.");
+													}
+												});
+											});
+										}, error: function(){
+											console.error("Error! kesalahan server saat penyimpanan data bill master.");
+										}
+									});
+								}
 							},
 							error : function(xhr, status, err){
 								console.error("Error! kesalahan server saat penyimpanan data detail.");
@@ -180,68 +254,6 @@ Pengiriman_sj.prototype.commit = function(){
 						console.error("no price id reference.");
 					}
 				});
-			});
-			// insert data bill
-			console.log("saving 'pos_bill' :");
-			var new_bill = "bill-"+Date.now().toString();
-			$.ajax({
-				url		: './server/api/pos_bill',
-				type	: 'POST',
-				async	: false,
-				data 	: {
-					id_pos_bill 	: new_bill,
-					datetime 		: me.datetime,
-					'fk.id_internal': me.id_internal,
-					'fk.id_member'	: me.pic,
-					tax_percent 	: me.tax_percent,
-					tax_amount 		: me.tax_amount,
-					active 			: 1,
-					notes 			: me.notes
-				},
-				success: function(){
-					console.log(JSON.parse(xhr.responseText));
-					// transaction item(s) bill
-					console.log("saving 'pos_bill_ex' :");
-					me.item_list.forEach(function(item){
-						// get pricelist from db
-						AjaxSync('get', './server/custom/get_price_id', {
-							id_product 	: item.id_product,
-							value		: item.id_product_sale_price
-						}, function (jqXHR, textStatus, rawData) {
-							if(rawData.length != 0){
-								var price_id = rawData[0].id_product_sale_price;
-								$.ajax({
-									url		: './server/api/pos_bill_ex',
-									type	: 'POST',
-									async	: false,
-									data 	: {
-										id_pos_bill_ex 				: Date.now().toString(),
-										'fk.id_pos_bill' 			: new_bill,
-										'fk.id_pos_ex' 				: item.id_pos_ex,
-										'fk.id_product_sale_price'	: price_id,
-										qty 						: item.qty,
-										discount_percent 			: item.discount,
-										discount_amount 			: (item.id_product_sale_price*item.qty)*item.discount/100,
-										active 						: item.active,
-										notes 						: item.notes
-									},
-									success : function(data, status, xhr){
-										console.log(JSON.parse(xhr.responseText));
-									},
-									error : function(xhr, status, err){
-										console.error("Error! kesalahan server saat penyimpanan data bill detail.");
-									}
-								});
-							} else {
-								console.error("no price id reference.");
-							}
-						});
-					});
-					alert("Data Pengiriman Berhasil Disimpan.");
-					$('#btnResetTransKirimsj').trigger('click');
-				}, error: function(){
-					console.error("Error! kesalahan server saat penyimpanan data bill master.");
-				}
 			});
 		},
 		error : function(xhr, status, err){

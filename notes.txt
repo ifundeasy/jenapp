@@ -2,7 +2,7 @@ SELECT
     ppp.`fk.id_product` AS `code`, p.name, pb.ippp, ppp.value,
     SUM(pb.qty) AS qty_p, SUM(IF(ISNULL(pr.qty), 0, pr.qty)) AS qty_r,
     SUM(pb.qty - IF(ISNULL(pr.qty), 0, pr.qty)) AS qty,
-    pb.ipx, pb.ipb, pb.datetime AS ipb_date, pb.ipbx, pr.ipr, pr.datetime AS ipr_date
+    pb.ipx, pb.ipb, DATE(pb.datetime) AS ipb_date, pb.ipbx, pr.ipr, DATE(pr.datetime) AS ipr_date
 FROM (
     SELECT
         pb.`datetime`, pbx.`fk.id_purchase_ex` AS ipx, pb.`id_purchase_bill` AS ipb,
@@ -22,13 +22,14 @@ LEFT JOIN (
 ) AS pr ON pr.ipbx = pb.ipbx
 JOIN product_purchase_price AS ppp ON ppp.`id_product_purchase_price` = pb.ippp
 JOIN product AS p ON p.`id_product` = ppp.`fk.id_product`
+WHERE pb.datetime >= $start
 GROUP BY pb.ippp;
 
 SELECT 
     ppp.`fk.id_product` AS `code`, p.name, pb.ippp, ppp.value,
     SUM(pb.qty) AS qty_p, SUM(IF(ISNULL(pr.qty), 0, pr.qty)) AS qty_r,
     SUM(pb.qty - IF(ISNULL(pr.qty), 0, pr.qty)) AS qty,
-    pb.ipx, pb.ipb, pb.datetime AS ipb_date, pb.ipbx, pr.ipr, pr.datetime AS ipr_date
+    pb.ipx, pb.ipb, DATE(pb.datetime) AS ipb_date, pb.ipbx, pr.ipr, DATE(pr.datetime) AS ipr_date
 FROM (
     SELECT
         pb.`datetime`, pbx.`fk.id_pos_ex` AS ipx, pb.`id_pos_bill` AS ipb,
@@ -48,4 +49,5 @@ LEFT JOIN (
 ) AS pr ON pr.ipbx = pb.ipbx
 JOIN product_sale_price AS ppp ON ppp.`id_product_sale_price` = pb.ippp
 JOIN product AS p ON p.`id_product` = ppp.`fk.id_product`
+WHERE pb.datetime >= $start
 GROUP BY pb.ippp;

@@ -11,6 +11,9 @@ Pengiriman_sj.prototype.initialize = function(){
 	me.pic				= '';
 	me.active 			= 1;
 	me.notes			= '';
+	me.tax_percent 		= 0;
+	me.tax_amount 		= 0;
+	me.total 			= 0;
 	me.item_list		= new Array();
 	// define properties --end
 	// call mandatory methods
@@ -71,20 +74,19 @@ Pengiriman_sj.prototype.getIdInternal = function(){
 // calculate everything when things change
 Pengiriman_sj.prototype.calculate = function(){
 	var me = this;
+	me.total = 0;
 	var products = [];
-	var tax = $('#inputTaxKirimsj').val();
-	var total = 0;
 	var qty = 0;
 	me.item_list.forEach(function(item){
 		products.push(item.id_product);
 		qty += parseInt(item.qty);
-		total += parseInt((item.qty * item.id_product_sale_price) - (item.qty * item.id_product_sale_price * item.discount / 100));
+		me.total += parseInt((item.qty * item.id_product_sale_price) - (item.qty * item.id_product_sale_price * item.discount / 100));
 	});
-
+	me.tax_amount = me.total * me.tax_percent / 100;
 	$('#inputTotalQtyKirimsj').html(qty);
 	$('#inputTotalItemsKirimsj').html(products.getUnique().length);
-	$('#inputTotalKirimsj').val(total);
-	$('#inputGrandTotalKirimsj').val(total + (total * tax / 100));
+	$('#inputTotalKirimsj').val(me.total);
+	$('#inputGrandTotalKirimsj').val(me.total + me.tax_amount);
 };
 // calculate everything when things change --end
 // validate data before inserting
@@ -179,8 +181,68 @@ Pengiriman_sj.prototype.commit = function(){
 					}
 				});
 			});
-			alert("Data Pengiriman Berhasil Disimpan.");
-			$('#btnResetTransKirimsj').trigger('click');
+			// insert data bill
+			console.log("saving 'pos_bill' :");
+			var new_bill = "bill-"+Date.now().toString();
+			$.ajax({
+				url		: './server/api/pos_bill',
+				type	: 'POST',
+				async	: false,
+				data 	: {
+					id_pos_bill 	: new_bill,
+					datetime 		: me.datetime,
+					'fk.id_internal': me.id_internal,
+					'fk.id_member'	: me.pic,
+					tax_percent 	: me.tax_percent,
+					tax_amount 		: me.tax_amount,
+					active 			: 1,
+					notes 			: me.notes
+				},
+				success: function(){
+					console.log(JSON.parse(xhr.responseText));
+					// transaction item(s) bill
+					console.log("saving 'pos_bill_ex' :");
+					me.item_list.forEach(function(item){
+						// get pricelist from db
+						AjaxSync('get', './server/custom/get_price_id', {
+							id_product 	: item.id_product,
+							value		: item.id_product_sale_price
+						}, function (jqXHR, textStatus, rawData) {
+							if(rawData.length != 0){
+								var price_id = rawData[0].id_product_sale_price;
+								$.ajax({
+									url		: './server/api/pos_bill_ex',
+									type	: 'POST',
+									async	: false,
+									data 	: {
+										id_pos_bill_ex 				: Date.now().toString(),
+										'fk.id_pos_bill' 			: new_bill,
+										'fk.id_pos_ex' 				: item.id_pos_ex,
+										'fk.id_product_sale_price'	: price_id,
+										qty 						: item.qty,
+										discount_percent 			: item.discount,
+										discount_amount 			: (item.id_product_sale_price*item.qty)*item.discount/100,
+										active 						: item.active,
+										notes 						: item.notes
+									},
+									success : function(data, status, xhr){
+										console.log(JSON.parse(xhr.responseText));
+									},
+									error : function(xhr, status, err){
+										console.error("Error! kesalahan server saat penyimpanan data bill detail.");
+									}
+								});
+							} else {
+								console.error("no price id reference.");
+							}
+						});
+					});
+					alert("Data Pengiriman Berhasil Disimpan.");
+					$('#btnResetTransKirimsj').trigger('click');
+				}, error: function(){
+					console.error("Error! kesalahan server saat penyimpanan data bill master.");
+				}
+			});
 		},
 		error : function(xhr, status, err){
 			console.error("Error! kesalahan server saat penyimpanan data master.");
@@ -319,6 +381,7 @@ Pengiriman_sj.prototype.configureNewItemFields = function(){
 Pengiriman_sj.prototype.configureTaxField = function(){
 	var me = this;
 	$('#inputTaxKirimsj').on('input', function(){
+		me.tax_percent = $('#inputTaxKirimsj').val();
 		me.calculate();
 	});
 	$('#inputTaxKirimsj').val(0);

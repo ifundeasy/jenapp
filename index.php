@@ -41,9 +41,12 @@
 	 * @link https://github.com/panique/php-login-minimal/
 	 * @license http://opensource.org/licenses/MIT MIT License
 	 */
-	/*header('Cache-Control: no-cache, no-store, must-revalidate'); // HTTP 1.1.
-	header('Pragma: no-cache'); // HTTP 1.0.
-	header('Expires: 0'); // Proxies.*/
+
+	/**
+	 * header('Cache-Control: no-cache, no-store, must-revalidate'); // HTTP 1.1.
+	 * header('Pragma: no-cache'); // HTTP 1.0.
+	 * header('Expires: 0'); // Proxies.
+	 */
 
 	if (version_compare(PHP_VERSION, '5.3.7', '<')) {
 		exit("Sorry, Simple PHP Login does not run on a PHP version smaller than 5.3.7 !");

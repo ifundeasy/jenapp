@@ -2,7 +2,8 @@
  * Created by rappresent on 11/5/14.
  */
 
-var Profile, Cache, Ajax, AjaxSync, Personalize;
+var Profile, Cache, Ajax, AjaxSync, Personalize, MyBackbone;
+
 $(function () {
 	Profile = {};
 	Cache = function () {
@@ -186,7 +187,95 @@ $(function () {
 			return cb;
 		}
 	};
+	MyBackbone = function (modules) {
+		var ApplicationRouter;
+		var ApplicationView;
+		var Router = {
+			routes   : {
+				""       : "home",
+				"home"   : "home"
+			},
+			deselect : function () {
+				$('.sidebar-nav > li[togo]').removeClass('selected');
+			},
+			selecting: function (selector) {
+				this.deselect();
+				$(selector).parent().addClass('selected');
+				$("nav a#brand").trigger('click');
+			},
+			hidePages: function () {
+				$('div[page]').hide();
+			},
+			showPage : function (clue, selector, url) {
+				this.hidePages();
+				if ($(selector).length) {
+					$(selector).show();
+				} else {
+					$.ajax({
+						url        : url,
+						contentType: "html",
+						context    : document.body,
+						xhrFields  : {
+							withCredentials: true
+						},
+						complete   : function (jqXHR, textStatus) {
+							var tag = '<div page='+ clue +'>'+ jqXHR.responseText +'</div>';
+							$('div#content').append(tag);
+						}
+					})
+				}
+			},
+			home   : function () {
+				this.selecting('a#home-page');
+				this.showPage('home-page', 'div[page="home-page"]', "./app/view/home.html");
+			}
+		};
+		var View = {
+			el            : $('body'),
+			events        : {
+				'click li[togo="home-page"]'   : 'displayHome'
+			},
+			initialize    : function () {
+				var me = this;
+				me.router = new ApplicationRouter();
+				Backbone.history.start();
+				/*
+				Backbone.history.start({
+					pushState: true,
+					root: "/"
+				});
+				*/
+			},
+			displayHome   : function () {
+				this.router.navigate("home", true);
+			}
+		};
 
+		$.each(modules, function(key, value) {
+			modules[key].forEach(function(obj, i){
+				var display = "display-" + obj.handler;
+
+				Router.routes[obj.handler] = obj.handler;
+				Router[obj.handler] = function () {
+					Router.selecting('a#' + obj.handler);
+					Router.showPage(obj.handler, 'div[page="'+ obj.handler +'"]', './app/view/'+ obj.handler +'.html');
+					$("#content").get(0).scrollIntoView(0);
+				};
+
+				View.events['click li[togo="'+ obj.handler +'"]'] = display;
+				View[display] = function () {
+					this.router.navigate(obj.handler, true);
+				};
+
+				if ((i == modules[key].length-1) && (Object.keys(modules).indexOf(key) == Object.keys(modules).length-1)) {
+					ApplicationRouter = Backbone.Router.extend(Router);
+					ApplicationView = Backbone.View.extend(View);
+
+					return new ApplicationView();
+				}
+			})
+		});
+	};
 	$(document).ready(function () {
 		$.fn.scrollTo = function( target, options, callback ){
 			if(typeof options == 'function' && arguments.length == 2){ callback = options; options = target; }
@@ -220,96 +309,15 @@ $(function () {
 							modules[key] = [];
 							profile[key].forEach(function(a){
 								if (a.handler) {
-									modules[key].push(a)
+									modules[key].push(a);
 								}
 							});
 						}
-					});
 
-					var Router = {
-						routes   : {
-							""       : "home",
-							"home"   : "home"
-						},
-						deselect : function () {
-							$('.sidebar-nav > li[togo]').removeClass('selected');
-						},
-						selecting: function (selector) {
-							this.deselect();
-							$(selector).parent().addClass('selected');
-							$("nav a#brand").trigger('click');
-						},
-						hidePages: function () {
-							$('div[page]').hide();
-						},
-						showPage : function (clue, selector, url) {
-							this.hidePages();
-							if ($(selector).length) {
-								$(selector).show();
-							} else {
-								$.ajax({
-									url        : url,
-									contentType: "html",
-									context    : document.body,
-									xhrFields  : {
-										withCredentials: true
-									},
-									complete   : function (jqXHR, textStatus) {
-										var tag = '<div page='+ clue +'>'+ jqXHR.responseText +'</div>';
-										$('div#content').append(tag);
-									}
-								})
-							}
-						},
-						home   : function () {
-							this.selecting('a#home-page');
-							this.showPage('home-page', 'div[page="home-page"]', "./app/view/home.html");
+						if (Object.keys(Profile).indexOf(key) == Object.keys(Profile).length-1) {
+							new MyBackbone(modules);
 						}
-					};
-					var View = {
-						el            : $('body'),
-						events        : {
-							'click li[togo="home-page"]'   : 'displayHome'
-						},
-						initialize    : function () {
-							var me = this;
-							me.router = new ApplicationRouter();
-							Backbone.history.start();
-							/*
-							Backbone.history.start({
-								pushState: true,
-								root: "/"
-							});
-							*/
-						},
-						displayHome   : function () {
-							this.router.navigate("home", true);
-						}
-					}
-
-
-					$.each(modules, function(key, value) {
-						modules[key].forEach(function(obj){
-							var display = "display-" + obj.handler;
-
-							Router.routes[obj.handler] = obj.handler;
-							Router[obj.handler] = function () {
-								Router.selecting('a#' + obj.handler);
-								Router.showPage(obj.handler, 'div[page="'+ obj.handler +'"]', './app/view/'+ obj.handler +'.html');
-								$("#content").get(0).scrollIntoView(0);
-							};
-
-							View.events['click li[togo="'+ obj.handler +'"]'] = display;
-							View[display] = function () {
-								this.router.navigate(obj.handler, true);
-							};
-						})
 					});
-
-					var ApplicationRouter = Backbone.Router.extend(Router);
-					var ApplicationView = Backbone.View.extend(View);
-
-					new ApplicationView();
 				}
 				i++
 			}, 250);

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 14, 2014 at 12:12 AM
+-- Generation Time: Dec 14, 2014 at 05:17 AM
 -- Server version: 5.5.40-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.5
 
@@ -425,6 +425,15 @@ CREATE TABLE IF NOT EXISTS `contact_addr` (
 --
 
 TRUNCATE TABLE `contact_addr`;
+--
+-- Dumping data for table `contact_addr`
+--
+
+INSERT INTO `contact_addr` (`fk.id_contact`, `fk.id_city`, `address`, `zip_code`, `active`, `notes`) VALUES
+('contact001', '43501c7e', 'Dipati ukur 103', '', '1', ''),
+('contact002', '43501c7e', 'Cimahi 771', '', '1', ''),
+('contact003', '43501c7e', 'Ciroyom 51', '', '1', '');
+
 -- --------------------------------------------------------
 
 --
@@ -2375,9 +2384,9 @@ ALTER TABLE `purchase_bill`
 -- Constraints for table `purchase_bill_ex`
 --
 ALTER TABLE `purchase_bill_ex`
-  ADD CONSTRAINT `purchase_bill_ex_ibfk_5` FOREIGN KEY (`fk.id_product_purchase_price`) REFERENCES `product_purchase_price` (`id_product_purchase_price`) ON UPDATE CASCADE,
   ADD CONSTRAINT `purchase_bill_ex_ibfk_1` FOREIGN KEY (`fk.id_purchase_bill`) REFERENCES `purchase_bill` (`id_purchase_bill`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `purchase_bill_ex_ibfk_4` FOREIGN KEY (`fk.id_purchase_ex`) REFERENCES `purchase_ex` (`id_purchase_ex`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `purchase_bill_ex_ibfk_4` FOREIGN KEY (`fk.id_purchase_ex`) REFERENCES `purchase_ex` (`id_purchase_ex`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `purchase_bill_ex_ibfk_5` FOREIGN KEY (`fk.id_product_purchase_price`) REFERENCES `product_purchase_price` (`id_product_purchase_price`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `purchase_bill_pay`

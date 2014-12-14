@@ -1,4 +1,5 @@
 <?php
+	require( '../../../server/config/db.php');
 	require( '../../../server/ssp.class.php' );
 
 	// DB table to use
@@ -9,10 +10,10 @@
 
 	// SQL server connection information
 	$sql_details = array(
-	    'user' => 'root',
-	    'pass' => 'root',
-	    'db'   => 'zen',
-	    'host' => 'localhost'
+	    'user' => DB_USER,
+	    'pass' => DB_PASS,
+	    'db'   => DB_NAME,
+	    'host' => DB_HOST
 	);
 
 // Array of database columns which should be read and sent back to DataTables.

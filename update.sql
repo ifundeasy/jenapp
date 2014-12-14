@@ -179,3 +179,35 @@ CREATE TABLE `pos_return_ex` (
 ## --------------------------------------------------------------------------------------------------------------------------------------------------
 ## --------------------------------------------------------------------------------------------------------------------------------------------------
 INSERT INTO `zen`.`_` (`id`, `query`, `active`, `notes`) VALUES ('get_price_id', 'select * from product_sale_price where `fk.id_product` = $id_product AND value = $value', '0', 'buat cek id harga');
+
+## hapus dulu view 'internal_karyawan', bikin baru lagi. gua gak tau syntax otomatisnya
+SELECT
+  `a`.`id_internal` AS `id`,
+  `b`.`first_name` AS `nama_depan`,
+  `b`.`last_name` AS `nama_belakang`,
+  `c`.`name` AS `cabang`,
+  `d`.`name` AS `grup`,
+  `a`.`active`
+FROM
+  (
+    (
+      (
+        `internal` `a`
+        JOIN `contact` `b` ON (
+          (
+            `a`.`fk.id_contact` = `b`.`id_contact`
+          )
+        )
+      )
+      LEFT JOIN `branch` `c` ON (
+        (
+          `a`.`fk.id_branch` = `c`.`id_branch`
+        )
+      )
+    )
+    LEFT JOIN `internal_group` `d` ON (
+      (
+        `a`.`fk.id_internal_group` = `d`.`id_internal_group`
+      )
+    )
+  ) 

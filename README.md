@@ -24,6 +24,14 @@
     - look at file [./bower.json] dependencies library folder ./bower/
     - other server side library dependencies path [./lib]
 
+# How to Install
+- create database (optional_name -> zen)
+- setting up [./server/config/db.php] as your MySQL account
+- run [zen@127.0.0.1_20141214.sql] as import
+- run [custom_api.sql] as import
+
+[zen@127.0.0.1_20141214.sql]:github.com/rappresent/jenapp/blob/master/zen@127.0.0.1_20141214.sql
+[custom_api.sql]:github.com/rappresent/jenapp/blob/master/custom_api.sql
 [./server/config/db.php]:github.com/rappresent/jenapp/blob/master/server/config/db.php
 [./server/composer.json]:github.com/rappresent/jenapp/blob/master/server/composer.json
 [./server/libraries]:github.com/rappresent/jenapp/tree/master/server/libraries

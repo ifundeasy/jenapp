@@ -34,6 +34,7 @@
 - go to : zenApp[/server/config/db.php], and setting up this file (config as your MySQL account)
 - run [zen@127.0.0.1_20141214.sql] as import
 - open browser, if your project folder is (zenApp) type the "localhost/zenApp" at URL browser bar
+- login with username : pegawai, password : test
 
 [system requirements]:README.md#system-reqiurements
 [zen@127.0.0.1_20141214.sql]:zen@127.0.0.1_20141214.sql

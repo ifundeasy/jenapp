@@ -27,7 +27,7 @@
     - other server side library dependencies path [/lib]
 
 # How to Install
-- read system requirements.
+- read this [system requirements]
 - if you miss understand this system requirements, please download and install XAMPP for fast way
 - download this full project
 - copy to your local server with folder (optional : zenApp)
@@ -35,6 +35,7 @@
 - go to : zenApp[/server/config/db.php], and setting up this file (config as your MySQL account)
 - run [zen@127.0.0.1_20141214.sql] as import
 
+[system requirements]:README.md#system-reqiurements
 [zen@127.0.0.1_20141214.sql]:zen@127.0.0.1_20141214.sql
 [/server/config/db.php]:server/config/db.php
 [/server/composer.json]:server/composer.json

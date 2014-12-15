@@ -16,24 +16,29 @@
 
 # Application
 - Database configuration file : 
-    - [./server/config/db.php]
+    - [/server/config/db.php]
+- Database import file : 
+    - [zen@127.0.0.1_20141214.sql]
+    - [custom_api.sql]
 - Server side library :
-    - look at file [./server/composer.json] dependencies library folder ./sever/vendor/
-    - other server side library dependencies path [./server/libraries]
+    - look at file [/server/composer.json] dependencies library folder ./sever/vendor/
+    - other server side library dependencies path [/server/libraries]
 - Client side library : 
-    - look at file [./bower.json] dependencies library folder ./bower/
-    - other server side library dependencies path [./lib]
+    - look at file [/bower.json] dependencies library folder ./bower/
+    - other server side library dependencies path [/lib]
 
 # How to Install
-- create database (optional_name -> zen)
-- setting up [./server/config/db.php] as your MySQL account
+- download this full project
+- copy to your local server with folder (optional : zenApp)
+- create database (optional : zen) on your MySQL RDBMS (like phpMyAdmin, Navicat, etc.)
+- go to : zenApp[/server/config/db.php], and setting up this file (config as your MySQL account)
 - run [zen@127.0.0.1_20141214.sql] as import
 - run [custom_api.sql] as import
 
-[zen@127.0.0.1_20141214.sql]:github.com/rappresent/jenapp/blob/master/zen@127.0.0.1_20141214.sql
-[custom_api.sql]:github.com/rappresent/jenapp/blob/master/custom_api.sql
-[./server/config/db.php]:github.com/rappresent/jenapp/blob/master/server/config/db.php
-[./server/composer.json]:github.com/rappresent/jenapp/blob/master/server/composer.json
-[./server/libraries]:github.com/rappresent/jenapp/tree/master/server/libraries
-[./bower.json]:github.com/rappresent/jenapp/blob/master/bower.json
-[./lib]:github.com/rappresent/jenapp/tree/master/lib
+[zen@127.0.0.1_20141214.sql]:zen@127.0.0.1_20141214.sql
+[custom_api.sql]:custom_api.sql
+[/server/config/db.php]:server/config/db.php
+[/server/composer.json]:server/composer.json
+[/server/libraries]:server/libraries
+[/bower.json]:bower.json
+[/lib]:lib

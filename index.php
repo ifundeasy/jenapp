@@ -57,14 +57,14 @@
 		require("./server/libraries/password_compatibility_library.php");
 	}
 
-<<<<<<< HEAD
+/* <<<<<<< HEAD
 	require_once("./server/config/db.php");
 	require_once("./server/classes/Login.php");
-=======
+======= */
 	require("./server/config/db.php");
 	require("./server/classes/Login.php");
 
->>>>>>> origin/master
+//>>>>>>> origin/master
 	$login = new Login();
 
 	if ($login->isUserLoggedIn() == true) {

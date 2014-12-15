@@ -31,7 +31,6 @@
 </head>
 <body>
 <?php
-session_start(); //moved from from Login.php
 	/**
 	 * A simple, clean and secure PHP Login Script / MINIMAL VERSION
 	 * For more versions (one-file, advanced, framework-like) visit http://www.php-login.net
@@ -49,19 +48,20 @@ session_start(); //moved from from Login.php
 	 * header('Expires: 0'); // Proxies.
 	 */
 
+	//session_start(); //moved from from Login.php
+
 	if (version_compare(PHP_VERSION, '5.3.7', '<')) {
 		exit("Sorry, Simple PHP Login does not run on a PHP version smaller than 5.3.7 !");
 	} else if (version_compare(PHP_VERSION, '5.5.0', '<')) {
-		require_once("./server/libraries/password_compatibility_library.php");
+		require("./server/libraries/password_compatibility_library.php");
 	}
 
-	require_once("./server/config/db.php");
-	require_once("./server/classes/Login.php");
+	require("./server/config/db.php");
+	require("./server/classes/Login.php");
 
 	$login = new Login();
 
 	if ($login->isUserLoggedIn() == true) {
-		unset($_SERVER['allowed']);
 		include("./server/views/logged_in.php");
 		echo "<script type='text/javascript' src='./app.js'></script>";
 	} else {

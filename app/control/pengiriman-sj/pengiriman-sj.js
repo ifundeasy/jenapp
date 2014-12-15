@@ -126,8 +126,6 @@ Pengiriman_sj.prototype.validate = function(){
 // validate data before inserting --end
 // insert record to DB
 Pengiriman_sj.prototype.commit = function(){
-	$('#btnResetTransKirimsj').toggleClass('disabled');
-	$('#btnSubmitTransKirimsj').toggleClass('disabled');
 	var me = this;
 	me.item_counter = 0;
 	me.bill_counter = 0;
@@ -431,6 +429,8 @@ $(document).ready(function(){
 		kirim_baru = new Pengiriman_sj();
 	});
 	$('#btnSubmitTransKirimsj').click(function(){
+		$('#btnResetTransKirimsj').toggleClass('disabled');
+		$('#btnSubmitTransKirimsj').toggleClass('disabled');
 		kirim_baru.validate();
 	});
 });

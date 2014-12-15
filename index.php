@@ -57,7 +57,6 @@ session_start(); //moved from from Login.php
 
 	require_once("./server/config/db.php");
 	require_once("./server/classes/Login.php");
-
 	$login = new Login();
 
 	if ($login->isUserLoggedIn() == true) {

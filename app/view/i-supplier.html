@@ -7,6 +7,7 @@
 	        <tr>
 	            <th>ID</th>
 	            <th>Nama Supplier</th>
+	            <th>Alamat</th>
 	            <th>Cabang</th>
 	            <th>Grup</th>
 	            <th>Catatan</th>
@@ -87,6 +88,28 @@
 	                    <div class="input-group">
 	                        <textarea name="InputAlamatSupplier" id="InputAlamatSupplier" class="form-control" rows="5"></textarea>
 	                        <span class="input-group-addon"></span>
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <label for="InputKotaSupplier">Kota</label>
+	                    <div class="input-group btn-block">
+	                    	<!-- Single dropdown -->
+							<div class="btn-group btn-block" combobox>
+								<button type="button" id="button-kota-supplier" class="btn btn-default dropdown-toggle btn-block" data-toggle="dropdown" aria-expanded="false">
+									<div align="left" display  style="float: left">Pilih</div>
+									<div align="right"><span class="caret"></span></div>
+								</button>
+								<ul class="dropdown-menu scrollable-menu btn-block" role="menu" id="list-kota-supplier">
+								</ul>
+								<input type="hidden" class="form-control" id="InputKotaSupplier" name="InputKotaSupplier" placeholder="" value="" required>
+							</div>
+							<!-- Single dropdown - end -->
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <label for="InputKodeposSupplier">Kode Pos</label>
+	                    <div class="input-group">
+	                        <input type="text" class="form-control" id="InputKodeposSupplier" name="InputKodeposSupplier" placeholder="Kode Pos">
 	                    </div>
 	                </div>
 	                <div class="form-group">

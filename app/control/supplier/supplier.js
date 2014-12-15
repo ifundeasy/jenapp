@@ -69,8 +69,7 @@ $(document).ready(function(){
 					user_pass 		: new_pass,
 					first_name		: _data[3].value,
 					registered 		: new_date.format("yyyy-mm-dd HH:mm:ss"), //kalo mau pake waktu server, kosong aja
-					genre 			: 'L',
-					notes			: _data[8].value,
+					notes			: _data[10].value,
 					allow_access 	: 1,
 					active 			: 1
 				},
@@ -89,13 +88,13 @@ $(document).ready(function(){
 							'fk.id_supplier_group'	: _data[5].value,
 							registered 				: new_date.format("yyyy-mm-dd HH:mm:ss"), //kalo mau pake waktu server, kosong aja
 							active 					: 1,
-							notes 					: _data[8].value
+							notes 					: _data[10].value
 						},
 						success: function(data, status, xhr){
 							console.log("data 'supplier' :");
 							console.log(JSON.parse(xhr.responseText));
 							// simpan data tambahan email
-							if(_data[7].value != ""){
+							if(_data[9].value != ""){
 								console.log('inserting additional data...');
 								$.ajax({
 									url		: './server/api/social',
@@ -115,49 +114,32 @@ $(document).ready(function(){
 											data 	: {
 												'fk.id_contact' : new_id,
 												'fk.id_social'	: idSocial,
-												value			: _data[7].value,
+												value			: _data[9].value,
 												active 			: 1
 											},
 											success: function(data, status, xhr){
 												console.log("data 'email' :");
 												console.log(JSON.parse(xhr.responseText));
 												// simpan data tambahan alamat
-												if(_data[6].value != ""){
-													console.log('inserting additional data...');
-													$.ajax({
-														url		: './server/api/city',
-														type	: 'GET',
-														async	: false,
-														data 	: {
-															f0_n: 'name', 
-															f0_l: '=', 
-															f0_v: 'Bandung' //nanti diganti dengan isi combobox
-														},
-														success: function(data, status, xhr){
-															var idCity = JSON.parse(xhr.responseText).data[0].id_city;
-															$.ajax({
-																url		: './server/api/contact_addr',
-																type	: 'POST',
-																async	: false,
-																data 	: {
-																	'fk.id_contact' : new_id,
-																	'fk.id_city'	: idCity,
-																	address			: _data[6].value,
-																	active 			: 1
-																},
-																success: function(data, status, xhr){
-																	console.log('address saved');
-																},
-																error : function(xhr, status, err){
-																	exeption = "Error! kesalahan server saat penyimpanan data [5].";
-																}
-															});
-														},
-														error : function(xhr, status, err){
-															exeption = "Error! kesalahan server saat penyimpanan data [4].";
-														}
-													});
-												}
+												var idCity = _data[7].value;
+												$.ajax({
+													url		: './server/api/contact_addr',
+													type	: 'POST',
+													async	: false,
+													data 	: {
+														'fk.id_contact' : new_id,
+														'fk.id_city'	: idCity,
+														address			: _data[6].value,
+														zip_code 		: _data[8].value,
+														active 			: 1
+													},
+													success: function(data, status, xhr){
+														console.log('address saved');
+													},
+													error : function(xhr, status, err){
+														exeption = "Error! kesalahan server saat penyimpanan data [4].";
+													}
+												});
 												// simpan data tambahan alamat --end
 											},
 											error : function(xhr, status, err){
@@ -198,6 +180,7 @@ $(document).ready(function(){
 		// tampilkan pesan error selama 3 detik --end
 		} else {
 			// tampilkan pesan sukses
+			alert("Data berhasil disimpan.");
 			$('#supplier-form-sukses').removeClass("hide");
 			$('html,body').animate({
 			   scrollTop: $('#supplier-form-sukses').offset().top - 100
@@ -249,6 +232,25 @@ $(document).ready(function(){
 		}
 	});
 	// request list grup supplier --end
+	// request list grup kota
+	$.ajax({
+		url		: './server/api/city',
+		type	: 'GET',
+		async	: false,
+		data 	: {},
+		success: function(data, status, xhr){
+			console.log("data 'city' :");
+			var list = JSON.parse(xhr.responseText);
+			console.log(list);
+			for(i=0; i<list.total; i++){
+				$('#list-kota-supplier').append('<li><a key="'+ list.data[i].id_city +'">'+ list.data[i].name +'</a></li>');
+			};
+		},
+		error : function(xhr, status, err){
+			alert('kesalahan server. Mohon reload halaman.');
+		}
+	});
+	// request list grup kota --end
 	// controller untuk combobox umum (format seragam)
 	$('[combobox] a').click(function(event){
 		var me = $(event.target);
@@ -256,6 +258,7 @@ $(document).ready(function(){
 		cmb.find('button div[display]').html(me.html());
 		cmb.find('input').val(me.attr('key'));
 	});
+	
 	// controller untuk combobox umum (format seragam) --end
 	// kontroller untuk tombol tambah data
 	$('#tambah-data-supplier').click(function(){
@@ -280,4 +283,5 @@ $(document).ready(function(){
 		$('#reset-form-supplier').toggleClass("disabled");
 	});
 	// kontoller untuk tombol submit (override default behaviour) --end
+	$('[combobox] a[key="43501c7e"]').trigger('click');
 });

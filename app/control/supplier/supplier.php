@@ -23,9 +23,10 @@
 $columns = array(
     array( 'db' => 'id_supplier', 'dt' => 0 ),
     array( 'db' => 'first_name', 'dt' => 1 ),
-    array( 'db' => 'fk.id_branch', 'dt' => 2 ),
-    array( 'db' => 'name', 'dt' => 3 ),
-    array( 'db' => 'notes', 'dt' => 4 )
+    array( 'db' => 'alamat', 'dt' => 2 ),
+    array( 'db' => 'fk.id_branch', 'dt' => 3 ),
+    array( 'db' => 'name', 'dt' => 4 ),
+    array( 'db' => 'notes', 'dt' => 5 )
 );
 echo json_encode(
     SSP::simple( $_GET, $sql_details, $table, $primaryKey, $columns )

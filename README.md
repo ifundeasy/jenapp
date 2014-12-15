@@ -27,8 +27,7 @@
     - other server side library dependencies path [/lib]
 
 # How to Install
-- read this [system requirements]
-- if you miss understand this system requirements, please download and install XAMPP for fast way
+- read this [system requirements], if you miss understanding, please download and install XAMPP for fast way
 - download this full project
 - copy to your local server with folder (optional : zenApp)
 - create database (optional : zen) on your MySQL RDBMS (like phpMyAdmin, Navicat, etc.)

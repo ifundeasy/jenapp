@@ -398,9 +398,9 @@ TRUNCATE TABLE `contact`;
 --
 
 INSERT INTO `contact` (`id_contact`, `pin`, `user_name`, `user_pass`, `first_name`, `last_name`, `alias`, `registered`, `date_of_birth`, `genre`, `blood`, `fk.id_religion`, `fk.id_relationship`, `picture`, `allow_access`, `notes`, `active`) VALUES
-('contact001', NULL, 'pegawai', '$2y$10$xZ87IXLIBunU1tmUf90hKuT5h1/DHVhobsF2bqc4P8ByFmnDq6Cne', 'Joko', 'Mardoyo', 'jomar', '2014-12-13 22:46:20', '0000-00-00', 'L', 'B', NULL, NULL, NULL, '1', '', '1'),
-('contact002', NULL, 'member', '$2y$10$xZ87IXLIBunU1tmUf90hKuT5h1/DHVhobsF2bqc4P8ByFmnDq6Cne', 'Ina', 'Saraswati', 'inras', '2014-12-13 22:46:20', '0000-00-00', 'P', 'B', NULL, NULL, NULL, '1', '', '1'),
-('contact003', NULL, 'supplier', '$2y$10$xZ87IXLIBunU1tmUf90hKuT5h1/DHVhobsF2bqc4P8ByFmnDq6Cne', 'Yatna', 'Sumartin', 'yasum', '2014-12-13 22:47:19', '0000-00-00', 'L', 'B', NULL, NULL, NULL, '1', '', '1');
+('contact001', NULL, 'pegawai', '$2y$10$TG9s.Mfbhhot5W2BUdRgRuU6NbvjuERuZMtI8KWiEkgMQz0zgmrDK', 'Joko', 'Mardoyo', 'jomar', '2014-12-13 22:46:20', '0000-00-00', 'L', 'B', NULL, NULL, NULL, '1', '', '1'),
+('contact002', NULL, 'member', '$2y$10$TG9s.Mfbhhot5W2BUdRgRuU6NbvjuERuZMtI8KWiEkgMQz0zgmrDK', 'Ina', 'Saraswati', 'inras', '2014-12-13 22:46:20', '0000-00-00', 'P', 'B', NULL, NULL, NULL, '1', '', '1'),
+('contact003', NULL, 'supplier', '$2y$10$TG9s.Mfbhhot5W2BUdRgRuU6NbvjuERuZMtI8KWiEkgMQz0zgmrDK', 'Yatna', 'Sumartin', 'yasum', '2014-12-13 22:47:19', '0000-00-00', 'L', 'B', NULL, NULL, NULL, '1', '', '1');
 
 -- --------------------------------------------------------
 

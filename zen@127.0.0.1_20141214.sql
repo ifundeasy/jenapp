@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.10deb1
+-- version 4.1.8
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: Dec 14, 2014 at 05:17 AM
--- Server version: 5.5.40-0ubuntu0.14.04.1
--- PHP Version: 5.5.9-1ubuntu4.5
+-- Host: localhost:3306
+-- Generation Time: Dec 15, 2014 at 07:33 AM
+-- Server version: 5.5.34
+-- PHP Version: 5.5.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `zen`
+-- Database: `jen`
 --
 
 -- --------------------------------------------------------
@@ -27,7 +27,7 @@ SET time_zone = "+00:00";
 --
 
 DROP TABLE IF EXISTS `bank`;
-CREATE TABLE IF NOT EXISTS `bank` (
+CREATE TABLE `bank` (
   `id_bank` varchar(30) NOT NULL,
   `fk.id_city_official` varchar(30) DEFAULT NULL,
   `name` varchar(50) NOT NULL DEFAULT '',
@@ -177,7 +177,7 @@ INSERT INTO `bank` (`id_bank`, `fk.id_city_official`, `name`, `type`, `active`, 
 --
 
 DROP TABLE IF EXISTS `branch`;
-CREATE TABLE IF NOT EXISTS `branch` (
+CREATE TABLE `branch` (
   `id_branch` varchar(30) NOT NULL DEFAULT '',
   `fk.id_company` varchar(30) DEFAULT NULL,
   `name` varchar(30) NOT NULL DEFAULT '',
@@ -207,7 +207,7 @@ INSERT INTO `branch` (`id_branch`, `fk.id_company`, `name`, `active`, `notes`) V
 --
 
 DROP TABLE IF EXISTS `city`;
-CREATE TABLE IF NOT EXISTS `city` (
+CREATE TABLE `city` (
   `id_city` varchar(30) NOT NULL DEFAULT '',
   `fk.id_state` varchar(30) DEFAULT NULL,
   `name` varchar(100) NOT NULL DEFAULT '',
@@ -337,7 +337,7 @@ INSERT INTO `city` (`id_city`, `fk.id_state`, `name`, `active`, `notes`) VALUES
 --
 
 DROP TABLE IF EXISTS `company`;
-CREATE TABLE IF NOT EXISTS `company` (
+CREATE TABLE `company` (
   `id_company` varchar(30) NOT NULL DEFAULT '',
   `name` varchar(30) NOT NULL DEFAULT '',
   `active` enum('0','1') NOT NULL DEFAULT '0',
@@ -364,7 +364,7 @@ INSERT INTO `company` (`id_company`, `name`, `active`, `notes`) VALUES
 --
 
 DROP TABLE IF EXISTS `contact`;
-CREATE TABLE IF NOT EXISTS `contact` (
+CREATE TABLE `contact` (
   `id_contact` varchar(30) NOT NULL DEFAULT '',
   `pin` varchar(6) DEFAULT NULL,
   `user_name` varchar(50) NOT NULL DEFAULT '',
@@ -409,7 +409,7 @@ INSERT INTO `contact` (`id_contact`, `pin`, `user_name`, `user_pass`, `first_nam
 --
 
 DROP TABLE IF EXISTS `contact_addr`;
-CREATE TABLE IF NOT EXISTS `contact_addr` (
+CREATE TABLE `contact_addr` (
   `fk.id_contact` varchar(30) DEFAULT NULL,
   `fk.id_city` varchar(30) DEFAULT NULL,
   `address` varchar(100) NOT NULL DEFAULT '',
@@ -441,7 +441,7 @@ INSERT INTO `contact_addr` (`fk.id_contact`, `fk.id_city`, `address`, `zip_code`
 --
 
 DROP TABLE IF EXISTS `contact_ex`;
-CREATE TABLE IF NOT EXISTS `contact_ex` (
+CREATE TABLE `contact_ex` (
   `fk.id_contact` varchar(30) DEFAULT NULL,
   `fk.id_social` varchar(30) DEFAULT NULL,
   `value` varchar(255) NOT NULL DEFAULT '',
@@ -463,7 +463,7 @@ TRUNCATE TABLE `contact_ex`;
 --
 
 DROP TABLE IF EXISTS `contact_log`;
-CREATE TABLE IF NOT EXISTS `contact_log` (
+CREATE TABLE `contact_log` (
   `fk.id_contact` varchar(30) DEFAULT NULL,
   `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `active` enum('0','1') NOT NULL DEFAULT '0',
@@ -483,7 +483,7 @@ TRUNCATE TABLE `contact_log`;
 --
 
 DROP TABLE IF EXISTS `country`;
-CREATE TABLE IF NOT EXISTS `country` (
+CREATE TABLE `country` (
   `id_country` varchar(30) NOT NULL DEFAULT '',
   `name` varchar(100) NOT NULL DEFAULT '',
   `alpha2` varchar(2) NOT NULL DEFAULT '',
@@ -765,7 +765,7 @@ INSERT INTO `country` (`id_country`, `name`, `alpha2`, `alpha3`, `numeric`, `iso
 --
 
 DROP TABLE IF EXISTS `internal`;
-CREATE TABLE IF NOT EXISTS `internal` (
+CREATE TABLE `internal` (
   `id_internal` varchar(30) NOT NULL DEFAULT '',
   `fk.id_contact` varchar(30) DEFAULT NULL,
   `fk.id_branch` varchar(30) DEFAULT NULL,
@@ -799,7 +799,7 @@ INSERT INTO `internal` (`id_internal`, `fk.id_contact`, `fk.id_branch`, `fk.id_i
 --
 
 DROP TABLE IF EXISTS `internal_group`;
-CREATE TABLE IF NOT EXISTS `internal_group` (
+CREATE TABLE `internal_group` (
   `id_internal_group` varchar(30) NOT NULL DEFAULT '',
   `name` varchar(30) NOT NULL DEFAULT '',
   `active` enum('0','1') NOT NULL DEFAULT '0',
@@ -826,7 +826,7 @@ INSERT INTO `internal_group` (`id_internal_group`, `name`, `active`, `notes`) VA
 -- Stand-in structure for view `internal_karyawan`
 --
 DROP VIEW IF EXISTS `internal_karyawan`;
-CREATE TABLE IF NOT EXISTS `internal_karyawan` (
+CREATE TABLE `internal_karyawan` (
 `id` varchar(30)
 ,`nama_depan` varchar(20)
 ,`nama_belakang` varchar(20)
@@ -841,7 +841,7 @@ CREATE TABLE IF NOT EXISTS `internal_karyawan` (
 --
 
 DROP TABLE IF EXISTS `internal_module`;
-CREATE TABLE IF NOT EXISTS `internal_module` (
+CREATE TABLE `internal_module` (
   `id_internal_module` varchar(30) NOT NULL DEFAULT '',
   `fk.id_internal_module` varchar(30) DEFAULT NULL,
   `fk.id_internal_group` varchar(30) DEFAULT NULL,
@@ -911,7 +911,7 @@ INSERT INTO `internal_module` (`id_internal_module`, `fk.id_internal_module`, `f
 --
 
 DROP TABLE IF EXISTS `level`;
-CREATE TABLE IF NOT EXISTS `level` (
+CREATE TABLE `level` (
   `id_level` varchar(30) NOT NULL DEFAULT '',
   `name` varchar(30) NOT NULL DEFAULT '',
   `active` enum('0','1') NOT NULL DEFAULT '0',
@@ -942,7 +942,7 @@ INSERT INTO `level` (`id_level`, `name`, `active`, `notes`) VALUES
 --
 
 DROP TABLE IF EXISTS `member`;
-CREATE TABLE IF NOT EXISTS `member` (
+CREATE TABLE `member` (
   `id_member` varchar(30) NOT NULL DEFAULT '',
   `fk.id_contact` varchar(30) DEFAULT NULL,
   `fk.id_branch` varchar(30) DEFAULT NULL,
@@ -976,7 +976,7 @@ INSERT INTO `member` (`id_member`, `fk.id_contact`, `fk.id_branch`, `fk.id_membe
 --
 
 DROP TABLE IF EXISTS `member_group`;
-CREATE TABLE IF NOT EXISTS `member_group` (
+CREATE TABLE `member_group` (
   `id_member_group` varchar(30) NOT NULL DEFAULT '',
   `name` varchar(30) NOT NULL DEFAULT '',
   `active` enum('0','1') NOT NULL DEFAULT '0',
@@ -1004,7 +1004,7 @@ INSERT INTO `member_group` (`id_member_group`, `name`, `active`, `notes`) VALUES
 --
 
 DROP TABLE IF EXISTS `member_module`;
-CREATE TABLE IF NOT EXISTS `member_module` (
+CREATE TABLE `member_module` (
   `id_member_module` varchar(30) NOT NULL DEFAULT '',
   `fk.id_member_module` varchar(30) DEFAULT NULL,
   `fk.id_member_group` varchar(30) DEFAULT NULL,
@@ -1040,7 +1040,7 @@ INSERT INTO `member_module` (`id_member_module`, `fk.id_member_module`, `fk.id_m
 --
 
 DROP TABLE IF EXISTS `on_order`;
-CREATE TABLE IF NOT EXISTS `on_order` (
+CREATE TABLE `on_order` (
   `id_on_order` varchar(30) NOT NULL DEFAULT '',
   `name` varchar(30) NOT NULL DEFAULT '',
   `active` enum('0','1') NOT NULL DEFAULT '0',
@@ -1077,7 +1077,7 @@ INSERT INTO `on_order` (`id_on_order`, `name`, `active`, `notes`) VALUES
 --
 
 DROP TABLE IF EXISTS `payment_type`;
-CREATE TABLE IF NOT EXISTS `payment_type` (
+CREATE TABLE `payment_type` (
   `id_payment_type` varchar(30) NOT NULL DEFAULT '',
   `name` varchar(30) NOT NULL DEFAULT '',
   `active` enum('0','1') NOT NULL DEFAULT '0',
@@ -1112,7 +1112,7 @@ INSERT INTO `payment_type` (`id_payment_type`, `name`, `active`, `color`, `icon`
 --
 
 DROP TABLE IF EXISTS `pos`;
-CREATE TABLE IF NOT EXISTS `pos` (
+CREATE TABLE `pos` (
   `id_pos` varchar(50) NOT NULL DEFAULT '',
   `datetime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `fk.id_internal` varchar(30) DEFAULT NULL,
@@ -1146,7 +1146,7 @@ TRUNCATE TABLE `pos`;
 --
 
 DROP TABLE IF EXISTS `pos_bill`;
-CREATE TABLE IF NOT EXISTS `pos_bill` (
+CREATE TABLE `pos_bill` (
   `id_pos_bill` varchar(50) NOT NULL DEFAULT '',
   `datetime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `fk.id_internal` varchar(30) DEFAULT NULL,
@@ -1178,7 +1178,7 @@ TRUNCATE TABLE `pos_bill`;
 --
 
 DROP TABLE IF EXISTS `pos_bill_ex`;
-CREATE TABLE IF NOT EXISTS `pos_bill_ex` (
+CREATE TABLE `pos_bill_ex` (
   `id_pos_bill_ex` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `fk.id_pos_bill` varchar(50) DEFAULT NULL,
   `fk.id_pos_ex` bigint(20) unsigned DEFAULT NULL,
@@ -1212,7 +1212,7 @@ TRUNCATE TABLE `pos_bill_ex`;
 --
 
 DROP TABLE IF EXISTS `pos_bill_pay`;
-CREATE TABLE IF NOT EXISTS `pos_bill_pay` (
+CREATE TABLE `pos_bill_pay` (
   `id_pos_bill_pay` varchar(50) NOT NULL DEFAULT '' COMMENT 'MD5(LEFT(UUID(), 8))',
   `fk.id_pos_bill` varchar(100) DEFAULT NULL,
   `value` double unsigned NOT NULL DEFAULT '0',
@@ -1236,7 +1236,7 @@ TRUNCATE TABLE `pos_bill_pay`;
 --
 
 DROP TABLE IF EXISTS `pos_bill_pay_ex`;
-CREATE TABLE IF NOT EXISTS `pos_bill_pay_ex` (
+CREATE TABLE `pos_bill_pay_ex` (
   `id_pos_bill_pay_ex` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `fk.id_pos_bill_pay` varchar(50) DEFAULT NULL,
   `fk.id_payment_type` varchar(30) DEFAULT NULL,
@@ -1264,7 +1264,7 @@ TRUNCATE TABLE `pos_bill_pay_ex`;
 --
 
 DROP TABLE IF EXISTS `pos_ex`;
-CREATE TABLE IF NOT EXISTS `pos_ex` (
+CREATE TABLE `pos_ex` (
   `id_pos_ex` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `datetime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `fk.id_pos` varchar(50) DEFAULT NULL,
@@ -1296,7 +1296,7 @@ TRUNCATE TABLE `pos_ex`;
 --
 
 DROP TABLE IF EXISTS `pos_return`;
-CREATE TABLE IF NOT EXISTS `pos_return` (
+CREATE TABLE `pos_return` (
   `id_pos_return` varchar(50) NOT NULL DEFAULT '',
   `datetime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `fk.id_internal` varchar(30) NOT NULL DEFAULT '',
@@ -1319,7 +1319,7 @@ TRUNCATE TABLE `pos_return`;
 --
 
 DROP TABLE IF EXISTS `pos_return_ex`;
-CREATE TABLE IF NOT EXISTS `pos_return_ex` (
+CREATE TABLE `pos_return_ex` (
   `id_pos_return_ex` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `fk.id_pos_return` varchar(50) DEFAULT NULL,
   `fk.id_pos_bill_ex` bigint(20) unsigned DEFAULT NULL,
@@ -1354,7 +1354,7 @@ TRUNCATE TABLE `pos_return_ex`;
 --
 
 DROP TABLE IF EXISTS `product`;
-CREATE TABLE IF NOT EXISTS `product` (
+CREATE TABLE `product` (
   `id_product` varchar(30) NOT NULL,
   `fk.id_level` varchar(30) DEFAULT NULL,
   `datetime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -1390,7 +1390,7 @@ INSERT INTO `product` (`id_product`, `fk.id_level`, `datetime`, `name`, `recomme
 --
 
 DROP TABLE IF EXISTS `product_ex`;
-CREATE TABLE IF NOT EXISTS `product_ex` (
+CREATE TABLE `product_ex` (
   `id_product_ex` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `fk.id_product` varchar(30) DEFAULT NULL,
   `fk.id_product_changeof` varchar(30) DEFAULT NULL,
@@ -1422,7 +1422,7 @@ TRUNCATE TABLE `product_ex`;
 --
 
 DROP TABLE IF EXISTS `product_process_cost`;
-CREATE TABLE IF NOT EXISTS `product_process_cost` (
+CREATE TABLE `product_process_cost` (
   `id_product_process_cost` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `fk.id_product` varchar(30) DEFAULT NULL,
   `datetime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
@@ -1446,7 +1446,7 @@ TRUNCATE TABLE `product_process_cost`;
 --
 
 DROP TABLE IF EXISTS `product_purchase_price`;
-CREATE TABLE IF NOT EXISTS `product_purchase_price` (
+CREATE TABLE `product_purchase_price` (
   `id_product_purchase_price` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `fk.id_product` varchar(30) DEFAULT NULL,
   `datetime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
@@ -1477,7 +1477,7 @@ INSERT INTO `product_purchase_price` (`id_product_purchase_price`, `fk.id_produc
 --
 
 DROP TABLE IF EXISTS `product_sale_price`;
-CREATE TABLE IF NOT EXISTS `product_sale_price` (
+CREATE TABLE `product_sale_price` (
   `id_product_sale_price` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `fk.id_product` varchar(30) DEFAULT NULL,
   `datetime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
@@ -1508,7 +1508,7 @@ INSERT INTO `product_sale_price` (`id_product_sale_price`, `fk.id_product`, `dat
 --
 
 DROP TABLE IF EXISTS `purchase`;
-CREATE TABLE IF NOT EXISTS `purchase` (
+CREATE TABLE `purchase` (
   `id_purchase` varchar(50) NOT NULL DEFAULT '',
   `datetime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `fk.id_internal` varchar(30) DEFAULT NULL,
@@ -1542,7 +1542,7 @@ TRUNCATE TABLE `purchase`;
 --
 
 DROP TABLE IF EXISTS `purchase_bill`;
-CREATE TABLE IF NOT EXISTS `purchase_bill` (
+CREATE TABLE `purchase_bill` (
   `id_purchase_bill` varchar(50) NOT NULL DEFAULT '',
   `datetime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `fk.id_internal` varchar(30) DEFAULT NULL,
@@ -1574,7 +1574,7 @@ TRUNCATE TABLE `purchase_bill`;
 --
 
 DROP TABLE IF EXISTS `purchase_bill_ex`;
-CREATE TABLE IF NOT EXISTS `purchase_bill_ex` (
+CREATE TABLE `purchase_bill_ex` (
   `id_purchase_bill_ex` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `fk.id_purchase_bill` varchar(50) DEFAULT NULL,
   `fk.id_purchase_ex` bigint(20) unsigned DEFAULT NULL,
@@ -1608,7 +1608,7 @@ TRUNCATE TABLE `purchase_bill_ex`;
 --
 
 DROP TABLE IF EXISTS `purchase_bill_pay`;
-CREATE TABLE IF NOT EXISTS `purchase_bill_pay` (
+CREATE TABLE `purchase_bill_pay` (
   `id_purchase_bill_pay` varchar(50) NOT NULL DEFAULT '' COMMENT 'MD5(LEFT(UUID(), 8))',
   `fk.id_purchase_bill` varchar(100) DEFAULT NULL,
   `value` double unsigned NOT NULL DEFAULT '0',
@@ -1632,7 +1632,7 @@ TRUNCATE TABLE `purchase_bill_pay`;
 --
 
 DROP TABLE IF EXISTS `purchase_bill_pay_ex`;
-CREATE TABLE IF NOT EXISTS `purchase_bill_pay_ex` (
+CREATE TABLE `purchase_bill_pay_ex` (
   `id_purchase_bill_pay_ex` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `fk.id_purchase_bill_pay` varchar(50) DEFAULT NULL,
   `fk.id_payment_type` varchar(30) DEFAULT NULL,
@@ -1660,7 +1660,7 @@ TRUNCATE TABLE `purchase_bill_pay_ex`;
 --
 
 DROP TABLE IF EXISTS `purchase_ex`;
-CREATE TABLE IF NOT EXISTS `purchase_ex` (
+CREATE TABLE `purchase_ex` (
   `id_purchase_ex` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `datetime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `fk.id_purchase` varchar(50) DEFAULT NULL,
@@ -1692,7 +1692,7 @@ TRUNCATE TABLE `purchase_ex`;
 --
 
 DROP TABLE IF EXISTS `purchase_return`;
-CREATE TABLE IF NOT EXISTS `purchase_return` (
+CREATE TABLE `purchase_return` (
   `id_purchase_return` varchar(50) NOT NULL DEFAULT '',
   `datetime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `fk.id_internal` varchar(30) NOT NULL DEFAULT '',
@@ -1715,7 +1715,7 @@ TRUNCATE TABLE `purchase_return`;
 --
 
 DROP TABLE IF EXISTS `purchase_return_ex`;
-CREATE TABLE IF NOT EXISTS `purchase_return_ex` (
+CREATE TABLE `purchase_return_ex` (
   `id_purchase_return_ex` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `fk.id_purchase_return` varchar(50) DEFAULT NULL,
   `fk.id_purchase_bill_ex` bigint(20) unsigned DEFAULT NULL,
@@ -1750,7 +1750,7 @@ TRUNCATE TABLE `purchase_return_ex`;
 --
 
 DROP TABLE IF EXISTS `purchasing`;
-CREATE TABLE IF NOT EXISTS `purchasing` (
+CREATE TABLE `purchasing` (
   `id_purchasing` varchar(30) NOT NULL DEFAULT '',
   `name` varchar(30) NOT NULL DEFAULT '',
   `active` enum('0','1') NOT NULL DEFAULT '0',
@@ -1779,7 +1779,7 @@ INSERT INTO `purchasing` (`id_purchasing`, `name`, `active`, `notes`) VALUES
 --
 
 DROP TABLE IF EXISTS `relationship`;
-CREATE TABLE IF NOT EXISTS `relationship` (
+CREATE TABLE `relationship` (
   `id_relationship` varchar(30) NOT NULL DEFAULT '',
   `name` varchar(30) NOT NULL DEFAULT '',
   `active` enum('0','1') NOT NULL DEFAULT '0',
@@ -1799,7 +1799,7 @@ TRUNCATE TABLE `relationship`;
 --
 
 DROP TABLE IF EXISTS `religion`;
-CREATE TABLE IF NOT EXISTS `religion` (
+CREATE TABLE `religion` (
   `id_religion` varchar(30) NOT NULL DEFAULT '',
   `name` varchar(30) NOT NULL DEFAULT '',
   `active` enum('0','1') NOT NULL DEFAULT '0',
@@ -1819,7 +1819,7 @@ TRUNCATE TABLE `religion`;
 --
 
 DROP TABLE IF EXISTS `room`;
-CREATE TABLE IF NOT EXISTS `room` (
+CREATE TABLE `room` (
   `id_room` varchar(30) NOT NULL DEFAULT '',
   `name` varchar(30) NOT NULL DEFAULT '',
   `active` enum('0','1') NOT NULL DEFAULT '0',
@@ -1839,7 +1839,7 @@ TRUNCATE TABLE `room`;
 --
 
 DROP TABLE IF EXISTS `social`;
-CREATE TABLE IF NOT EXISTS `social` (
+CREATE TABLE `social` (
   `id_social` varchar(30) NOT NULL DEFAULT '',
   `name` varchar(30) NOT NULL DEFAULT '',
   `active` enum('0','1') NOT NULL DEFAULT '0',
@@ -1876,7 +1876,7 @@ INSERT INTO `social` (`id_social`, `name`, `active`, `notes`) VALUES
 --
 
 DROP TABLE IF EXISTS `state`;
-CREATE TABLE IF NOT EXISTS `state` (
+CREATE TABLE `state` (
   `id_state` varchar(30) NOT NULL DEFAULT '',
   `fk.id_country` varchar(30) DEFAULT NULL,
   `name` varchar(100) NOT NULL,
@@ -1940,7 +1940,7 @@ INSERT INTO `state` (`id_state`, `fk.id_country`, `name`, `type`, `geo_code`, `g
 --
 
 DROP TABLE IF EXISTS `supplier`;
-CREATE TABLE IF NOT EXISTS `supplier` (
+CREATE TABLE `supplier` (
   `id_supplier` varchar(30) NOT NULL DEFAULT '',
   `fk.id_contact` varchar(30) DEFAULT NULL,
   `fk.id_branch` varchar(30) DEFAULT NULL,
@@ -1974,7 +1974,7 @@ INSERT INTO `supplier` (`id_supplier`, `fk.id_contact`, `fk.id_branch`, `fk.id_s
 --
 
 DROP TABLE IF EXISTS `supplier_group`;
-CREATE TABLE IF NOT EXISTS `supplier_group` (
+CREATE TABLE `supplier_group` (
   `id_supplier_group` varchar(30) NOT NULL DEFAULT '',
   `name` varchar(30) NOT NULL DEFAULT '',
   `active` enum('0','1') NOT NULL DEFAULT '0',
@@ -2002,7 +2002,7 @@ INSERT INTO `supplier_group` (`id_supplier_group`, `name`, `active`, `notes`) VA
 --
 
 DROP TABLE IF EXISTS `supplier_module`;
-CREATE TABLE IF NOT EXISTS `supplier_module` (
+CREATE TABLE `supplier_module` (
   `id_supplier_module` varchar(30) NOT NULL DEFAULT '',
   `fk.id_supplier_module` varchar(30) DEFAULT NULL,
   `fk.id_supplier_group` varchar(30) DEFAULT NULL,
@@ -2038,7 +2038,7 @@ INSERT INTO `supplier_module` (`id_supplier_module`, `fk.id_supplier_module`, `f
 --
 
 DROP TABLE IF EXISTS `table`;
-CREATE TABLE IF NOT EXISTS `table` (
+CREATE TABLE `table` (
   `id_table` varchar(30) NOT NULL DEFAULT '',
   `fk.id_room` varchar(30) NOT NULL DEFAULT '',
   `name` varchar(30) NOT NULL DEFAULT '',
@@ -2061,7 +2061,7 @@ TRUNCATE TABLE `table`;
 --
 
 DROP TABLE IF EXISTS `unit`;
-CREATE TABLE IF NOT EXISTS `unit` (
+CREATE TABLE `unit` (
   `id_unit` varchar(30) NOT NULL DEFAULT '',
   `name` varchar(30) NOT NULL DEFAULT '',
   `active` enum('0','1') NOT NULL DEFAULT '0',
@@ -2110,7 +2110,7 @@ INSERT INTO `unit` (`id_unit`, `name`, `active`, `notes`) VALUES
 -- Stand-in structure for view `view_outlet`
 --
 DROP VIEW IF EXISTS `view_outlet`;
-CREATE TABLE IF NOT EXISTS `view_outlet` (
+CREATE TABLE `view_outlet` (
 `id` varchar(30)
 ,`nama_outlet` varchar(20)
 ,`notes` varchar(100)
@@ -2122,7 +2122,7 @@ CREATE TABLE IF NOT EXISTS `view_outlet` (
 -- Stand-in structure for view `view_supplier`
 --
 DROP VIEW IF EXISTS `view_supplier`;
-CREATE TABLE IF NOT EXISTS `view_supplier` (
+CREATE TABLE `view_supplier` (
 `id_supplier` varchar(30)
 ,`first_name` varchar(20)
 ,`fk.id_branch` varchar(30)
@@ -2137,7 +2137,7 @@ CREATE TABLE IF NOT EXISTS `view_supplier` (
 --
 
 DROP TABLE IF EXISTS `_`;
-CREATE TABLE IF NOT EXISTS `_` (
+CREATE TABLE `_` (
   `id` varchar(100) NOT NULL DEFAULT '',
   `query` text,
   `active` enum('0','1') DEFAULT '0' COMMENT 'Leave it ''0'' for safety',
@@ -2161,6 +2161,7 @@ INSERT INTO `_` (`id`, `query`, `active`, `notes`) VALUES
 ('purchase_bill', 'SELECT DISTINCT(X.`fk.id_purchase_bill`) FROM (\n    SELECT\n        SUM(`qty`) AS qty, IF(isNULL(pR.`sum_qty`), 0, pR.`sum_qty`) AS qty_,\n        IF(isNULL(SUM(`qty`) - IF(isNULL(pR.`sum_qty`), 0, pR.`sum_qty`)), 0, (SUM(`qty`) - IF(isNULL(pR.`sum_qty`), 0, pR.`sum_qty`))) AS available,\n        pBX.`id_purchase_bill_ex`, pBX.`fk.id_purchase_bill`, pBX.`fk.id_purchase_ex`, pBX.`fk.id_product_purchase_price`, pBX.`complimentary`, pBX.`tax_percent`, pBX.`tax_amount`, pBX.`service_percent`, pBX.`service_amount`,\n        pBX.`discount_percent`, pBX.`discount_amount`, pBX.`active`, pBX.`notes`, pBX.`update`\n    FROM\n        purchase_bill_ex AS pBX\n    LEFT JOIN (\n        SELECT\n            pRX.`fk.id_purchase_bill_ex`, SUM(pRX.qty) AS sum_qty\n        FROM\n            purchase_return_ex AS pRX\n        JOIN\n            purchase_return AS pR ON pR.`id_purchase_return` = pRX.`fk.id_purchase_return`\n        WHERE\n            pR.`active`=''1'' AND pRX.`active` = ''1''\n        GROUP BY\n            pRX.`fk.id_purchase_bill_ex`\n        ORDER BY\n            pRX.`fk.id_purchase_return`, pRX.`fk.id_purchase_bill_ex`\n    ) AS pR ON pR.`fk.id_purchase_bill_ex` = pBX.`id_purchase_bill_ex`\n    WHERE\n        pBX.`active` = ''1''\n    GROUP BY\n        pBX.`fk.id_purchase_bill`, pBX.`fk.id_product_purchase_price`\n    ORDER BY\n        pBX.`fk.id_purchase_bill`, pBX.`id_purchase_bill_ex`\n) AS X WHERE X.available > 0;', '0', NULL),
 ('purchase_bill_ex', 'SELECT Z.`name` AS name_product, Z.`id_product`, Y.`value` AS harga_beli, X.*\nFROM (\n    SELECT\n        SUM(`qty`) AS qty, IF(isNULL(pR.`sum_qty`), 0, pR.`sum_qty`) AS qty_,\n        IF(isNULL(SUM(`qty`) - IF(isNULL(pR.`sum_qty`), 0, pR.`sum_qty`)), 0, (SUM(`qty`) - IF(isNULL(pR.`sum_qty`), 0, pR.`sum_qty`))) AS available,\n        pBX.`id_purchase_bill_ex`, pBX.`fk.id_purchase_bill`, pBX.`fk.id_purchase_ex`, pBX.`fk.id_product_purchase_price`, pBX.`complimentary`, pBX.`tax_percent`, pBX.`tax_amount`, pBX.`service_percent`, pBX.`service_amount`,\n        pBX.`discount_percent`, pBX.`discount_amount`, pBX.`active`, pBX.`notes`, pBX.`update`\n    FROM\n        purchase_bill_ex AS pBX\n    LEFT JOIN (\n        SELECT\n            pRX.`fk.id_purchase_bill_ex`, SUM(pRX.qty) AS sum_qty\n        FROM\n            purchase_return_ex AS pRX\n        JOIN\n            purchase_return AS pR ON pR.`id_purchase_return` = pRX.`fk.id_purchase_return`\n        WHERE\n            pR.`active`=''1'' AND pRX.`active` = ''1''\n        GROUP BY\n            pRX.`fk.id_purchase_bill_ex`\n        ORDER BY\n            pRX.`fk.id_purchase_return`, pRX.`fk.id_purchase_bill_ex`\n    ) AS pR ON pR.`fk.id_purchase_bill_ex` = pBX.`id_purchase_bill_ex`\n    WHERE\n        pBX.`active` = ''1''\n    GROUP BY\n        pBX.`fk.id_purchase_bill`, pBX.`fk.id_product_purchase_price`\n    ORDER BY\n        pBX.`fk.id_purchase_bill`, pBX.`id_purchase_bill_ex`\n) AS X\nJOIN `product_purchase_price` AS Y ON Y.`id_product_purchase_price` = X.`fk.id_product_purchase_price`\nJOIN `product` AS Z ON Z.`id_product` = Y.`fk.id_product`\nWHERE X.available > 0 AND X.`fk.id_purchase_bill` = $id_purchase_bill;', '0', NULL),
 ('purchase_ex', 'SELECT X.* FROM (\n    SELECT\n        purchase_ex.`id_purchase_ex`, purchase_ex.`datetime`, purchase_ex.`fk.id_purchase`, purchase_ex.`fk.id_product`,\n        purchase_ex.`modifier`,\n        IF(ISNULL(purchase_ex.`qty` - purchase_bill_ex_.`sum_qty`), purchase_ex.`qty`, (purchase_ex.`qty` - purchase_bill_ex_.`sum_qty`))  AS ''qty'',\n        IF(ISNULL(purchase_bill_ex_.`sum_qty`), 0, purchase_bill_ex_.`sum_qty`)  AS ''sum_qty'',\n        purchase_ex.`fk.id_product_purchase_price`, purchase_ex.`discount`, purchase_ex.`void`, purchase_ex.`complimentary`, purchase_ex.`active`, purchase_ex.`notes`,\n        product.name AS ''name_product'', product_purchase_price.`value`AS ''harga_beli''\n    FROM purchase_ex\n    LEFT JOIN product ON purchase_ex.`fk.id_product` = product.`id_product`\n    LEFT JOIN product_purchase_price ON purchase_ex.`fk.id_product_purchase_price` = product_purchase_price.`id_product_purchase_price`\n    LEFT JOIN (SELECT *, sum(`qty`) AS ''sum_qty'' FROM purchase_bill_ex WHERE `active` = ''1'' GROUP BY `fk.id_purchase_ex`, `fk.id_product_purchase_price`) AS purchase_bill_ex_\n        ON purchase_ex.`id_purchase_ex` = purchase_bill_ex_.`fk.id_purchase_ex`\n    WHERE purchase_ex.`fk.id_purchase` = $id_purchase AND purchase_ex.`active` = ''1'' AND !isNULL(purchase_ex.`fk.id_purchase`)\n) AS X WHERE X.`qty` > 0 ORDER BY X.`fk.id_purchase`;', '0', 'join with product & product_purchase_price'),
+('stock', 'SELECT \n    ppp.`fk.id_product` AS `code`, p.name, pb.ippp, ppp.value,\n    SUM(pb.qty) AS qty_p, SUM(IF(ISNULL(pr.qty), 0, pr.qty)) AS qty_r,\n    SUM(pb.qty - IF(ISNULL(pr.qty), 0, pr.qty)) AS qty,\n    pb.ipx, pb.ipb, DATE(pb.datetime) AS ipb_date, pb.ipbx, pr.ipr, DATE(pr.datetime) AS ipr_date\nFROM (\n    SELECT\n        pb.`datetime`, pbx.`fk.id_purchase_ex` AS ipx, pb.`id_purchase_bill` AS ipb,\n        pbx.`id_purchase_bill_ex` AS ipbx, pbx.`fk.id_product_purchase_price` AS ippp, pbx.`qty`\n    FROM purchase_bill AS pb\n    JOIN purchase_bill_ex pbx ON pb.`id_purchase_bill` = pbx.`fk.id_purchase_bill`\n    WHERE pb.`active`=''1'' AND pbx.`active` = ''1''\n) AS pb\nLEFT JOIN (\n    SELECT\n        pr.`DATETIME`, prx.`fk.id_purchase_bill_ex` AS ipbx, pr.`id_purchase_return` AS ipr,\n        prx.`id_purchase_return_ex` AS iprx, SUM(prx.`qty`) AS `qty`\n    FROM purchase_return AS pr\n    JOIN purchase_return_ex AS prx ON pr.`id_purchase_return` = prx.`fk.id_purchase_return`\n    WHERE pr.`active`=''1'' AND prx.`active` = ''1''\n    GROUP BY ipbx\n) AS pr ON pr.ipbx = pb.ipbx\nJOIN product_purchase_price AS ppp ON ppp.`id_product_purchase_price` = pb.ippp\nJOIN product AS p ON p.`id_product` = ppp.`fk.id_product`\nWHERE pb.datetime >= $start\nGROUP BY pb.ippp;', '0', NULL),
 ('supplier', 'SELECT\n    supplier.`id_supplier`, supplier_group.`id_supplier_group`, supplier_group.`name` AS ''name_supplier_group'',\n    branch.`id_branch`, branch.`name` AS ''name_branch'',\n    contact.`id_contact`, contact.`user_name`, contact.`first_name`, contact.`last_name`, contact.`alias` AS ''alias'', contact_addr.`address`, city.`name` AS ''city''\nFROM supplier\nLEFT JOIN contact ON supplier.`fk.id_contact` = contact.`id_contact`\nLEFT JOIN contact_addr ON contact.`id_contact` = contact_addr.`fk.id_contact`\nLEFT JOIN city ON contact_addr.`fk.id_city` = city.`id_city`\nLEFT JOIN supplier_group ON supplier_group.`id_supplier_group` = supplier.`fk.id_supplier_group`\nLEFT JOIN branch ON branch.`id_branch` = supplier.`fk.id_branch`\nWHERE supplier.`active` = ''1'' AND supplier_group.`active` = ''1'' AND branch.`active` = ''1'' AND contact_addr.`active` = ''1'';', '0', NULL),
 ('_', 'SELECT * FROM product WHERE id_product LIKE concat(''%'', $id_product, ''%'');', '0', NULL);
 

@@ -1,4 +1,4 @@
-# Web Server Engine
+# System Reqiurements
 - Apache Version :
     - Apache/2.2.25 (Unix) mod_fastcgi/2.4.6 mod_wsgi/3.4
     - Python/2.7.5
@@ -19,7 +19,6 @@
     - [/server/config/db.php]
 - Database import file : 
     - [zen@127.0.0.1_20141214.sql]
-    - [custom_api.sql]
 - Server side library :
     - look at file [/server/composer.json].. and dependencies library at path [/sever/vendor]
     - other server side library dependencies path [/server/libraries]
@@ -28,15 +27,15 @@
     - other server side library dependencies path [/lib]
 
 # How to Install
+- read system requirements.
+- if you miss understand this system requirements, please download and install XAMPP for fast way
 - download this full project
 - copy to your local server with folder (optional : zenApp)
 - create database (optional : zen) on your MySQL RDBMS (like phpMyAdmin, Navicat, etc.)
 - go to : zenApp[/server/config/db.php], and setting up this file (config as your MySQL account)
 - run [zen@127.0.0.1_20141214.sql] as import
-- run [custom_api.sql] as import
 
 [zen@127.0.0.1_20141214.sql]:zen@127.0.0.1_20141214.sql
-[custom_api.sql]:custom_api.sql
 [/server/config/db.php]:server/config/db.php
 [/server/composer.json]:server/composer.json
 [/server/libraries]:server/libraries

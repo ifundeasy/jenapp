@@ -21,10 +21,10 @@
     - [zen@127.0.0.1_20141214.sql]
     - [custom_api.sql]
 - Server side library :
-    - look at file [/server/composer.json] dependencies library folder ./sever/vendor/
+    - look at file [/server/composer.json].. and dependencies library at path [/sever/vendor]
     - other server side library dependencies path [/server/libraries]
 - Client side library : 
-    - look at file [/bower.json] dependencies library folder ./bower/
+    - look at file [/bower.json].. and dependencies library at path [/bower]
     - other server side library dependencies path [/lib]
 
 # How to Install
@@ -41,4 +41,6 @@
 [/server/composer.json]:server/composer.json
 [/server/libraries]:server/libraries
 [/bower.json]:bower.json
+[/bower]:bower
+[/sever/vendor]:sever/vendor
 [/lib]:lib

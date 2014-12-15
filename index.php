@@ -49,6 +49,7 @@
 	 */
 
 	//session_start(); //moved from from Login.php
+	//Do not kidding put session_start() here, Login() have a __constructor which auto run from instantiate object class -> new Login();
 
 	if (version_compare(PHP_VERSION, '5.3.7', '<')) {
 		exit("Sorry, Simple PHP Login does not run on a PHP version smaller than 5.3.7 !");

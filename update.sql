@@ -210,4 +210,13 @@ FROM
         `a`.`fk.id_internal_group` = `d`.`id_internal_group`
       )
     )
-  ) 
+  ) ;
+## --------------------------------------------------------------------------------------------------------------------------------------------------
+## --------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Query buat stok
+INSERT INTO `_` (`id`, `query`, `active`, `notes`)
+VALUES
+	('stock', 'SELECT \n    ppp.`fk.id_product` AS `code`, p.name, pb.ippp, ppp.value,\n    SUM(pb.qty) AS qty_p, SUM(IF(ISNULL(pr.qty), 0, pr.qty)) AS qty_r,\n    SUM(pb.qty - IF(ISNULL(pr.qty), 0, pr.qty)) AS qty,\n    pb.ipx, pb.ipb, DATE(pb.datetime) AS ipb_date, pb.ipbx, pr.ipr, DATE(pr.datetime) AS ipr_date\nFROM (\n    SELECT\n        pb.`datetime`, pbx.`fk.id_purchase_ex` AS ipx, pb.`id_purchase_bill` AS ipb,\n        pbx.`id_purchase_bill_ex` AS ipbx, pbx.`fk.id_product_purchase_price` AS ippp, pbx.`qty`\n    FROM purchase_bill AS pb\n    JOIN purchase_bill_ex pbx ON pb.`id_purchase_bill` = pbx.`fk.id_purchase_bill`\n    WHERE pb.`active`=\'1\' AND pbx.`active` = \'1\'\n) AS pb\nLEFT JOIN (\n    SELECT\n        pr.`DATETIME`, prx.`fk.id_purchase_bill_ex` AS ipbx, pr.`id_purchase_return` AS ipr,\n        prx.`id_purchase_return_ex` AS iprx, SUM(prx.`qty`) AS `qty`\n    FROM purchase_return AS pr\n    JOIN purchase_return_ex AS prx ON pr.`id_purchase_return` = prx.`fk.id_purchase_return`\n    WHERE pr.`active`=\'1\' AND prx.`active` = \'1\'\n    GROUP BY ipbx\n) AS pr ON pr.ipbx = pb.ipbx\nJOIN product_purchase_price AS ppp ON ppp.`id_product_purchase_price` = pb.ippp\nJOIN product AS p ON p.`id_product` = ppp.`fk.id_product`\nWHERE pb.datetime >= $start\nGROUP BY pb.ippp;', '0', NULL);
+## --------------------------------------------------------------------------------------------------------------------------------------------------
+## --------------------------------------------------------------------------------------------------------------------------------------------------

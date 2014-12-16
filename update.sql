@@ -14,9 +14,6 @@ INSERT INTO `zen`.`member_group` (`id_member_group`, `name`, `active`, `notes`) 
 
 ## Falih views
 CREATE 
-ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` 
-SQL SECURITY DEFINER 
 VIEW `internal_karyawan` AS 
 SELECT
   `a`.`id_internal` AS `id`,
@@ -49,9 +46,6 @@ FROM
     )
   ) ;
   CREATE 
-ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` 
-SQL SECURITY DEFINER 
 VIEW `view_outlet` AS 
 SELECT
   a.id_member AS `id`,
@@ -64,9 +58,6 @@ JOIN contact AS b ON a.`fk.id_contact` = b.id_contact
 WHERE
   a.`fk.id_member_group` = 'outlet' ;
   CREATE 
-ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` 
-SQL SECURITY DEFINER 
 VIEW `view_supplier` AS 
 SELECT
   a.id_supplier,

@@ -160,7 +160,7 @@ $(function () {
 										if (key == null) {
 											$('div#sidebar-wrapper>ul').append(
 												'<li class="divider" module='+ module["id_"+ name +"_module"] +'>'+ module.name.toTitleCase() +
-													'<span style="position: relative;left: 5px; top: -5px;" class="label label-'+ kind.class +'">'+ name.toTitleCase() +'</span></li>'
+												'<span style="position: relative;left: 5px; top: -5px;" class="label label-'+ kind.class +'">'+ name.toTitleCase() +'</span></li>'
 											);
 											var children = Profile[name+"_module"].filter(function(item){
 												return item["fk.id_"+ name +"_module"] == module["id_"+ name +"_module"];
@@ -294,7 +294,6 @@ $(function () {
 				});
 			});
 		};
-
 		new Personalize(function(param){
 			var z = undefined, i = 0;
 			z = setInterval(function(){
@@ -324,39 +323,3 @@ $(function () {
 		})
 	});
 });
-
-String.prototype.numberWithCommas = function () {
-	if (typeof parseFloat(this) === "number") {
-		thiss = (Math.round((this) * 100) / 100).toString();
-		var dotLastIndex = this.lastIndexOf(".");
-		if (dotLastIndex === -1) {
-			thiss = this + ".00"
-		} else {
-			var decimal = this.substring(dotLastIndex+1);
-			var nonDecimal = this.substring(0, dotLastIndex);
-			thiss = nonDecimal + "." + decimal;
-
-			if (this[this.lastIndexOf(".")+2] == undefined) {
-				thiss = this + "0"
-			}
-		}
-
-		var parts = this.toString().split(",");
-		parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-		return parts.join(".");
-	} else {
-		console.log(this, ": please only number")
-	}
-};
-
-Array.prototype.getUnique = function(){
-	var u = {}, a = [];
-	for(var i = 0, l = this.length; i < l; ++i){
-		if(u.hasOwnProperty(this[i])) {
-			continue;
-		}
-		a.push(this[i]);
-		u[this[i]] = 1;
-	}
-	return a;
-};

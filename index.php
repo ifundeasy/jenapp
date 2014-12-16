@@ -28,6 +28,7 @@
 	<script type="text/javascript" src="./lib/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 	<script type="text/javascript" src="./lib/jquery-watch.min.js"></script>
 	<script type="text/javascript" src="./lib/titlecase.js"></script>
+	<script type="text/javascript" src="./lib/custom.js"></script>
 </head>
 <body>
 <?php

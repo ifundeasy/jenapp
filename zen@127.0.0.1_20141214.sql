@@ -2172,7 +2172,7 @@ INSERT INTO `_` (`id`, `query`, `active`, `notes`) VALUES
 --
 DROP TABLE IF EXISTS `internal_karyawan`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `internal_karyawan` AS select `a`.`id_internal` AS `id`,`b`.`first_name` AS `nama_depan`,`b`.`last_name` AS `nama_belakang`,`c`.`name` AS `cabang`,`d`.`name` AS `grup`,`a`.`active` AS `active` from (((`contact` `b` left join `internal` `a` on((`a`.`fk.id_contact` = `b`.`id_contact`))) left join `branch` `c` on((`a`.`fk.id_branch` = `c`.`id_branch`))) left join `internal_group` `d` on((`a`.`fk.id_internal_group` = `d`.`id_internal_group`)));
+CREATE VIEW `internal_karyawan` AS select `a`.`id_internal` AS `id`,`b`.`first_name` AS `nama_depan`,`b`.`last_name` AS `nama_belakang`,`c`.`name` AS `cabang`,`d`.`name` AS `grup`,`a`.`active` AS `active` from (((`contact` `b` left join `internal` `a` on((`a`.`fk.id_contact` = `b`.`id_contact`))) left join `branch` `c` on((`a`.`fk.id_branch` = `c`.`id_branch`))) left join `internal_group` `d` on((`a`.`fk.id_internal_group` = `d`.`id_internal_group`)));
 
 -- --------------------------------------------------------
 
@@ -2181,7 +2181,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `view_outlet`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_outlet` AS select `a`.`id_member` AS `id`,`b`.`first_name` AS `nama_outlet`,`a`.`notes` AS `notes`,`a`.`active` AS `active` from (`member` `a` join `contact` `b` on((`a`.`fk.id_contact` = `b`.`id_contact`))) where (`a`.`fk.id_member_group` = 'outlet');
+CREATE VIEW `view_outlet` AS select `a`.`id_member` AS `id`,`b`.`first_name` AS `nama_outlet`,`a`.`notes` AS `notes`,`a`.`active` AS `active` from (`member` `a` join `contact` `b` on((`a`.`fk.id_contact` = `b`.`id_contact`))) where (`a`.`fk.id_member_group` = 'outlet');
 
 -- --------------------------------------------------------
 
@@ -2190,7 +2190,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `view_supplier`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_supplier` AS select `a`.`id_supplier` AS `id_supplier`,`b`.`first_name` AS `first_name`,`a`.`fk.id_branch` AS `fk.id_branch`,`c`.`name` AS `name`,`a`.`notes` AS `notes`,`a`.`active` AS `active` from ((`supplier` `a` join `contact` `b` on((`a`.`fk.id_contact` = `b`.`id_contact`))) join `supplier_group` `c` on((`a`.`fk.id_supplier_group` = `c`.`id_supplier_group`)));
+CREATE VIEW `view_supplier` AS select `a`.`id_supplier` AS `id_supplier`,`b`.`first_name` AS `first_name`,`a`.`fk.id_branch` AS `fk.id_branch`,`c`.`name` AS `name`,`a`.`notes` AS `notes`,`a`.`active` AS `active` from ((`supplier` `a` join `contact` `b` on((`a`.`fk.id_contact` = `b`.`id_contact`))) join `supplier_group` `c` on((`a`.`fk.id_supplier_group` = `c`.`id_supplier_group`)));
 
 --
 -- Constraints for dumped tables

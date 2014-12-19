@@ -5,7 +5,7 @@ function Pengiriman_sj_detail(_product, _qty, _discount, _price){this.initialize
 Pengiriman_sj.prototype.initialize = function(){
 	var me = this;
 	// define properties
-	me.id_pos 			= "tr-"+Date.now().toString();
+	me.id_pos 			= '';
 	me.datetime 		= ''; // new Date().format("yyyy-mm-dd HH:mm:ss");
 	me.id_internal	 	= '';
 	me.pic				= '';
@@ -355,7 +355,12 @@ Pengiriman_sj.prototype.configureDatefield = function(){
 // configure transaction id field
 Pengiriman_sj.prototype.configureTransNumberField = function(){
 	var me = this;
-	$('#inputNoTransKirimsj').val(me.id_pos);
+	$('#inputNoTransKirimsj').off('input');
+	$('#inputNoTransKirimsj').on('input', function(){
+		me.id_pos = $('#inputNoTransKirimsj').val();
+	});
+	$('#inputNoTransKirimsj').val("tr-"+Date.now().toString());
+	me.id_pos = $('#inputNoTransKirimsj').val();
 };
 // configure transaction id field --end
 // configure new item fields

@@ -1,0 +1,114 @@
+<div id="containerNewReturKirim" class="panel-group">
+	<h1>Retur Pengiriman
+		<input type="button" class="btn btn-xs btn-danger" style="margin-top: -15px" value="baru">
+		<input id="btnShowReturKirimSearch" type="button" class="btn btn-default pull-right" value="Cari Retur Pengiriman">
+	</h1>
+	<div class="panel panel-info">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				Informasi Transaksi<a data-toggle="collapse" data-target="[panel='1']"></a>
+			</h4>
+		</div>
+		<div panel="1" class="panel-collapse collapse in">
+			<div class="panel-body">
+				<form role="form">
+					<div class="col-lg-6 form-group">
+						<label>Nomor Transkasi</label>
+						<input id="inputNoTransReturKirim" type="text" class="form-control">
+					</div>
+					<div class="col-lg-6 form-group">
+						<label>Tanggal</label>
+						<input id="inputDateTransReturKirim" type="text" class="form-control datepicker">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="panel panel-danger">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				Barang<a data-toggle="collapse" data-target="[panel='3']" class="collapsed"></a>
+			</h4>
+		</div>
+		<div panel="3" class="panel-collapse collapse in">
+			<div class="panel-body">
+				<table id="tableReturKirim" class="table table-hover table-striped table-bordered table-condensed table-responsive">
+					<thead>
+					<tr class="active">
+						<th style="width: 40px" class="text-center">No</th>
+						<th class="text-center">Trans</th>
+						<th style="width: 80px" class="text-center">Kode</th>
+						<th class="text-center">Nama barang</th>
+						<th style="width: 120px" class="text-center">Dapat di retur (Qty)</th>
+						<th style="width: 120px" class="text-center">Pernah di retur (Qty)</th>
+						<th style="width: 120px" class="text-center">Retur (Qty)</th>
+						<th class="text-center">Harga (Rp.)</th>
+						<th class="text-center">Aksi</th>
+					</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="panel-footer text-right">
+			<form role="form" class="form-inline">
+				<div class="form-group">
+					<input id="inputTransKirim" style="margin-top: 6px;" type="text" class="form-control" placeholder="Nomor Pengiriman">
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="panel panel-info">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				Lainnya<a data-toggle="collapse" data-target="[panel='2']" class="collapsed"></a>
+			</h4>
+		</div>
+		<div panel="2" class="panel-collapse collapse in">
+			<div class="panel-body">
+				<form role="form">
+					<div class="col-lg-6 form-group">
+						<label>Pengaju</label>
+						<input id="inputInternalReturKirim" type="text" class="form-control" disabled>
+						<p align="right" style="margin-top: 10px">
+							<span class="label label-info">Total Qty : <span id="inputTotalQtyReturKirim">0</span></span>
+							<span class="label label-info">Total Item : <span id="inputTotalItemsReturKirim">0</span></span>
+						</p>
+					</div>
+					<div class="col-lg-6 form-group">
+						<label>Keterangan</label>
+						<textarea id="textareaNotesReturKirim" type="text" rows="4" class="form-control right"></textarea>
+					</div>
+
+				</form>
+			</div>
+		</div>
+		<div class="panel-footer text-right">
+			<input id="btnResetTransReturKirim" type="button" class="btn btn-warning" value="Reset">
+			<input id="btnSubmitTransReturKirim" type="button" class="btn btn-success" value="Sumbit">
+		</div>
+	</div>
+</div>
+<div id="containerSearch" class="panel-group hidden">
+	<h1>Retur Pengiriman
+		<input type="button" class="btn btn-xs btn-info" style="margin-top: -15px" value="cari">
+		<input id="btnShowNewReturKirim" type="button" class="btn btn-default pull-right" value="Buat Retur Pengiriman">
+	</h1>
+	<div class="panel panel-danger">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				Transaksi<a data-toggle="collapse" data-target="[panel='3']" class="collapsed"></a>
+			</h4>
+		</div>
+		<div panel="3" class="panel-collapse collapse">
+			<div class="panel-body">
+				<h5>Under construction <span class="label label-warning">on the way development :D</span></h5>
+			</div>
+		</div>
+		<div class="panel-footer text-right">
+			<h5>Under construction <span class="label label-warning">on the way development :D</span></h5>
+		</div>
+	</div>
+</div>
+<script type="application/javascript" src="./app/control/returkirim/returkirim.js"></script>

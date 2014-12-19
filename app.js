@@ -10,7 +10,7 @@ App.prototype.init = function () {
 	var me = this;
 
 	me.profile = {};
-	me.interval = 200;
+	me.interval = 500;
 	me.title = $("title");
 	me.brand = $("nav a#brand");
 	me.wrapper = $("#wrapper");

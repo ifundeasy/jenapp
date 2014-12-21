@@ -7,6 +7,7 @@
 	        <tr>
 	            <th>ID</th>
 	            <th>Outlet</th>
+	            <th>Alamat</th>
 	            <th>Catatan</th>
 	        </tr>
 	    </thead>
@@ -45,6 +46,35 @@
 	                    <div class="input-group">
 	                        <input type="text" class="form-control" name="InputNamaOutlet" id="InputNamaOutlet" placeholder="nama outlet" required>
 	                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <label for="InputAlamatOutlet">Alamat</label>
+	                    <div class="input-group">
+	                        <textarea name="InputAlamatOutlet" id="InputAlamatOutlet" class="form-control" rows="5"></textarea>
+	                        <span class="input-group-addon"></span>
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <label for="InputKotaOutlet">Kota</label>
+	                    <div class="input-group btn-block">
+	                    	<!-- Single dropdown -->
+							<div class="btn-group btn-block" combobox>
+								<button type="button" id="button-kota-outlet" class="btn btn-default dropdown-toggle btn-block" data-toggle="dropdown" aria-expanded="false">
+									<div align="left" display  style="float: left">Pilih</div>
+									<div align="right"><span class="caret"></span></div>
+								</button>
+								<ul class="dropdown-menu scrollable-menu btn-block" role="menu" id="list-kota-outlet">
+								</ul>
+								<input type="hidden" class="form-control" id="InputKotaOutlet" name="InputKotaOutlet" placeholder="" value="" required>
+							</div>
+							<!-- Single dropdown - end -->
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <label for="InputKodeposOutlet">Kode Pos</label>
+	                    <div class="input-group">
+	                        <input type="text" class="form-control" id="InputKodeposOutlet" name="InputKodeposOutlet" placeholder="Kode Pos">
 	                    </div>
 	                </div>
 	                <div class="form-group">

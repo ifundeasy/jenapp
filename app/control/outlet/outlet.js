@@ -88,12 +88,33 @@ $(document).ready(function(){
 							'fk.id_contact' 	: new_id,
 							'fk.id_member_group': 'outlet',
 							registered 			: new_date.format("yyyy-mm-dd HH:mm:ss"), //kalo mau pake waktu server, kosong aja
-							notes 				: _data[4].value,
+							notes 				: _data[7].value,
 							active 				: 1
 						},
 						success: function(data, status, xhr){
 							console.log("data 'member' :");
 							console.log(JSON.parse(xhr.responseText));
+							// simpan data tambahan alamat
+							var idCity = _data[5].value;
+							$.ajax({
+								url		: './server/api/contact_addr',
+								type	: 'POST',
+								async	: false,
+								data 	: {
+									'fk.id_contact' : new_id,
+									'fk.id_city'	: idCity,
+									address			: _data[4].value,
+									zip_code 		: _data[6].value,
+									active 			: 1
+								},
+								success: function(data, status, xhr){
+									console.log('address saved');
+								},
+								error : function(xhr, status, err){
+									exeption = "Error! kesalahan server saat penyimpanan data [addr].";
+								}
+							});
+							// simpan data tambahan alamat --end
 						},
 						error: function(xhr, status, err){
 							exeption = "Error! kesalahan server saat penyimpanan data [1].";
@@ -157,4 +178,32 @@ $(document).ready(function(){
 		$('#reset-form-outlet').toggleClass("disabled");
 	});
 	// kontoller untuk tombol submit (override default behaviour) --end
+	// request list grup kota
+	$.ajax({
+		url		: './server/api/city',
+		type	: 'GET',
+		async	: false,
+		data 	: {},
+		success: function(data, status, xhr){
+			console.log("data 'city' :");
+			var list = JSON.parse(xhr.responseText);
+			console.log(list);
+			for(i=0; i<list.total; i++){
+				$('#list-kota-outlet').append('<li><a key="'+ list.data[i].id_city +'">'+ list.data[i].name +'</a></li>');
+			};
+		},
+		error : function(xhr, status, err){
+			alert('kesalahan server. Mohon reload halaman.'	);
+		}
+	});
+	// request list grup kota --end
+	// controller untuk combobox umum (format seragam)
+	$('[combobox] a').click(function(event){
+		var me = $(event.target);
+		var cmb = me.closest('div[combobox]');
+		cmb.find('button div[display]').html(me.html());
+		cmb.find('input').val(me.attr('key'));
+	});
+	// controller untuk combobox umum (format seragam) --end
+	$('[combobox] a[key="43501c7e"]').trigger('click');
 });

@@ -23,7 +23,8 @@
 $columns = array(
     array( 'db' => 'id', 'dt' => 0 ),
     array( 'db' => 'nama_outlet', 'dt' => 1 ),
-    array( 'db' => 'notes', 'dt' => 2 )
+    array( 'db' => 'alamat', 'dt' => 2 ),
+    array( 'db' => 'notes', 'dt' => 3 )
 );
 echo json_encode(
     SSP::simple( $_GET, $sql_details, $table, $primaryKey, $columns )

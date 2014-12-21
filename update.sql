@@ -46,15 +46,19 @@ FROM
     )
   ) ;
   CREATE 
+  ## -- view_outlet yang lama dihapus ya broww
 VIEW `view_outlet` AS 
 SELECT
   a.id_member AS `id`,
   b.first_name AS `nama_outlet`,
+  CONCAT(c.address,", ",d.`name`," ",c.zip_code) as `alamat`,
   a.notes,
   a.active
 FROM
   member AS a
 JOIN contact AS b ON a.`fk.id_contact` = b.id_contact
+JOIN contact_addr as c ON c.`fk.id_contact` = b.id_contact
+JOIN city as d ON d.id_city = c.`fk.id_city`
 WHERE
   a.`fk.id_member_group` = 'outlet' ;
   CREATE 
